@@ -23,6 +23,7 @@ class Highlights extends CPT{
 
 	// Arguments for the CPT loop
 	protected $loop_args = array(
+		'no_found_rows'	=> true,
 		'orderby' 		=> 'menu_order',
 		'order' 		=> 'ASC',
 		'quantity'		=> 3,
@@ -38,15 +39,21 @@ class Highlights extends CPT{
 		$img_id		= get_post_meta( $pid, otm_cmb_prefix( $this->cptslug ) . 'image_id', true);
 		$img		= wp_get_attachment_image_src( $img_id, $this->cptslug.'-thumb' );
 
-		$html .= "<li>";
+		$html .= "<li class='".$this->cptslug."'>";
 
-			if ( $img[0] ){ $html .= "<img src='$img[0]' alt='".get_the_title()."'>"; }
+			if ( !empty( $img[0] ) ){
+				$html .= "<img src='$img[0]' alt='".get_the_title()."'>";
+			}
 
 			$html .= "<h3>".get_the_title()."</h3>";
 
-			if ( $content != '' ){ $html .= "<p>$content</p>"; }
+			if ( !empty( $content ) ){
+				$html .=  apply_filters( 'the_content', $content );
+			}
 
-			if ( $link && $link_text ){ $html .= "<a href='$link' class='button' role='button'>$link_text</a>"; }
+			if ( !empty( $link ) && !empty( $link_text ) ){
+				$html .= "<a href='".esc_url( $link )."' class='button' role='button'>".esc_attr( $link_text )."</a>";
+			}
 
 		$html .= "</li>";
 

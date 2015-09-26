@@ -18,6 +18,7 @@ class Alerts extends CPT{
 
 	// Arguments for the CPT loop
 	protected $loop_args = array(
+		'no_found_rows'	=> true,
 		'orderby' 		=> 'menu_order',
 		'order' 		=> 'ASC',
 		'quantity'		=> 3,
@@ -81,6 +82,8 @@ class Alerts extends CPT{
 
 		}
 
+		wp_reset_postdata();
+
 		return $html;
 
 	}
@@ -93,9 +96,7 @@ class Alerts extends CPT{
 
 			if ( !$end || time() <= $end ){
 
-				$html .= "<div class='alert'>";
-
-					if (  $image != '' ){ $html .= "<img src='$image' itemprop='image'>"; }
+				$html .= "<div class='".$this->cptslug."'>";
 
 					$html .= "<$title_tag>" . get_the_title() . "</$title_tag>";
 
