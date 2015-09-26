@@ -5,6 +5,19 @@ if ( !get_option( 'otm_theme_setup' ) && get_option( 'otm_theme_setup' ) != 'set
 	require_once 'includes/initial-install.php';
 }
 
-require_once 'includes/class-tgm-plugin-activation.php';
-require_once 'includes/auto-install-plugins.php';
+// If we haven't installed our plugins, include our setup script
+if ( !get_option( 'otm_plugins_installed' ) && get_option( 'otm_plugins_installed' ) != 'installed' ){
+	require_once 'includes/class-tgm-plugin-activation.php';
+	require_once 'includes/auto-install-plugins.php';
+}
 
+/*
+ * Once we have our plugins installed, create a flag to stop
+ * the loading of the plugin install files
+ */
+add_action( 'admin_init', 'flag_plugins_installed' );
+function flag_plugins_installed(){
+	if ( is_plugin_active( 'wpremote/plugin.php' ) && is_plugin_active( 'wordpress-seo/wp-seo.php' ) ){
+		add_option( 'otm_plugins_installed', 'installed', '', 'no' );
+	}
+}

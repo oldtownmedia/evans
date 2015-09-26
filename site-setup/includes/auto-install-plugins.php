@@ -109,39 +109,6 @@ function my_theme_register_required_plugins() {
 			'slug' 		=> 'wpremote',
 			'required' 	=> true,
 		),
-
-		// Premium Plugins
-		array(
-			'name' 		=> 'Backup Buddy',
-			'slug' 		=> 'backupbuddy',
-			'source'	=> 'http://dev.otmoffice.com/resources/required_plugins/backupbuddy.zip',
-			'required' 	=> true,
-		),
-		array(
-			'name' 		=> 'Gravity Forms',
-			'slug' 		=> 'gravityforms',
-			'source'	=> 'http://dev.otmoffice.com/resources/required_plugins/gravityforms.zip',
-			'required' 	=> true,
-		),
-		array(
-			'name' 		=> 'Soliloquy',
-			'slug' 		=> 'soliloquy',
-			'source'	=> 'http://dev.otmoffice.com/resources/required_plugins/soliloquy.zip',
-			'required' 	=> true,
-		),
-		array(
-			'name' 		=> 'Wp Rocket',
-			'slug' 		=> 'wp-rocket',
-			'source'	=> 'http://dev.otmoffice.com/resources/required_plugins/wp-rocket.zip',
-			'required' 	=> false,
-		),
-		array(
-			'name' 		=> 'Wp Sent Mail',
-			'slug' 		=> 'wp-sent-mail',
-			'source'	=> 'http://dev.otmoffice.com/resources/required_plugins/wp-sent-mail.zip',
-			'required' 	=> true,
-		),
-
 	);
 
 	/*

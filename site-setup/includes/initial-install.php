@@ -102,7 +102,7 @@ class Initial_Settings{
 		if ( get_option( 'default_ping_status' ) != 'closed' ){		update_option( 'default_ping_status', 'closed' ); }
 		if ( get_option( 'timezone_string' ) != 'America/Denver' ){ update_option( 'timezone_string', 'America/Denver' ); }
 
-		// Our theme setup is now complete, set a value that we can use latr
+		// Our theme setup is now complete, set a value that we can use later
 		// to stop the loading of this file
 		add_option( 'otm_theme_setup', 'setup', '', 'no' );
 
