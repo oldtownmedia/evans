@@ -68,6 +68,25 @@ class Alerts extends CPT{
 	        ),
 		);
 
+		// If our shortcode passed in the random as true
+		if ( !empty( $args['random'] ) && $args['random'] == true ){
+			$query['no_found_rows']		= false;
+			$query['posts_per_page']	= 1;
+			$query['orderby']			= 'rand';
+		}
+
+		// If our shortcode passed in an id
+		if ( !empty( $args['pid'] ) ){
+			$query['no_found_rows']		= false;
+			$query['posts_per_page']	= 1;
+			$query['post__in']			= array( $args['pid'] );
+		}
+
+		// If our shortcode passed in a group id OR our taxonomy_loop passes in a group id
+		if ( !empty( $args['group'] ) ){
+			$query[$this->tax_slug]			= array( $args['group'] );
+		}
+
 		$objects = new WP_Query( $query );
 
 		if ( $objects->have_posts() ){
