@@ -42,16 +42,16 @@ class Highlights extends CPT{
 		$html .= "<li class='".$this->cptslug."'>";
 
 			if ( !empty( $img[0] ) ){
-				$html .= "<img src='$img[0]' alt='".get_the_title()."'>";
+				$html .= "<a href='".esc_url( $link )."'><img src='$img[0]' alt='".get_the_title()."'></a>";
 			}
 
-			$html .= "<h3>".get_the_title()."</h3>";
+			$html .= "<h3><a href='".esc_url( $link )."'>".get_the_title()."</a></h3>";
 
 			if ( !empty( $content ) ){
 				$html .=  apply_filters( 'the_content', $content );
 			}
 
-			if ( !empty( $link ) && !empty( $link_text ) ){
+			if ( !empty( $link_text ) ){
 				$html .= "<a href='".esc_url( $link )."' class='button' role='button'>".esc_attr( $link_text )."</a>";
 			}
 

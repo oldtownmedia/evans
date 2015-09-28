@@ -7,7 +7,7 @@ abstract class CPT{
 	protected $singular;
 	protected $plural;
 	protected $cpt_args;
-	protected $icon;
+	protected $icon;	// https://developer.wordpress.org/resource/dashicons/
 	protected $loop_args;
 	protected $thumbnail_size;
 	protected $tax_slug;
@@ -40,7 +40,7 @@ abstract class CPT{
 
 	}
 
-	public function loop_cpt( $args ){
+	public function loop_cpt( $args = array() ){
 
 		$html .= "";
 		$defaults = $this->loop_args;
@@ -116,7 +116,7 @@ abstract class CPT{
 
 	}
 
-	public function taxonomy_loop( $args ){
+	public function taxonomy_loop( $args = array() ){
 
 		$html = "";
 

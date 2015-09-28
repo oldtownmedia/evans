@@ -23,7 +23,7 @@ class Events extends CPT{
 		'order' 		=> 'ASC',
 	);
 
-	public function loop_cpt( $args ){
+	public function loop_cpt( $args = array() ){
 
 		$html .= "";
 		$defaults = $this->loop_args;

@@ -25,7 +25,7 @@ class Alerts extends CPT{
 
 	);
 
-	public function loop_cpt( $args ){
+	public function loop_cpt( $args = array() ){
 
 		$html .= "";
 		$defaults = $this->loop_args;
