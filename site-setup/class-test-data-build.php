@@ -30,7 +30,7 @@ class BuildTestData{
 
 		$page = add_submenu_page(
 			'tools.php',
-			__( 'Create Test Date', 'otm-mu' ),
+			__( 'Create Test Data', 'otm-mu' ),
 			__( 'Test Data', 'otm-mu' ),
 			'manage_options',
 			'otm_mu-test_data',

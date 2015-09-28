@@ -52,13 +52,15 @@ class Events extends CPT{
 
 		if ( $objects->have_posts() ){
 
-			$title_tag = $args['title_tag'];
+			$html .= "<ul class='".$this->cptslug."-listing group'>";
 
 			while ( $objects->have_posts() ) : $objects->the_post();
 
 				$html .= $this->display_loop( get_the_id() );
 
 			endwhile;
+
+			$html .= "</ul>";
 
 		}
 

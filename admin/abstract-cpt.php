@@ -78,8 +78,6 @@ abstract class CPT{
 
 		if ( $objects->have_posts() ){
 
-			$title_tag = $args['title_tag'];
-
 			$html .= "<ul class='".$this->cptslug."-listing group'>";
 
 			while ( $objects->have_posts() ) : $objects->the_post();
