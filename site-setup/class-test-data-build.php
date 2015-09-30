@@ -50,18 +50,24 @@ class BuildTestData{
 
 		$cptslug	= $_REQUEST['cptslug'];
 		$action		= $_REQUEST['todo'];
+		$nonce		= $_REQUEST['nonce'];
 
-		if ( $action == 'delete' ){
+		// Verify that we have a proper logged in user and it's the right person
+		if ( !empty( $nonce ) && wp_verify_nonce( $nonce, 'handle-test-data' ) ){
 
-			$this->delete_test_content( $cptslug );
-			echo "Deleted " . $cptslug ."s";
+			if ( $action == 'delete' ){
 
-		} elseif ( $action == 'create' ){
+				$this->delete_test_content( $cptslug );
+				echo "Deleted " . $cptslug ."s";
 
-			$this->create_post_type_content( $cptslug );
-			echo "Created " . $cptslug ."s";
+			} elseif ( $action == 'create' ){
 
-		}
+				$this->create_post_type_content( $cptslug );
+				echo "Created " . $cptslug ."s";
+
+			}
+
+		} // end nonce check
 
 		die();
 
@@ -120,7 +126,8 @@ class BuildTestData{
 						var data = {
 							'action' : 'handle_test_data',
 							'todo' : jQuery( this ).data( 'todo' ),
-							'cptslug' : jQuery( this ).data( 'cpt' )
+							'cptslug' : jQuery( this ).data( 'cpt' ),
+							'nonce' : '<?php echo wp_create_nonce( 'handle-test-data' ); ?>'
 						};
 
 						// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
