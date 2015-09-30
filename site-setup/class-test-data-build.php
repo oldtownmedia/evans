@@ -95,8 +95,8 @@ class BuildTestData{
 					$html .= "<h3>";
 
 						$html .= "<span style='width: 20%; display: inline-block;'>" . $post_type->labels->name . "</span>";
-						$html .= " <a href='javascript:void(0);' data-cpt='".$post_type->name."' data-todo='create' class='button-primary handle-test-data' />Create Test Data</a>";
-						$html .= " <a href='javascript:void(0);' data-cpt='".$post_type->name."' data-todo='delete' class='button-primary handle-test-data' />Delete Test Data</a>";
+						$html .= " <a href='javascript:void(0);' data-cpt='".$post_type->name."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-plus' style='margin-top: 6px; font-size: 1.2em'></span> Create Test Data</a>";
+						$html .= " <a href='javascript:void(0);' data-cpt='".$post_type->name."' data-todo='delete' class='button-primary handle-test-data' /><span class='dashicons dashicons-trash' style='margin-top: 4px; font-size: 1.2em'></span> Delete Test Data</a>";
 
 					$html .= "</h3>";
 
@@ -115,6 +115,8 @@ class BuildTestData{
 
 					jQuery( '.handle-test-data' ).on( 'click', function(){
 
+						$( this ).after( '<img src="<?php echo plugins_url( '../resources/images/loading.gif', __FILE__ ); ?>" class="loading-icon" style="height: 20px; margin-bottom: -4px; margin-left: 4px;">' );
+
 						var data = {
 							'action' : 'handle_test_data',
 							'todo' : jQuery( this ).data( 'todo' ),
@@ -124,6 +126,7 @@ class BuildTestData{
 						// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 						jQuery.post( ajaxurl, data, function(response) {
 							console.log( '<?php __( 'Got this from the server: ', 'otm-mu' ); ?>' + response );
+							$( '.loading-icon' ).remove();
 						});
 
 					});
@@ -383,7 +386,7 @@ class BuildTestData{
 					} elseif ( stripos( $cmb['id'], 'email' ) ){
 						$value = TestContent::email();
 					} else {
-						$value = TestContent::title();
+						$value = TestContent::plain_text();
 					}
 
 					break;

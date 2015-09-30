@@ -14,43 +14,52 @@ class TestContent{
 
     }
 
-	public static function title(){
+	public static function title( $num_words = '' ){
 
 		$title = '';
 
 		$random_words = array(
-			'near',
-			'rich',
-			'synergy',
-			'noise',
-			'fork',
-			'original',
-			'box',
-			'border',
-			'host',
-			'profits',
-			'service',
-			'product',
-			'under',
-			'true',
-			'value',
-			'price',
-			'blur',
-			'classic',
-			'content',
-			'trust',
-			'in',
-			'a',
-			'the',
-			'on',
-			'then',
-			'do'
+			'lorem',
+			'ipsum',
+			'dolor',
+			'sit',
+			'amet',
+			'consectetur',
+			'adipiscing',
+			'elit',
+			'sed',
+			'porttitor',
+			'augue',
+			'vitae',
+			'ante',
+			'posuere',
+			'aecenas',
+			'ultricies',
+			'neque',
+			'ut',
+			'enim',
+			'pharetra',
+			'sodales',
+			'pellentesque',
+			'gravida',
+			'mauris',
+			'pellentesque',
+			'cum',
+			'sociis',
+			'natoque',
+			'penatibus',
+			'et',
+			'magnis',
+			'dis'
+
 		);
 
-		$num_words = rand( 2, 8 );
+		if ( empty( $num_words ) ){
+			$num_words = rand( 2, 10 );
+		}
 
 		for( $i = 1; $i <= $num_words; $i++ ){
-			$title .= $random_words[ rand( 0, 25 ) ] . " ";
+			$title .= $random_words[ rand( 0, 31 ) ] . " ";
 		}
 
 		return substr( $title, 0, -1 );
