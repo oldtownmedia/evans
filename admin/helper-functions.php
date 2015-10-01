@@ -102,16 +102,16 @@ function otm_set_messages( $messages ) {
 
 	$messages[$post_type] = array(
 		0 => '', // Unused. Messages start at index 1.
-		1 => sprintf( __( $singular.' updated. <a href="%s">View '.strtolower( $singular ).'</a>', 'otm-mu' ), esc_url( get_permalink( $post_ID ) ) ),
-		2 => __( 'Custom field updated.', 'otm-mu' ),
-		3 => __( 'Custom field deleted.', 'otm-mu' ),
-		4 => __( $singular.' updated.', 'otm-mu' ),
-		5 => isset( $_GET['revision'] ) ? sprintf( __( $singular.' restored to revision from %s', 'otm-mu' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		6 => sprintf( __( $singular.' published. <a href="%s">View '.strtolower( $singular ).'</a>' , 'otm-mu' ), esc_url( get_permalink( $post_ID ) ) ),
+		1 => sprintf( __( $singular.' updated. <a href="%s">View '.strtolower( $singular ).'</a>', 'evans-mu' ), esc_url( get_permalink( $post_ID ) ) ),
+		2 => __( 'Custom field updated.', 'evans-mu' ),
+		3 => __( 'Custom field deleted.', 'evans-mu' ),
+		4 => __( $singular.' updated.', 'evans-mu' ),
+		5 => isset( $_GET['revision'] ) ? sprintf( __( $singular.' restored to revision from %s', 'evans-mu' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6 => sprintf( __( $singular.' published. <a href="%s">View '.strtolower( $singular ).'</a>' , 'evans-mu' ), esc_url( get_permalink( $post_ID ) ) ),
 		7 => __( 'Page saved.' ),
-		8 => sprintf( __( $singular.' submitted. <a target="_blank" href="%s">Preview '.strtolower( $singular ).'</a>', 'otm-mu' ), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
-		9 => sprintf( __( $singular.' scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview '.strtolower( $singular ).'</a>', 'otm-mu' ), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
-		10 => sprintf( __( $singular.' draft updated. <a target="_blank" href="%s">Preview '.strtolower( $singular ).'</a>', 'otm-mu' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+		8 => sprintf( __( $singular.' submitted. <a target="_blank" href="%s">Preview '.strtolower( $singular ).'</a>', 'evans-mu' ), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+		9 => sprintf( __( $singular.' scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview '.strtolower( $singular ).'</a>', 'evans-mu' ), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
+		10 => sprintf( __( $singular.' draft updated. <a target="_blank" href="%s">Preview '.strtolower( $singular ).'</a>', 'evans-mu' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
 	);
 
 	return $messages;

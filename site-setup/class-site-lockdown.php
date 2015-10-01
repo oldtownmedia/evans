@@ -63,10 +63,10 @@ class Site_Lockdown {
 			$locked = get_option( 'otm_site_lockdown' );
 
 			if ( $locked == 'locked' ){
-				$title = '<span style="color:green">'.__( 'Site is locked', 'otm-mu' ).'</span>';
+				$title = '<span style="color:green">'.__( 'Site is locked', 'evans-mu' ).'</span>';
 				$link = $this->maybe_add_get_to_url() . 'unlock_site=' . wp_create_nonce( 'otm_unlock_site' );
 			} else {
-				$title = '<span style="color:red">'.__( 'Site is unlocked', 'otm-mu' ).'</span>';
+				$title = '<span style="color:red">'.__( 'Site is unlocked', 'evans-mu' ).'</span>';
 				$link = $this->maybe_add_get_to_url() . 'lock_site=' . wp_create_nonce( 'otm_lock_site' );
 			}
 

@@ -45,15 +45,15 @@ class Staff extends CPT{
 			if ( !empty( $title ) || !empty( $phone ) || !empty( $email ) ){ $html .= "<p>"; }
 
 				if ( !empty( $title ) ){
-					$html .= "<strong>" . __( 'Position:', 'otm-mu' ) . "</strong> <span itemprop='jobTitle'>".esc_attr( $title )."</span><br>";
+					$html .= "<strong>" . __( 'Position:', 'evans-mu' ) . "</strong> <span itemprop='jobTitle'>".esc_attr( $title )."</span><br>";
 				}
 
 				if ( !empty( $phone ) ){
-					$html .= "<strong>" . __( 'Phone:', 'otm-mu' ) . "</strong> <span itemprop='contactPoint'>".esc_attr( $phone )."</span><br>";
+					$html .= "<strong>" . __( 'Phone:', 'evans-mu' ) . "</strong> <span itemprop='contactPoint'>".esc_attr( $phone )."</span><br>";
 				}
 
 				if ( !empty( $email ) && is_email( $email ) ){
-					$html .= "<strong>" . __( 'Email:', 'otm-mu' ) . "</strong> <span itemprop='email'><a href='mailt:o".esc_attr( $email )."'>".esc_attr( $email )."</a></span><br>";
+					$html .= "<strong>" . __( 'Email:', 'evans-mu' ) . "</strong> <span itemprop='email'><a href='mailt:o".esc_attr( $email )."'>".esc_attr( $email )."</a></span><br>";
 				}
 
 			if ( !empty( $title ) || !empty( $phone ) || !empty( $email ) ){ $html .= "</p>"; }
@@ -73,32 +73,32 @@ class Staff extends CPT{
 
 		$meta_boxes[] = array(
 			'id'			=> $this->cptslug.'_metabox',
-			'title'			=> sprintf( __( '%s Information', 'otm-mu' ), $this->singular ),
+			'title'			=> sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
 			'object_types'	=> array( $this->cptslug, ),
 			'context'		=> 'normal',
 			'priority'		=> 'high',
 			'show_names'	=> true,
 			'fields'		=> array(
 				array(
-					'name' => __( 'Position/Title', 'otm-mu' ),
-					'desc' => __( 'Enter the title for the '.$this->cptslug, 'otm-mu' ),
+					'name' => __( 'Position/Title', 'evans-mu' ),
+					'desc' => __( 'Enter the title for the '.$this->cptslug, 'evans-mu' ),
 					'id'   => $prefix . 'position',
 					'type' => 'text',
 				),
 				array(
-					'name' => __( 'Phone #', 'otm-mu' ),
-					'desc' => __( 'Enter the phone # for the '.$this->cptslug, 'otm-mu' ),
+					'name' => __( 'Phone #', 'evans-mu' ),
+					'desc' => __( 'Enter the phone # for the '.$this->cptslug, 'evans-mu' ),
 					'id'   => $prefix . 'phone',
 					'type' => 'text',
 				),
 				array(
-					'name' => __( 'Email', 'otm-mu' ),
-					'desc' => __( 'Enter the email for the '.$this->cptslug, 'otm-mu' ),
+					'name' => __( 'Email', 'evans-mu' ),
+					'desc' => __( 'Enter the email for the '.$this->cptslug, 'evans-mu' ),
 					'id'   => $prefix . 'email',
 					'type' => 'text',
 				),
 				array(
-					'name' => __( 'Image', 'otm-mu' ),
+					'name' => __( 'Image', 'evans-mu' ),
 					'id'   => $prefix . 'image',
 					'type' => 'file',
 					'allow' => array( 'attachment' )

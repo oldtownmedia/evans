@@ -75,7 +75,7 @@ class Initial_Settings{
 
 		if ( !has_nav_menu( 'header-menu' ) ) {
 			$primary_nav_id = wp_create_nav_menu(
-				__( 'Header Menu', 'otm-mu' ),
+				__( 'Header Menu', 'evans-mu' ),
 				array(
 					'slug' => 'header-menu'
 				)

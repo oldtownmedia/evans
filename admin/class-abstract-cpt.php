@@ -90,7 +90,7 @@ abstract class CPT{
 
 		} else {
 
-			$html = "<h3>".sprintf( __( "There are no %s to list. Check back soon!", 'otm-mu' ), $this->cptslug_plural )."</h3>";
+			$html = "<h3>".sprintf( __( "There are no %s to list. Check back soon!", 'evans-mu' ), $this->cptslug_plural )."</h3>";
 
 		}
 
@@ -175,19 +175,19 @@ abstract class CPT{
 	public function define_cpt(){
 
 		$labels = array(
-			'name'               => sprintf( _x( '%s', 'post type general name', 'otm-mu' ), $this->plural ),
-			'singular_name'      => sprintf( _x( '%s', 'post type singular name', 'otm-mu' ), $this->singular ),
-			'add_new'            => sprintf( _x( 'Add New', '%s', 'otm-mu' ), $this->cptslug ),
-			'add_new_item'       => sprintf( __( 'Add New %s', 'otm-mu' ), $this->singular ),
-			'edit_item'          => sprintf( __( 'Edit %s', 'otm-mu' ), $this->singular ),
-			'new_item'           => sprintf( __( 'New %s', 'otm-mu' ), $this->singular ),
-			'all_items'          => sprintf( __( 'All %s', 'otm-mu' ), $this->plural ),
-			'view_item'          => sprintf( __( 'View %s', 'otm-mu' ), $this->singular ),
-			'search_items'       => sprintf( __( 'Search %s', 'otm-mu' ), $this->plural ),
-			'not_found'          => sprintf( __( 'No %s found', 'otm-mu' ), $this->plural ),
-			'not_found_in_trash' => sprintf( __( 'No %s found in the Trash', 'otm-mu' ), $this->plural ),
-			'parent_item_colon'  => sprintf( __( 'Parent %s', 'otm-mu' ), $this->singular ),
-			'menu_name'          => sprintf( __( '%s', 'otm-mu' ), $this->plural )
+			'name'               => sprintf( _x( '%s', 'post type general name', 'evans-mu' ), $this->plural ),
+			'singular_name'      => sprintf( _x( '%s', 'post type singular name', 'evans-mu' ), $this->singular ),
+			'add_new'            => sprintf( _x( 'Add New', '%s', 'evans-mu' ), $this->cptslug ),
+			'add_new_item'       => sprintf( __( 'Add New %s', 'evans-mu' ), $this->singular ),
+			'edit_item'          => sprintf( __( 'Edit %s', 'evans-mu' ), $this->singular ),
+			'new_item'           => sprintf( __( 'New %s', 'evans-mu' ), $this->singular ),
+			'all_items'          => sprintf( __( 'All %s', 'evans-mu' ), $this->plural ),
+			'view_item'          => sprintf( __( 'View %s', 'evans-mu' ), $this->singular ),
+			'search_items'       => sprintf( __( 'Search %s', 'evans-mu' ), $this->plural ),
+			'not_found'          => sprintf( __( 'No %s found', 'evans-mu' ), $this->plural ),
+			'not_found_in_trash' => sprintf( __( 'No %s found in the Trash', 'evans-mu' ), $this->plural ),
+			'parent_item_colon'  => sprintf( __( 'Parent %s', 'evans-mu' ), $this->singular ),
+			'menu_name'          => sprintf( __( '%s', 'evans-mu' ), $this->plural )
 		);
 
 		$defaults = array(
@@ -213,17 +213,17 @@ abstract class CPT{
 	public function define_taxonomy(){
 
 		$labels = array(
-			'name'              => sprintf( _x( '%s', 'taxonomy general name', 'otm-mu' ), $this->taxonomy_name ),
-			'singular_name'     => sprintf( _x( '%s', 'taxonomy singular name', 'otm-mu' ), $this->taxonomy_name ),
-			'search_items'      => sprintf( __( 'Search %s', 'otm-mu' ), $this->taxonomy_plural ),
-			'all_items'         => sprintf( __( 'All %s', 'otm-mu' ), $this->taxonomy_plural ),
-			'parent_item'       => sprintf( __( 'Parent %s', 'otm-mu' ), $this->taxonomy_name ),
-			'parent_item_colon' => sprintf( __( 'Parent %s:', 'otm-mu' ), $this->taxonomy_name ),
-			'edit_item'         => sprintf( __( 'Edit %s', 'otm-mu' ), $this->taxonomy_name ),
-			'update_item'       => sprintf( __( 'Update %s', 'otm-mu' ), $this->taxonomy_name ),
-			'add_new_item'      => sprintf( __( 'Add New %s', 'otm-mu' ), $this->taxonomy_name ),
-			'new_item_name'     => sprintf( __( 'New %s', 'otm-mu' ), $this->taxonomy_name ),
-			'menu_name'         => sprintf( __( '%s', 'otm-mu' ), $this->taxonomy_plural ),
+			'name'              => sprintf( _x( '%s', 'taxonomy general name', 'evans-mu' ), $this->taxonomy_name ),
+			'singular_name'     => sprintf( _x( '%s', 'taxonomy singular name', 'evans-mu' ), $this->taxonomy_name ),
+			'search_items'      => sprintf( __( 'Search %s', 'evans-mu' ), $this->taxonomy_plural ),
+			'all_items'         => sprintf( __( 'All %s', 'evans-mu' ), $this->taxonomy_plural ),
+			'parent_item'       => sprintf( __( 'Parent %s', 'evans-mu' ), $this->taxonomy_name ),
+			'parent_item_colon' => sprintf( __( 'Parent %s:', 'evans-mu' ), $this->taxonomy_name ),
+			'edit_item'         => sprintf( __( 'Edit %s', 'evans-mu' ), $this->taxonomy_name ),
+			'update_item'       => sprintf( __( 'Update %s', 'evans-mu' ), $this->taxonomy_name ),
+			'add_new_item'      => sprintf( __( 'Add New %s', 'evans-mu' ), $this->taxonomy_name ),
+			'new_item_name'     => sprintf( __( 'New %s', 'evans-mu' ), $this->taxonomy_name ),
+			'menu_name'         => sprintf( __( '%s', 'evans-mu' ), $this->taxonomy_plural ),
 		);
 
 		$args = array(

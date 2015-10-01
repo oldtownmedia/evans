@@ -136,32 +136,32 @@ class Alerts extends CPT{
 
 		$meta_boxes[] = array(
 			'id'			=> $this->cptslug.'_metabox',
-			'title'			=> sprintf( __( '%s Information', 'otm-mu' ), $this->singular ),
+			'title'			=> sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
 			'object_types'	=> array( $this->cptslug, ),
 			'context'		=> 'normal',
 			'priority'		=> 'high',
 			'show_names'	=> true,
 			'fields'		=> array(
 				array(
-					'name'    => __( 'Active?', 'otm-mu' ),
-					'desc'    => __( 'Choose whether this '.$this->cptslug.' should be active or not', 'otm-mu' ),
+					'name'    => __( 'Active?', 'evans-mu' ),
+					'desc'    => __( 'Choose whether this '.$this->cptslug.' should be active or not', 'evans-mu' ),
 					'id'      => $prefix . 'active',
 					'type'    => 'radio',
 					'options' => array(
-						'active'	=> __( 'Active', 'otm-mu' ),
-						'inactive'	=>  __( 'Inactive', 'otm-mu' )
+						'active'	=> __( 'Active', 'evans-mu' ),
+						'inactive'	=>  __( 'Inactive', 'evans-mu' )
 					),
 				),
 				array(
-					'name' 		=> __( 'Start Date', 'otm-mu' ),
-					'desc' 		=> __( 'If you would like to schedule this '.$this->cptslug.', enter a start date.', 'otm-mu' ),
+					'name' 		=> __( 'Start Date', 'evans-mu' ),
+					'desc' 		=> __( 'If you would like to schedule this '.$this->cptslug.', enter a start date.', 'evans-mu' ),
 					'id'   		=> $prefix . 'start_date',
 					'type' 		=> 'text_datetime_timestamp',
 					'default'	=> time()
 				),
 				array(
-					'name' => __( 'End Date', 'otm-mu' ),
-					'desc' => __( 'If you would like to schedule this '.$this->cptslug.', enter an end date.', 'otm-mu' ),
+					'name' => __( 'End Date', 'evans-mu' ),
+					'desc' => __( 'If you would like to schedule this '.$this->cptslug.', enter an end date.', 'evans-mu' ),
 					'id'   => $prefix . 'end_date',
 					'type' => 'text_datetime_timestamp',
 				),

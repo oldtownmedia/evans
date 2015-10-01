@@ -1,12 +1,12 @@
 <?php
 /**
-  * Plugin Name: Longs - the functionality framework for your site
+  * Plugin Name: Evans - the functionality framework for your site
   * Plugin URI: http://oldtownmediainc.com/
   * Description: Plugin to enable all kinds of features on your site.
   * Author: Old Town Media
   * Version: 2.0
-  * Author URI: http://oldtownmediainc.com/
-  * Text Domain: otm-mu
+  * Author URI: https://oldtownmediainc.com/
+  * Text Domain: evans-mu
   */
 
 // Define a list of subfolders to poke through for files

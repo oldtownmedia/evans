@@ -92,8 +92,8 @@ class Events extends CPT{
 				if ( !empty( $date ) || !empty( $time ) || !empty( $location ) || !empty( $cost ) ){ $html .= "<p>"; }
 
 					$html .= esc_attr( $date ) ." ". esc_attr( $time )."<br>";
-					if ( !empty( $location ) ){ $html .= __( 'Location:', 'otm-mu' ) . " <span itemprop='location'>".esc_attr( $location )."</span><br>"; }
-					if ( !empty( $cost ) ){ $html .= __( 'Cost:', 'otm-mu' ) . " ".esc_attr( $cost )."<br>"; }
+					if ( !empty( $location ) ){ $html .= __( 'Location:', 'evans-mu' ) . " <span itemprop='location'>".esc_attr( $location )."</span><br>"; }
+					if ( !empty( $cost ) ){ $html .= __( 'Cost:', 'evans-mu' ) . " ".esc_attr( $cost )."<br>"; }
 
 				if ( !empty( $date ) || !empty( $time ) || !empty( $location ) || !empty( $cost ) ){ $html .= "</p>"; }
 
@@ -112,38 +112,38 @@ class Events extends CPT{
 
 		$meta_boxes[] = array(
 			'id'			=> $this->cptslug.'_metabox',
-			'title'			=> sprintf( __( '%s Information', 'otm-mu' ), $this->singular ),
+			'title'			=> sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
 			'object_types'	=> array( $this->cptslug, ),
 			'context'		=> 'normal',
 			'priority'		=> 'high',
 			'show_names'	=> true,
 			'fields'		=> array(
 				array(
-					'name' => __( 'Start Date/Time', 'otm-mu' ),
-					'desc' => __( 'Enter a date for your '.$this->cptslug, 'otm-mu' ),
+					'name' => __( 'Start Date/Time', 'evans-mu' ),
+					'desc' => __( 'Enter a date for your '.$this->cptslug, 'evans-mu' ),
 					'id'   => $prefix . 'date',
 					'type' => 'text_date_timestamp',
 				),
 				array(
-					'name' => __( 'Time', 'otm-mu' ),
-					'desc' => __( 'Enter a time for your '.$this->cptslug, 'otm-mu' ),
+					'name' => __( 'Time', 'evans-mu' ),
+					'desc' => __( 'Enter a time for your '.$this->cptslug, 'evans-mu' ),
 					'id'   => $prefix . 'time',
 					'type' => 'text',
 				),
 				array(
-					'name' => __( 'Event Cost', 'otm-mu' ),
-					'desc' => __( 'Enter the guest cost for your '.$this->cptslug.' (optional)', 'otm-mu' ),
+					'name' => __( 'Event Cost', 'evans-mu' ),
+					'desc' => __( 'Enter the guest cost for your '.$this->cptslug.' (optional)', 'evans-mu' ),
 					'id'   => $prefix . 'cost',
 					'type' => 'text_money',
 				),
 				array(
-					'name' => __( 'Location', 'otm-mu' ),
-					'desc' => __( 'Enter a location name or address for your '.$this->cptslug, 'otm-mu' ),
+					'name' => __( 'Location', 'evans-mu' ),
+					'desc' => __( 'Enter a location name or address for your '.$this->cptslug, 'evans-mu' ),
 					'id'   => $prefix . 'location',
 					'type' => 'text',
 				),
 				array(
-					'name' => __( 'Image', 'otm-mu' ),
+					'name' => __( 'Image', 'evans-mu' ),
 					'id'   => $prefix . 'image',
 					'type' => 'file',
 					'allow' => array( 'attachment' )

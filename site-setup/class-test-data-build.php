@@ -30,8 +30,8 @@ class BuildTestData{
 
 		$page = add_submenu_page(
 			'tools.php',
-			__( 'Create Test Data', 'otm-mu' ),
-			__( 'Test Data', 'otm-mu' ),
+			__( 'Create Test Data', 'evans-mu' ),
+			__( 'Test Data', 'evans-mu' ),
 			'manage_options',
 			'otm_mu-test_data',
 			array( $this, 'admin_page' )
@@ -84,7 +84,7 @@ class BuildTestData{
 
 		$html .= '<div class="wrap" id="options_editor">' . "\n";
 
-			$html .= '<h2>' . __( 'Create Test Data' , 'otm-mu' ) . '</h2>' . "\n";
+			$html .= '<h2>' . __( 'Create Test Data' , 'evans-mu' ) . '</h2>' . "\n";
 
 			// Loop through all other cpts
 			$post_types = get_post_types( array( 'public' => true ), 'objects' );
@@ -132,7 +132,7 @@ class BuildTestData{
 
 						// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 						jQuery.post( ajaxurl, data, function(response) {
-							console.log( '<?php __( 'Got this from the server: ', 'otm-mu' ); ?>' + response );
+							console.log( '<?php __( 'Got this from the server: ', 'evans-mu' ); ?>' + response );
 							$( '.loading-icon' ).remove();
 						});
 

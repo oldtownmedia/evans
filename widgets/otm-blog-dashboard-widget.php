@@ -8,7 +8,7 @@ function dashboard_widget_function() {
 
           if ( is_admin() || current_user_can( 'manage_options' ) ) {
                echo '<p>';
-	               printf( __( '<strong>RSS Error</strong>: %s', 'otm-mu' ), $rss->get_error_message() );
+	               printf( __( '<strong>RSS Error</strong>: %s', 'evans-mu' ), $rss->get_error_message() );
                echo '</p>';
           }
 
@@ -17,7 +17,7 @@ function dashboard_widget_function() {
 	}
 
 	if ( !$rss->get_item_quantity() ) {
-	     echo '<p>'.__( 'Apparently, there are no updates to show!', 'otm-mu' ).'</p>';
+	     echo '<p>'.__( 'Apparently, there are no updates to show!', 'evans-mu' ).'</p>';
 	     $rss->__destruct();
 	     unset( $rss );
 	     return;
@@ -51,7 +51,7 @@ function dashboard_widget_function() {
 }
 
 function add_dashboard_widget() {
-     wp_add_dashboard_widget( 'rss_widget', 'Recent Posts from Old Town Media', 'dashboard_widget_function' );
+     wp_add_dashboard_widget( 'rss_widget', __( 'Recent Posts from Old Town Media', 'evans-mu' ), 'dashboard_widget_function' );
 }
 
 add_action( 'wp_dashboard_setup', 'add_dashboard_widget' );

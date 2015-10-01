@@ -68,33 +68,33 @@ class Highlights extends CPT{
 
 		$meta_boxes[] = array(
 			'id'			=> $this->cptslug.'_metabox',
-			'title'			=> sprintf( __( '%s Information', 'otm-mu' ), $this->singular ),
+			'title'			=> sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
 			'object_types'	=> array( $this->cptslug, ),
 			'context'		=> 'normal',
 			'priority'		=> 'high',
 			'show_names'	=> true,
 			'fields'		=> array(
 				array(
-					'name' => __( 'Content', 'otm-mu' ),
-					'desc' => __( 'Enter any content that you would like to appear in the '.$this->singular, 'otm-mu' ),
+					'name' => __( 'Content', 'evans-mu' ),
+					'desc' => __( 'Enter any content that you would like to appear in the '.$this->singular, 'evans-mu' ),
 					'id'   => $prefix . 'content',
 					'type' => 'text',
 				),
 				array(
-					'name' => __( 'Link URL', 'otm-mu' ),
-					'desc' => __( 'Enter the URL from the page you want to link to.', 'otm-mu' ),
+					'name' => __( 'Link URL', 'evans-mu' ),
+					'desc' => __( 'Enter the URL from the page you want to link to.', 'evans-mu' ),
 					'id'   => $prefix . 'url',
 					'type' => 'text_url',
 				),
 				array(
-					'name' => __( 'Link Text', 'otm-mu' ),
-					'desc' => __( 'Enter text for the link.', 'otm-mu' ),
+					'name' => __( 'Link Text', 'evans-mu' ),
+					'desc' => __( 'Enter text for the link.', 'evans-mu' ),
 					'id'   => $prefix . 'url_text',
 					'type' => 'text',
-					'default' => __( 'Read More', 'otm-mu' )
+					'default' => __( 'Read More', 'evans-mu' )
 				),
 				array(
-					'name' => __( 'Image', 'otm-mu' ),
+					'name' => __( 'Image', 'evans-mu' ),
 					'id'   => $prefix . 'image',
 					'type' => 'file',
 					'allow' => array( 'attachment' )

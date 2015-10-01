@@ -540,21 +540,21 @@ class Clean_Admin {
 		$plugins = array(
 			'parent' => 'site-name',
 			'id'     => 'plugins',
-			'title'  => __( 'Plugins', 'otm-mu' ),
+			'title'  => __( 'Plugins', 'evans-mu' ),
 			'href'   => admin_url( 'plugins.php' )
 		);
 
 		$pages = array(
 			'parent' => 'site-name',
 			'id'     => 'pages',
-			'title'  => __( 'Pages', 'otm-mu' ),
+			'title'  => __( 'Pages', 'evans-mu' ),
 			'href'   => admin_url( 'edit.php?post_type=page' )
 		);
 
 		$posts = array(
 			'parent' => 'site-name',
 			'id'     => 'posts',
-			'title'  => __( 'Posts', 'otm-mu' ),
+			'title'  => __( 'Posts', 'evans-mu' ),
 			'href'   => admin_url( 'edit.php?post_type=post' )
 		);
 

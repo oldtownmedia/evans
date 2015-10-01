@@ -51,14 +51,14 @@ class Testimonials extends CPT{
 
 		$meta_boxes[] = array(
 			'id'			=> $this->cptslug.'_metabox',
-			'title'			=> sprintf( __( '%s Information', 'otm-mu' ), $this->singular ),
+			'title'			=> sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
 			'object_types'	=> array( $this->cptslug, ),
 			'context'		=> 'normal',
 			'priority'		=> 'high',
 			'show_names'	=> true,
 			'fields'		=> array(
 				array(
-					'name'	=> __( 'Reviewer Name', 'otm-mu' ),
+					'name'	=> __( 'Reviewer Name', 'evans-mu' ),
 					'id'	=> $prefix . 'reviewer',
 					'type'	=> 'text',
 				),

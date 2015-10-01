@@ -2,7 +2,7 @@
 
 // If we haven't run theme setup, include our setup script
 if ( !get_option( 'otm_theme_setup' ) && get_option( 'otm_theme_setup' ) != 'setup' ){
-	require_once 'includes/initial-install.php';
+	require_once 'includes/class-initial-install.php';
 }
 
 // If we haven't installed our plugins, include our setup script
