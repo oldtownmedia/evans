@@ -23,7 +23,6 @@ class Clean_Admin {
 		add_filter( 'admin_init' , array( $this , 'register_fields' ) );
 		add_action( 'admin_menu', array( $this, 'otm_remove_menus' ), 105 );
 		add_action( 'admin_menu', array( $this, 'otm_remove_dashboard_widgets' ) );
-		add_action( 'admin_menu', array( $this, 'otm_add_dashboard_widgets' ) );
 		add_action( 'admin_notices', array( $this, 'custom_update_nag' ), 99 );
 		add_action( 'admin_menu', array( $this, 'remove_core_update_nag' ), 2 );
 		add_action( 'admin_notices', array( $this, 'custom_update_nag' ), 99 );
@@ -315,16 +314,6 @@ class Clean_Admin {
 		remove_meta_box( 'dashboard_recent_drafts', 'dashboard', 'core' );		// Recent Drafts
 		remove_meta_box( 'dashboard_primary', 'dashboard', 'core' );			// WordPress Blog
 		remove_meta_box( 'dashboard_activity', 'dashboard', 'core' );			// Dashboard Activity
-
-	}
-
-	/**
-	 * Add in our own custom admin dashboard widgets
-	 */
-	function otm_add_dashboard_widgets() {
-
-		require_once( dirname(__FILE__) . '/../widgets/support-dashboard-widget.php' );
-		require_once( dirname(__FILE__) . '/../widgets/otm-blog-dashboard-widget.php' );
 
 	}
 

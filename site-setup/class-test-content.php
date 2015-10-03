@@ -233,7 +233,8 @@ CSSland,
 
 	public static function date( $format ){
 
-		return date( $format, strtotime( " +".rand( 1, 60 )." days" ) );
+		$num_days = rand( 1, 60 );
+		return date( $format, strtotime( " +$num_days days" ) );
 
 	}
 

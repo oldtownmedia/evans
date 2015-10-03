@@ -413,28 +413,28 @@ class BuildTestData{
 				// case 'text_time': break;
 				// case 'select_timezone': break;
 
-				case 'text_date';
+				case 'text_date':
 
-					TestContent::date( 'm/d/Y' );
-
-					break;
-
-				case 'text_date_timestamp';
-
-					TestContent::date( 'U' );
+					$value = TestContent::date( 'm/d/Y' );
 
 					break;
 
-				// case 'text_datetime_timestamp': break;
+				case 'text_date_timestamp':
+				case 'text_datetime_timestamp':
+
+					$value = TestContent::date( 'U' );
+
+					break;
+
 				// case 'text_datetime_timestamp_timezone': break;
 
-				case 'text_money';
+				case 'text_money':
 
 					$value = rand( 0, 100000 );
 
 					break;
 
-				case 'test_colorpicker';
+				case 'test_colorpicker':
 
 					$value = '#' . str_pad( dechex( mt_rand( 0, 0xFFFFFF ) ), 6, '0', STR_PAD_LEFT );
 
@@ -473,7 +473,7 @@ class BuildTestData{
 
 					break;
 
-				// case 'multicheck'; break;
+				// case 'multicheck': break;
 
 				case 'wysiwyg':
 
