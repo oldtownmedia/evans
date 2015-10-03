@@ -8,6 +8,7 @@ abstract class CPT{
 	protected $plural;
 	protected $cpt_args;
 	protected $icon;	// https://developer.wordpress.org/resource/dashicons/
+	protected $hide_view;
 	protected $loop_args;
 	protected $thumbnail_size;
 	protected $tax_slug;
@@ -29,6 +30,13 @@ abstract class CPT{
 		// If we want to use the taxonomy, hook in the taxonomy functions
 		if ( !empty( $this->taxonomy_name ) ){
 			add_action( 'init', array( $this, 'define_taxonomy' ), 0 );
+		}
+
+		// If we don't want links to the single to appear in the admin section
+		if ( $this->hide_view === true ){
+			add_filter( 'post_row_actions', array( $this, 'remove_view_from_row' ), 10, 2 );
+			add_filter( 'page_row_actions', array( $this, 'remove_view_from_row' ), 10, 2 );	// In case pot is hierarchical
+			add_filter( 'get_sample_permalink_html', array( $this, 'remove_permalink_option' ), '', 4 );
 		}
 
 	}
@@ -235,6 +243,26 @@ abstract class CPT{
 
 		register_taxonomy( $this->tax_slug, $this->cptslug, $args );
 
+	}
+
+	public function remove_view_from_row( $actions, $post ){
+
+	    if( $post->post_type === $this->cptslug ){
+	        unset( $actions['inline hide-if-no-js'] );
+	        unset( $actions['view'] );
+	    }
+
+	    return $actions;
+	}
+
+	public function remove_permalink_option( $return, $id, $new_title, $new_slug ){
+	    global $post;
+
+	    if( $post->post_type === $this->cptslug ){
+	        return '';
+	    }
+
+	    return $return;
 	}
 
 	public function dashboard_cpt_loop( $cpt_array ){

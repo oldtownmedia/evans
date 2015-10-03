@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) OR exit;
  * Site Lockdown
  *
  * Serves up a custom splash page to visitors not on our network if
- * the otm_site_lockdown option is set to 'locked'
+ * the evans_site_lockdown option is set to 'locked'
  *
  * @package WordPress
  * @category mu_plugin
@@ -36,7 +36,7 @@ class Site_Lockdown {
 	 *
 	 * @return array Array of IPs that are whitelisted.
 	 */
-	public function otm_acceptible_ips() {
+	public function evans_acceptible_ips() {
 
 		return array(
 			'50.78.80.53',		// Comcast
@@ -60,14 +60,14 @@ class Site_Lockdown {
 		$current_user = wp_get_current_user();
 		if ( $current_user->user_login == 'otm' ){
 
-			$locked = get_option( 'otm_site_lockdown' );
+			$locked = get_option( 'evans_site_lockdown' );
 
 			if ( $locked == 'locked' ){
 				$title = '<span style="color:green">'.__( 'Site is locked', 'evans-mu' ).'</span>';
-				$link = $this->maybe_add_get_to_url() . 'unlock_site=' . wp_create_nonce( 'otm_unlock_site' );
+				$link = $this->maybe_add_get_to_url() . 'unlock_site=' . wp_create_nonce( 'evans_unlock_site' );
 			} else {
 				$title = '<span style="color:red">'.__( 'Site is unlocked', 'evans-mu' ).'</span>';
-				$link = $this->maybe_add_get_to_url() . 'lock_site=' . wp_create_nonce( 'otm_lock_site' );
+				$link = $this->maybe_add_get_to_url() . 'lock_site=' . wp_create_nonce( 'evans_lock_site' );
 			}
 
 			$wp_admin_bar->add_node(
@@ -98,14 +98,14 @@ class Site_Lockdown {
 
 		if ( $_GET['lock_site'] ){
 
-			if ( wp_verify_nonce( $_GET['lock_site'], 'otm_lock_site' ) ){
-				update_option( 'otm_site_lockdown', 'locked' );
+			if ( wp_verify_nonce( $_GET['lock_site'], 'evans_lock_site' ) ){
+				update_option( 'evans_site_lockdown', 'locked' );
 			}
 
 		} else if ( $_GET['unlock_site']  ){
 
-			if ( wp_verify_nonce( $_GET['unlock_site'], 'otm_unlock_site' ) ){
-				update_option( 'otm_site_lockdown', 'unlocked' );
+			if ( wp_verify_nonce( $_GET['unlock_site'], 'evans_unlock_site' ) ){
+				update_option( 'evans_site_lockdown', 'unlocked' );
 			}
 
 		}
@@ -120,12 +120,12 @@ class Site_Lockdown {
 	 */
 	public function lockdown_actions() {
 
-		$locked = get_option( 'otm_site_lockdown' );
+		$locked = get_option( 'evans_site_lockdown' );
 
 		if ( $locked == 'locked' && !is_admin() ){
 
 			// Check to see if the current user is allowed
-			if ( !in_array( $_SERVER['REMOTE_ADDR'], $this->otm_acceptible_ips() ) ){
+			if ( !in_array( $_SERVER['REMOTE_ADDR'], $this->evans_acceptible_ips() ) ){
 
 				$response = wp_remote_get( 'http://dev.otmoffice.com/resources/index.html' );
 
@@ -146,8 +146,8 @@ class Site_Lockdown {
 	 */
 	function set_lockdown_option() {
 
-		if ( get_option( 'otm_site_lockdown' ) === false ){
-			add_option( 'otm_site_lockdown', 'unlocked', '', 'yes' );
+		if ( get_option( 'evans_site_lockdown' ) === false ){
+			add_option( 'evans_site_lockdown', 'unlocked', '', 'yes' );
 		}
 
 	}
@@ -172,6 +172,6 @@ class Site_Lockdown {
 
 }
 
-$otm_simple_admin = new Site_Lockdown();
+$evans_simple_admin = new Site_Lockdown();
 
 ?>

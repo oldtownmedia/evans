@@ -113,7 +113,7 @@ function my_theme_register_required_plugins() {
 	);
 
 	// If we have a path for premium plugins - include here
-	if ( function_exists( premium_plugins_path() ) ){
+	if ( function_exists( 'premium_plugins_path' ) ){
 
 		$premium_plugins = array(
 			// Premium Plugins

@@ -7,6 +7,7 @@ class Staff extends CPT{
 	protected $singular			= 'Staff';
 	protected $plural			= 'Staff';
 	protected $icon				= 'dashicons-businessman';
+	protected $hide_view 		= false;
 	protected $thumbnail_size	= array(
 		'width'		=> 300,
 		'height'	=> 300
@@ -28,11 +29,11 @@ class Staff extends CPT{
 
 		$html = "";
 
-		$img_id		= get_post_meta( $pid, otm_cmb_prefix( $this->cptslug ) . 'image_id', true);
+		$img_id		= get_post_meta( $pid, evans_cmb_prefix( $this->cptslug ) . 'image_id', true);
 		$img		= wp_get_attachment_image_src( $img_id, $this->cptslug.'-thumb' );
-		$title		= get_post_meta( $pid, otm_cmb_prefix( $this->cptslug ) . 'position', true );
-		$phone		= get_post_meta( $pid, otm_cmb_prefix( $this->cptslug ) . 'phone', true );
-		$email		= get_post_meta( $pid, otm_cmb_prefix( $this->cptslug ) . 'email', true );
+		$title		= get_post_meta( $pid, evans_cmb_prefix( $this->cptslug ) . 'position', true );
+		$phone		= get_post_meta( $pid, evans_cmb_prefix( $this->cptslug ) . 'phone', true );
+		$email		= get_post_meta( $pid, evans_cmb_prefix( $this->cptslug ) . 'email', true );
 
 		$html .= "<li class='".$this->cptslug."' itemscope itemtype ='http://schema.org/Person'>";
 
@@ -69,7 +70,7 @@ class Staff extends CPT{
 	public function cmb_metaboxes( array $meta_boxes ) {
 
 		// Start with an underscore to hide fields from custom fields list
-		$prefix = otm_cmb_prefix( $this->cptslug );
+		$prefix = evans_cmb_prefix( $this->cptslug );
 
 		$meta_boxes[] = array(
 			'id'			=> $this->cptslug.'_metabox',

@@ -7,6 +7,7 @@ class Highlights extends CPT{
 	protected $singular			= 'Home Highlight';
 	protected $plural			= 'Home Highlights';
 	protected $icon				= 'dashicons-archive';
+	protected $hide_view		= true;
 	protected $thumbnail_size	= array(
 		'width'		=> 400,
 		'height'	=> 400
@@ -33,10 +34,10 @@ class Highlights extends CPT{
 
 		$html = "";
 
-		$link		= get_post_meta( $pid, otm_cmb_prefix( $this->cptslug ) . 'url', true );
-		$link_text	= get_post_meta( $pid, otm_cmb_prefix( $this->cptslug ) . 'url_text', true );
-		$content	= get_post_meta( $pid, otm_cmb_prefix( $this->cptslug ) . 'content', true );
-		$img_id		= get_post_meta( $pid, otm_cmb_prefix( $this->cptslug ) . 'image_id', true);
+		$link		= get_post_meta( $pid, evans_cmb_prefix( $this->cptslug ) . 'url', true );
+		$link_text	= get_post_meta( $pid, evans_cmb_prefix( $this->cptslug ) . 'url_text', true );
+		$content	= get_post_meta( $pid, evans_cmb_prefix( $this->cptslug ) . 'content', true );
+		$img_id		= get_post_meta( $pid, evans_cmb_prefix( $this->cptslug ) . 'image_id', true);
 		$img		= wp_get_attachment_image_src( $img_id, $this->cptslug.'-thumb' );
 
 		$html .= "<li class='".$this->cptslug."'>";
@@ -64,7 +65,7 @@ class Highlights extends CPT{
 	public function cmb_metaboxes( array $meta_boxes ) {
 
 		// Start with an underscore to hide fields from custom fields list
-		$prefix = otm_cmb_prefix( $this->cptslug );
+		$prefix = evans_cmb_prefix( $this->cptslug );
 
 		$meta_boxes[] = array(
 			'id'			=> $this->cptslug.'_metabox',

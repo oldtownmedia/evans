@@ -7,6 +7,7 @@ class Testimonials extends CPT{
 	protected $singular			= 'Testimonial';
 	protected $plural			= 'Testimonials';
 	protected $icon				= 'dashicons-format-quote';
+	protected $hide_view 		= true;
 
 	// Arguments to define the CPT
 	protected $cpt_args			= array(
@@ -26,7 +27,7 @@ class Testimonials extends CPT{
 
 		$html = "";
 
-		$reviewer = get_post_meta( $pid, otm_cmb_prefix( $this->cptslug ) . 'reviewer', true );
+		$reviewer = get_post_meta( $pid, evans_cmb_prefix( $this->cptslug ) . 'reviewer', true );
 
 		$html .= "<li class='".$this->cptslug."'>";
 
@@ -47,7 +48,7 @@ class Testimonials extends CPT{
 	public function cmb_metaboxes( array $meta_boxes ) {
 
 		// Start with an underscore to hide fields from custom fields list
-		$prefix = otm_cmb_prefix( $this->cptslug );
+		$prefix = evans_cmb_prefix( $this->cptslug );
 
 		$meta_boxes[] = array(
 			'id'			=> $this->cptslug.'_metabox',

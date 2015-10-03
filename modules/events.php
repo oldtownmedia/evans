@@ -7,6 +7,7 @@ class Events extends CPT{
 	protected $singular			= 'Event';
 	protected $plural			= 'Events';
 	protected $icon				= 'dashicons-calendar';
+	protected $hide_view 		= false;
 	protected $thumbnail_size	= array(
 		'width'		=> 300,
 		'height'	=> 200
@@ -37,10 +38,10 @@ class Events extends CPT{
 	        'order'            	=> $args['order'],
 	        'orderby'			=> $args['orderby'],
 	        'nopaging'			=> $args['nopaging'],
-	        'meta_key'			=> otm_cmb_prefix( $this->cptslug ) . 'date',
+	        'meta_key'			=> evans_cmb_prefix( $this->cptslug ) . 'date',
 			'meta_query' 		=> array(
 	            array(
-	                'key' 		=> otm_cmb_prefix( $this->cptslug ) . 'date',
+	                'key' 		=> evans_cmb_prefix( $this->cptslug ) . 'date',
 	                'value' 	=> date( 'U', strtotime( '-1 day' ) ),
 	                'compare' 	=> '>=',
 	                'type'		=> 'char'
@@ -74,11 +75,11 @@ class Events extends CPT{
 
 		$html = "";
 
-		$date		= get_post_meta( $pid, otm_cmb_prefix( $this->cptslug ) . 'date', true);
-		$time		= get_post_meta( $pid, otm_cmb_prefix( $this->cptslug ) . 'time', true);
-		$cost		= get_post_meta( $pid, otm_cmb_prefix( $this->cptslug ) . 'cost', true);
-		$location	= get_post_meta( $pid, otm_cmb_prefix( $this->cptslug ) . 'location', true);
-		$img_id		= get_post_meta( $pid, otm_cmb_prefix( $this->cptslug ) . 'image_id', true);
+		$date		= get_post_meta( $pid, evans_cmb_prefix( $this->cptslug ) . 'date', true);
+		$time		= get_post_meta( $pid, evans_cmb_prefix( $this->cptslug ) . 'time', true);
+		$cost		= get_post_meta( $pid, evans_cmb_prefix( $this->cptslug ) . 'cost', true);
+		$location	= get_post_meta( $pid, evans_cmb_prefix( $this->cptslug ) . 'location', true);
+		$img_id		= get_post_meta( $pid, evans_cmb_prefix( $this->cptslug ) . 'image_id', true);
 		$img		= wp_get_attachment_image_src( $img_id, $this->cptslug.'-thumb' );
 
 			$html .= "<li itemscope itemtype='http://data-vocabulary.org/Event' class='".$this->cptslug." group'>";
@@ -108,7 +109,7 @@ class Events extends CPT{
 	public function cmb_metaboxes( array $meta_boxes ) {
 
 		// Start with an underscore to hide fields from custom fields list
-		$prefix = otm_cmb_prefix( $this->cptslug );
+		$prefix = evans_cmb_prefix( $this->cptslug );
 
 		$meta_boxes[] = array(
 			'id'			=> $this->cptslug.'_metabox',

@@ -33,7 +33,7 @@ class BuildTestData{
 			__( 'Create Test Data', 'evans-mu' ),
 			__( 'Test Data', 'evans-mu' ),
 			'manage_options',
-			'otm_mu-test_data',
+			'evans_mu-test_data',
 			array( $this, 'admin_page' )
 		);
 
@@ -214,7 +214,7 @@ class BuildTestData{
 			'posts_per_page'	=> 500,
 			'meta_query' 		=> array(
 				array(
-					'key'     => 'otm_test_content',
+					'key'     => 'evans_test_content',
 					'value'   => '__test__',
 					'compare' => '=',
 				),
@@ -280,7 +280,7 @@ class BuildTestData{
 		$post_id = wp_insert_post( $post );
 
 		// Then, set a test content flag on the new post for later deletion
-		add_post_meta( $post_id, 'otm_test_content', '__test__', true );
+		add_post_meta( $post_id, 'evans_test_content', '__test__', true );
 
 		// Add thumbnail if supported
 		if ( $supports['thumbnail'] === true || in_array( $cptslug, array( 'post', 'page' ) ) ){

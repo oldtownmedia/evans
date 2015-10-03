@@ -21,26 +21,26 @@ class Clean_Admin {
 	function __construct() {
 
 		add_filter( 'admin_init' , array( $this , 'register_fields' ) );
-		add_action( 'admin_menu', array( $this, 'otm_remove_menus' ), 105 );
-		add_action( 'admin_menu', array( $this, 'otm_remove_dashboard_widgets' ) );
+		add_action( 'admin_menu', array( $this, 'evans_remove_menus' ), 105 );
+		add_action( 'admin_menu', array( $this, 'evans_remove_dashboard_widgets' ) );
 		add_action( 'admin_notices', array( $this, 'custom_update_nag' ), 99 );
 		add_action( 'admin_menu', array( $this, 'remove_core_update_nag' ), 2 );
 		add_action( 'admin_notices', array( $this, 'custom_update_nag' ), 99 );
 		add_filter( 'menu_order', array( $this, 'menu_order' ), 9999 );
 		add_filter( 'custom_menu_order', '__return_true' );
-        add_filter( 'manage_posts_columns', array( $this, 'otm_remove_columns' ) );
+        add_filter( 'manage_posts_columns', array( $this, 'evans_remove_columns' ) );
         add_filter( 'gettext', array( $this, 'tgm_soliloquy_envira_whitelabel' ), 10, 3 );
         add_filter( 'envira_gallery_skipped_posttypes', array( $this, 'envira_skip_custom_post_type' ) );
         add_action( 'admin_menu', array( $this, 'remove_post_meta_boxes' ) );
         add_filter( 'manage_pages_columns', array( $this, 'clean_post_columns' ) );
         add_action( 'wp_before_admin_bar_render', array( $this, 'remove_admin_bar_links' ) );
-        add_action( 'login_head', array( $this, 'otm_login_css' ) );
-        add_filter( 'mce_buttons', array( $this, 'otm_extended_editor_mce_buttons' ), 0 );
-		add_filter( 'mce_buttons_2', array( $this, 'otm_extended_editor_mce_buttons_2' ), 0 );
-		add_action( 'add_meta_boxes', array( $this, 'otm_remove_seo_metabox' ), 11 );
+        add_action( 'login_head', array( $this, 'evans_login_css' ) );
+        add_filter( 'mce_buttons', array( $this, 'evans_extended_editor_mce_buttons' ), 0 );
+		add_filter( 'mce_buttons_2', array( $this, 'evans_extended_editor_mce_buttons_2' ), 0 );
+		add_action( 'add_meta_boxes', array( $this, 'evans_remove_seo_metabox' ), 11 );
 		add_action( 'dashboard_glance_items', array( $this, 'right_now_cpt_count' ) );
-		add_action( 'admin_bar_menu', array( $this, 'otm_add_toolbar_links' ), 999 );
-		add_action( 'admin_bar_menu', array( $this, 'otm_add_admin_toolbar_links' ), 999 );
+		add_action( 'admin_bar_menu', array( $this, 'evans_add_toolbar_links' ), 999 );
+		add_action( 'admin_bar_menu', array( $this, 'evans_add_admin_toolbar_links' ), 999 );
 
 	}
 
@@ -57,10 +57,10 @@ class Clean_Admin {
 			return;
 		}
 
-		register_setting( 'general', 'otm_clean_admin_bar', 'esc_attr' );
+		register_setting( 'general', 'evans_clean_admin_bar', 'esc_attr' );
 		add_settings_field(
-			'otm_clean_admin_bar',
-			'<label for="favorite_color">' . __( 'Hide unnecessary menu items' , 'otm_clean_admin_bar' ) . '</label>',
+			'evans_clean_admin_bar',
+			'<label for="favorite_color">' . __( 'Hide unnecessary menu items' , 'evans_clean_admin_bar' ) . '</label>',
 			array( $this, 'fields_html' ),
 			'general'
 		);
@@ -70,7 +70,7 @@ class Clean_Admin {
 	 * HTML for extra settings fields in the general settings page
 	 */
 	public function fields_html() {
-		$value = get_option( 'otm_clean_admin_bar', 'on' );
+		$value = get_option( 'evans_clean_admin_bar', 'on' );
 		$on = $off = '';
 
 		if ( $value == 'on' ){
@@ -79,8 +79,8 @@ class Clean_Admin {
 			$off = 'checked="checked"';
 		}
 
-		echo '<label><input type="radio" id="otm_clean_admin_bar" name="otm_clean_admin_bar" value="on" '.$on.' /> Hide items</label><br>';
-		echo '<label><input type="radio" id="otm_clean_admin_bar" name="otm_clean_admin_bar" value="off" '.$off.' /> Show items</label>';
+		echo '<label><input type="radio" id="evans_clean_admin_bar" name="evans_clean_admin_bar" value="on" '.$on.' /> Hide items</label><br>';
+		echo '<label><input type="radio" id="evans_clean_admin_bar" name="evans_clean_admin_bar" value="off" '.$off.' /> Show items</label>';
 
 	}
 
@@ -95,10 +95,10 @@ class Clean_Admin {
 	 * @global array $menu Array of main menu items.
 	 * @global array $submenu Array of submenu items.
 	 */
-	public function otm_remove_menus() {
+	public function evans_remove_menus() {
 
 		// Has the client opted out of cleaning the admin area?
-		$hide = get_option( 'otm_clean_admin_bar' );
+		$hide = get_option( 'evans_clean_admin_bar' );
 
 		if ( $hide == 'off' ){
 			return '';
@@ -304,7 +304,7 @@ class Clean_Admin {
 	/**
 	 * Remove unnecesary dashboard widgets from the admin dashboard
 	 */
-	public function otm_remove_dashboard_widgets() {
+	public function evans_remove_dashboard_widgets() {
 
 		remove_meta_box( 'dashboard_incoming_links', 'dashboard', 'core' );		// Incoming Links
 		remove_meta_box( 'dashboard_plugins', 'dashboard', 'core' );			// Plugins
@@ -364,7 +364,7 @@ class Clean_Admin {
 	 * @param array $defaulgts Default column listin.
 	 * @return array $defaults Modified column listing.
 	 */
-	public function otm_remove_columns( $defaults ) {
+	public function evans_remove_columns( $defaults ) {
 		unset( $defaults['author'] );
 		return $defaults;
 	}
@@ -372,7 +372,7 @@ class Clean_Admin {
 	/**
 	 * Insert our own stylesheet into the login page to customize it
 	 */
-	public function otm_login_css() {
+	public function evans_login_css() {
 		wp_enqueue_style( 'login_css', get_template_directory_uri() . '/styles/login.css' );
 	}
 
@@ -382,7 +382,7 @@ class Clean_Admin {
 	 * @param array $buttons Default mce buttons row 1.
 	 * @return array Modified array of buttons for row 1.
 	 */
-	function otm_extended_editor_mce_buttons( $buttons ) {
+	function evans_extended_editor_mce_buttons( $buttons ) {
 
 		return array(
 			'formatselect',
@@ -416,7 +416,7 @@ class Clean_Admin {
 	 * @param array $buttons Default mce buttons row 1.
 	 * @return array empty array.
 	 */
-	function otm_extended_editor_mce_buttons_2( $buttons ) {
+	function evans_extended_editor_mce_buttons_2( $buttons ) {
 		return array();
 	}
 
@@ -426,7 +426,7 @@ class Clean_Admin {
 	 * @param type $columns Default column array.
 	 * @return array $columns Modified array of columns.
 	 */
-	function otm_seo_remove_columns( $columns ) {
+	function evans_seo_remove_columns( $columns ) {
 
 		// remove the Yoast SEO columns
 		unset( $columns['wpseo-score'] );
@@ -441,7 +441,7 @@ class Clean_Admin {
 	/**
 	 * Remove Yoast SEO custom metaboxes from CPTs that don't have their own single
 	 */
-	function otm_remove_seo_metabox() {
+	function evans_remove_seo_metabox() {
 
 	    if ( !current_user_can( 'edit_others_posts' ) ){
 	        remove_meta_box( 'wpseo_meta', 'alert', 'normal' );
@@ -462,7 +462,7 @@ class Clean_Admin {
 
 				$count = wp_count_posts( $cpt['slug'] );
 
-				$text = _n( '%s '.$cpt['singular'], '%s '.$cpt['plural'], intval( $count->publish ), 'otm' );
+				$text = _n( '%s '.$cpt['singular'], '%s '.$cpt['plural'], intval( $count->publish ), 'evans-mu' );
 				$text = sprintf( $text, number_format_i18n( $count->publish ) );
 
 				printf( "<li class='$cpt[slug]-count'><a href='edit.php?post_type=$cpt[slug]' class='$cpt[class]'>%s</a></li>", $text );
@@ -479,7 +479,7 @@ class Clean_Admin {
 	 *
 	 * @param object $wp_admin_bar admin bar main object.
 	 */
-	public function otm_add_admin_toolbar_links( $wp_admin_bar ) {
+	public function evans_add_admin_toolbar_links( $wp_admin_bar ) {
 
 		// Abort if we're not in the back end
 		if( !is_admin() || !current_user_can( 'edit_users' ) ) {
@@ -492,22 +492,27 @@ class Clean_Admin {
 	    if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $menu_id ] ) ) {
 			$menu = wp_get_nav_menu_object( $locations[ $menu_id ] );
 
-			$menu_items = wp_get_nav_menu_items( $menu->term_id );
+			if ( !empty( $menu ) ){
 
-			foreach ( (array) $menu_items as $key => $menu_item ) :
+				$menu_items = wp_get_nav_menu_items( $menu->term_id );
 
-			    $page = array(
-					'parent' => 'site-name',
-					'id'     => 'front_end_page_'.$menu_item->db_id,
-					'title'  => $menu_item->title,
-					'href'   => $menu_item->url
-				);
+				foreach ( (array) $menu_items as $key => $menu_item ) :
 
-				if ( $menu_item->menu_item_parent == 0 ){
-					$wp_admin_bar->add_node( $page );
-				}
+				    $page = array(
+						'parent' => 'site-name',
+						'id'     => 'front_end_page_'.$menu_item->db_id,
+						'title'  => $menu_item->title,
+						'href'   => $menu_item->url
+					);
 
-			endforeach;
+					if ( $menu_item->menu_item_parent == 0 ){
+						$wp_admin_bar->add_node( $page );
+					}
+
+				endforeach;
+
+			}
+
 		} // End if
 
 	}
@@ -519,7 +524,7 @@ class Clean_Admin {
 	 *
 	 * @param object $wp_admin_bar admin bar main object.
 	 */
-	public function otm_add_toolbar_links( $wp_admin_bar ) {
+	public function evans_add_toolbar_links( $wp_admin_bar ) {
 
 		// Abort if we're not on the front-end
 		if( is_admin() || !current_user_can( 'edit_users' ) ) {
@@ -562,4 +567,4 @@ class Clean_Admin {
 
 }
 
-$otm_simple_admin = new Clean_Admin();
+$evans_simple_admin = new Clean_Admin();

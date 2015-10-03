@@ -7,7 +7,7 @@
  * @param string $slug The appended id of the cmb key
  * @return string The full CMB key
  */
-function otm_cmb_prefix( $slug = '' ){
+function evans_cmb_prefix( $slug = '' ){
 
 	$base = '_cmb2_';
 	if ( $slug ) {
@@ -91,8 +91,8 @@ function _remove_script_version( $src ){
  *
  * With thanks from: http://wp-bytes.com/function/2013/02/changing-post-updated-messages/
  */
-add_filter( 'post_updated_messages', 'otm_set_messages' );
-function otm_set_messages( $messages ) {
+add_filter( 'post_updated_messages', 'evans_set_messages' );
+function evans_set_messages( $messages ) {
 
 	global $post, $post_ID;
 	$post_type = get_post_type( $post_ID );

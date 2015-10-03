@@ -71,7 +71,7 @@ class Initial_Settings{
 	 */
 	function create_menus(){
 
-		$otm_nav_theme_mod = false;
+		$evans_nav_theme_mod = false;
 
 		if ( !has_nav_menu( 'header-menu' ) ) {
 			$primary_nav_id = wp_create_nav_menu(
@@ -81,11 +81,11 @@ class Initial_Settings{
 				)
 			);
 
-			$otm_nav_theme_mod['header-menu'] = $primary_nav_id;
+			$evans_nav_theme_mod['header-menu'] = $primary_nav_id;
 		}
 
-		if ( $otm_nav_theme_mod ) {
-			set_theme_mod( 'nav_menu_locations', $otm_nav_theme_mod );
+		if ( $evans_nav_theme_mod ) {
+			set_theme_mod( 'nav_menu_locations', $evans_nav_theme_mod );
 		}
 
 	}
@@ -104,7 +104,7 @@ class Initial_Settings{
 
 		// Our theme setup is now complete, set a value that we can use later
 		// to stop the loading of this file
-		add_option( 'otm_theme_setup', 'setup', '', 'no' );
+		add_option( 'evans_theme_setup', 'setup', '', 'no' );
 
 	}
 

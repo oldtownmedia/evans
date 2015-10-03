@@ -7,6 +7,7 @@ class Alerts extends CPT{
 	protected $singular			= 'Alert';
 	protected $plural			= 'Alerts';
 	protected $icon				= 'dashicons-megaphone';
+	protected $hide_view 		= true;
 
 	// Arguments to define the CPT
 	protected $cpt_args			= array(
@@ -43,23 +44,23 @@ class Alerts extends CPT{
 				'relation'	=> 'OR',
 	            array(
 		            array(
-		                'key' 		=> otm_cmb_prefix( $this->cptslug ) . 'active',
+		                'key' 		=> evans_cmb_prefix( $this->cptslug ) . 'active',
 		                'value' 	=> 'active',
 		                'compare' 	=> '=',
 		            ),
 		            array(
-		                'key' 		=> otm_cmb_prefix( $this->cptslug ) . 'start_date',
+		                'key' 		=> evans_cmb_prefix( $this->cptslug ) . 'start_date',
 		                'compare' 	=> 'NOT EXISTS',
 		            ),
 	            ),
 	            array(
 		            array(
-		                'key' 		=> otm_cmb_prefix( $this->cptslug ) . 'active',
+		                'key' 		=> evans_cmb_prefix( $this->cptslug ) . 'active',
 		                'value' 	=> 'active',
 		                'compare' 	=> '=',
 		            ),
 		            array(
-		                'key' 		=> otm_cmb_prefix( $this->cptslug ) . 'start_date',
+		                'key' 		=> evans_cmb_prefix( $this->cptslug ) . 'start_date',
 		                'value' 	=> time(),
 		                'compare' 	=> '<=',
 		                'type'		=> 'char'
@@ -111,7 +112,7 @@ class Alerts extends CPT{
 
 		$html = "";
 
-			$end = get_post_meta( $pid, otm_cmb_prefix( $this->cptslug ) . 'end_date', true );
+			$end = get_post_meta( $pid, evans_cmb_prefix( $this->cptslug ) . 'end_date', true );
 
 			if ( !$end || time() <= $end ){
 
@@ -132,7 +133,7 @@ class Alerts extends CPT{
 	public function cmb_metaboxes( array $meta_boxes ) {
 
 		// Start with an underscore to hide fields from custom fields list
-		$prefix = otm_cmb_prefix( $this->cptslug );
+		$prefix = evans_cmb_prefix( $this->cptslug );
 
 		$meta_boxes[] = array(
 			'id'			=> $this->cptslug.'_metabox',
