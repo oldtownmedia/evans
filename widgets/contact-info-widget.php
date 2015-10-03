@@ -2,7 +2,7 @@
 /**
  * Display Contact Information
  *
- * @package   OTM_Contact_Info
+ * @package   Evans_Contact_Info
  * @author    OTM <support@oldtownmediainc.com>
  * @license   GPL-2.0+
  * @link      http://oldtownmediainc.com
@@ -10,11 +10,11 @@
  */
 
  // Prevent direct file access
-if ( ! defined ( 'ABSPATH' ) ) {
+if ( ! defined ( 'ABSPATH' ) ){
 	exit;
 }
 
-class OTM_Contact_Info extends WP_Widget {
+class Evans_Contact_Info extends WP_Widget {
 
     /**
      * Unique identifier for your widget.
@@ -22,7 +22,7 @@ class OTM_Contact_Info extends WP_Widget {
      * @since    1.0.0
      * @var      string
      */
-    protected $widget_slug = 'otm-contact-info';
+    protected $widget_slug = 'evans-contact-info';
 
 	/*--------------------------------------------------*/
 	/* Constructor
@@ -36,10 +36,10 @@ class OTM_Contact_Info extends WP_Widget {
 
 		parent::__construct(
 			$this->get_widget_slug(),
-			__( 'OTM Contact Information', $this->get_widget_slug() ),
+			__( 'Contact Information', 'evans-mu' ),
 			array(
 				'classname'  => $this->get_widget_slug().'-class',
-				'description' => __( 'Display your contact information on a sidebar.', $this->get_widget_slug() )
+				'description' => __( 'Display your contact information on a sidebar.', 'evans-mu' )
 			)
 		);
 
@@ -71,19 +71,22 @@ class OTM_Contact_Info extends WP_Widget {
 	 * @param array args  The array of form elements
 	 * @param array instance The current instance of the widget
 	 */
-	public function widget( $args, $instance ) {
+	public function widget( $args, $instance ){
 
 		// Check if there is a cached output
 		$cache = wp_cache_get( $this->get_widget_slug(), 'widget' );
 
-		if ( !is_array( $cache ) )
+		if ( !is_array( $cache ) ){
 			$cache = array();
+		}
 
-		if ( ! isset ( $args['widget_id'] ) )
+		if ( !isset( $args['widget_id'] ) ){
 			$args['widget_id'] = $this->id;
+		}
 
-		if ( isset ( $cache[ $args['widget_id'] ] ) )
+		if ( isset( $cache[ $args['widget_id'] ] ) ){
 			return print $cache[ $args['widget_id'] ];
+		}
 
 		extract( $args, EXTR_SKIP );
 
@@ -113,21 +116,20 @@ class OTM_Contact_Info extends WP_Widget {
 	 * @param array new_instance The new instance of values to be generated via the update.
 	 * @param array old_instance The previous instance of values before the update.
 	 */
-	public function update( $new_instance, $old_instance ) {
+	public function update( $new_instance, $old_instance ){
 
 		$instance = $old_instance;
 
 		//Strip tags from title and name to remove HTML
-		$instance['title'] = strip_tags( $new_instance['title'] );
-		$instance['address1'] = strip_tags( $new_instance['address1'] );
-		$instance['address2'] = strip_tags( $new_instance['address2'] );
-		$instance['city'] = strip_tags( $new_instance['city'] );
-		$instance['state'] = strip_tags( $new_instance['state'] );
-		$instance['zip'] = strip_tags( $new_instance['zip'] );
-		$instance['phone'] = strip_tags( $new_instance['phone'] );
-		$instance['fax'] = strip_tags( $new_instance['fax'] );
-		$instance['email'] = strip_tags( $new_instance['email'] );
-		$instance['map'] = strip_tags( $new_instance['map'] );
+		$instance['title'] 		= strip_tags( $new_instance['title'] );
+		$instance['address1']	= strip_tags( $new_instance['address1'] );
+		$instance['city']		= strip_tags( $new_instance['city'] );
+		$instance['state']		= strip_tags( $new_instance['state'] );
+		$instance['zip']		= strip_tags( $new_instance['zip'] );
+		$instance['phone']		= strip_tags( $new_instance['phone'] );
+		$instance['fax']		= strip_tags( $new_instance['fax'] );
+		$instance['email']		= sanitize_email( strip_tags( $new_instance['email'] ) );
+		$instance['map']		= strip_tags( $new_instance['map'] );
 
 		return $instance;
 
@@ -138,14 +140,13 @@ class OTM_Contact_Info extends WP_Widget {
 	 *
 	 * @param array instance The array of keys and values for the widget.
 	 */
-	public function form( $instance ) {
+	public function form( $instance ){
 
 		$instance = wp_parse_args(
 			(array) $instance,
 			$defaults = array(
 				'title' 		=> 'Contact Information',
 				'address1' 		=> '123 Anywhere St',
-				'address2' 		=> '',
 				'city' 			=> 'Fort Collins',
 				'state' 		=> 'CO',
 				'zip' 			=> '80521',
@@ -163,4 +164,4 @@ class OTM_Contact_Info extends WP_Widget {
 
 } // end class
 
-add_action( 'widgets_init', create_function( '', 'register_widget("OTM_Contact_Info");' ) );
+add_action( 'widgets_init', create_function( '', 'register_widget("Evans_Contact_Info");' ) );

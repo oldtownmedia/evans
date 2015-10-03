@@ -2,55 +2,63 @@
 
 //Our variables from the widget settings.
 $title		= apply_filters('widget_title', $instance['title'] );
-$address1 	= $instance['address1'];
-$address2 	= $instance['address2'];
-$city		= $instance['city'];
-$state 		= $instance['state'];
-$zip 		= $instance['zip'];
-$phone 		= $instance['phone'];
-$fax 		= $instance['fax'];
-$email 		= $instance['email'];
+$address1 	= esc_attr( $instance['address1'] );
+$address2 	= esc_attr( $instance['address2'] );
+$city		= esc_attr( $instance['city'] );
+$state 		= esc_attr( $instance['state'] );
+$zip 		= esc_attr( $instance['zip'] );
+$phone 		= esc_attr( $instance['phone'] );
+$fax 		= esc_attr( $instance['fax'] );
+$email 		= sanitize_email( $instance['email'] );
 $map		= $instance['map'];
 
-	// Display the widget title
-	if ( $title )
-		echo $before_title . $title . $after_title;
+$address_string = '';
 
-	// Display the contact information
-	echo "<p>";
+// Display the widget title
+if ( !empty( $title ) ){
+	echo $before_title . $title . $after_title;
+}
 
-		if ( $address1 )
-			echo "$address1<br>";
+// Display the contact information
+echo "<p>";
 
-		if ( $address2 )
-			echo "$address2<br>";
-
-		if ( $city )
-			$address_string .= "$city, ";
-
-		if ( $state )
-			$address_string .= "$state ";
-
-		if ( $zip )
-			$address_string .= "$zip";
-
-		// echo the built string
-		echo $address_string."<br>";
-
-		if ( $phone )
-			echo "Phone: $phone<br>";
-
-		if ( $fax )
-			echo "Fax: $fax<br>";
-
-		if ( $email )
-			echo "Email: <a href='mailto:$email'>$email</a><br>";
-
-	echo "</p>";
-
-	if ( $map == 'true' ){
-		$address_string = $address1 ." ". $address2 ." ". $address_string;
-		echo do_shortcode('[pw_map address="'.$address_string.'"]');
+	if ( !empty( $address1 ) ){
+		$address_string .= "$address1<br>";
 	}
 
-?>
+	if ( !empty( $city ) ){
+		$address_string .= "$city, ";
+	}
+
+	if ( !empty( $state ) ){
+		$address_string .= "$state ";
+	}
+
+	if ( !empty( $zip ) ){
+		$address_string .= "$zip";
+	}
+
+	// echo the address string
+	if ( !empty( $address_string ) ){
+		echo $address_string."<br>";
+	}
+
+	if ( !empty( $phone ) ){
+		echo "Phone: $phone<br>";
+	}
+
+	if ( !empty( $fax ) ){
+		echo "Fax: $fax<br>";
+	}
+
+	if ( !empty( $email ) ){
+		echo "Email: <a href='mailto:$email'>$email</a><br>";
+	}
+
+echo "</p>";
+
+// If map is checked, display the map using Simple Google Maps Short Code
+if ( $map == 'true' && !empty( $address_string ) ){
+	$address_string = $address1 ." ". $address_string;
+	echo do_shortcode('[pw_map address="'.$address_string.'"]');
+}

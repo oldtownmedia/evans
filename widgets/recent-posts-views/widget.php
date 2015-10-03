@@ -1,16 +1,18 @@
 <?php
 
 //Our variables from the widget settings.
-$title = apply_filters('widget_title', $instance['title'] );
-$num_posts = $instance['num_posts'];
-$category = $instance['category'];
-$char_length = $instance['char_length'];
+$title		= apply_filters('widget_title', $instance['title'] );
+$num_posts 	= int( $instance['num_posts'] );
+$category 	= esc_attr( $instance['category'] );
+$char_length= int( $instance['char_length'] );
+
 
 // If user specifies number of posts, use. Otherwise, just one post.
-if( $num_posts )
+if( $num_posts ){
 	$posts_per = $num_posts;
-else
+} else {
 	$posts_per = 1;
+}
 
 // If user specifies specific categories, declare. Otherwise use all cats
 if ( $category ) {
@@ -18,7 +20,7 @@ if ( $category ) {
 } else {
 	$categories = get_categories();
 	foreach ( $categories as $category ) {
-		$cat .= "$category->slug,";
+		$cat .= $category->slug . ",";
 	}
 }
 
@@ -30,15 +32,16 @@ $args = array(
     'orderby'			=> 'date',
 );
 
-$RecentPosts = new WP_Query($args);
+$objects = new WP_Query( $args );
 
-if ( $RecentPosts->have_posts() ) :
+if ( $objects->have_posts() ) :
 
 	// Display the widget title
-	if ( $title )
+	if ( $title ){
 		echo $before_title . $title . $after_title;
+	}
 
-	while ( $RecentPosts->have_posts() ) : $RecentPosts->the_post();
+	while ( $objects->have_posts() ) : $objects->the_post();
 
 		echo "<h3>".get_the_title()."</h3>";
 
@@ -49,5 +52,3 @@ if ( $RecentPosts->have_posts() ) :
 	endwhile;
 
 endif;
-
-?>

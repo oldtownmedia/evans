@@ -38,6 +38,7 @@ add_action( 'tgmpa_register', 'my_theme_register_required_plugins' );
  * TGM_Plugin_Activation class constructor.
  */
 function my_theme_register_required_plugins() {
+
 	/*
 	 * Array of plugin arrays. Required keys are name and slug.
 	 * If the source is NOT from the .org repo, then source is also required.
@@ -108,8 +109,49 @@ function my_theme_register_required_plugins() {
 			'name' 		=> 'The WP Remote WordPress Plugin',
 			'slug' 		=> 'wpremote',
 			'required' 	=> true,
-		),
+		)
 	);
+
+	// If we have a path for premium plugins - include here
+	if ( function_exists( premium_plugins_path() ) ){
+
+		$premium_plugins = array(
+			// Premium Plugins
+			array(
+				'name' 		=> 'Backup Buddy',
+				'slug' 		=> 'backupbuddy',
+				'source'	=> premium_plugins_path() . '/backupbuddy.zip',
+				'required' 	=> true,
+			),
+			array(
+				'name' 		=> 'Gravity Forms',
+				'slug' 		=> 'gravityforms',
+				'source'	=> premium_plugins_path() . '/gravityforms.zip',
+				'required' 	=> true,
+			),
+			array(
+				'name' 		=> 'Soliloquy',
+				'slug' 		=> 'soliloquy',
+				'source'	=> premium_plugins_path() . '/soliloquy.zip',
+				'required' 	=> true,
+			),
+			array(
+				'name' 		=> 'Wp Rocket',
+				'slug' 		=> 'wp-rocket',
+				'source'	=> premium_plugins_path() . '/wp-rocket.zip',
+				'required' 	=> false,
+			),
+			array(
+				'name' 		=> 'Wp Sent Mail',
+				'slug' 		=> 'wp-sent-mail',
+				'source'	=> premium_plugins_path() . '/wp-sent-mail.zip',
+				'required' 	=> true,
+			)
+		);
+
+		$plugins = array_merge( $plugins, $premium_plugins );
+
+	}
 
 	/*
 	 * Array of configuration settings. Amend each line as needed.

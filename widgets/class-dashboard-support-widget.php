@@ -23,7 +23,7 @@ class CompanySupportWidget extends Dashboard_Widget{
 		echo "<p>";
 
 			echo "<strong>".__( 'Phone:', 'evans-mu' )."</strong> ".esc_attr( $this->phone )."<br>";
-			echo "<strong>".__( 'Email:', 'evans-mu' )."</strong> <a href='mailto:".esc_attr( $this->email )."'>".esc_attr( $this->email )."</a><br>";
+			echo "<strong>".__( 'Email:', 'evans-mu' )."</strong> <a href='mailto:".sanitize_email( $this->email )."'>".sanitize_email( $this->email )."</a><br>";
 			echo "<strong>".__( 'Hours:', 'evans-mu' )."</strong> ".esc_attr( $this->hours );
 
 		echo "</p>";
