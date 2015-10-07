@@ -1,20 +1,137 @@
 <?php
 
+/**
+ * Class to generate custom post types using only a few variables.
+ *
+ * @abstract
+ * @package    WordPress
+ * @subpackage Evans
+ * @author     Old Town Media
+ */
 abstract class CPT{
 
+	/**
+	 * cptslug
+	 * Slug ID for the cpt.
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $cptslug;
+
+	/**
+	 * cptslug_plural
+	 * Plural slug ID for the cpt.
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $cptslug_plural;
+
+	/**
+	 * singular
+	 * Singular string used for messages/labels.
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $singular;
+
+	/**
+	 * plural
+	 * Plural string used for messages/labels.
+	 *
+	 * @var mixed
+	 * @access protected
+	 */
 	protected $plural;
+
+	/**
+	 * cpt_args
+	 * Array of arguments used in register_custom_post_type.
+	 * Generally [ exclude_from_search, show_in_nav_menus, publicly_queryable, supports, has_archive ]
+	 *
+	 * @var array
+	 * @access protected
+	 */
 	protected $cpt_args;
-	protected $icon;	// https://developer.wordpress.org/resource/dashicons/
+
+	/**
+	 * icon
+	 * Icon ID from Dashicons for the cpt icon in the admin nav menu.
+	 * https://developer.wordpress.org/resource/dashicons/
+	 *
+	 * @var string
+	 * @access protected
+	 */
+	protected $icon;
+
+	/**
+	 * hide_view
+	 * Choose whether or not you want to hide the "View {cptslug}" on the admin side.
+	 * Used in cases where the cpt doesn't have a single on the front end.
+	 *
+	 * @var boolean
+	 * @access protected
+	 */
 	protected $hide_view;
+
+	/**
+	 * loop_args
+	 * Array of arguments used in the WP_Query loop.
+	 Generally [ orderby, order, quantity ]
+	 *
+	 * @var array
+	 * @access protected
+	 */
 	protected $loop_args;
+
+	/**
+	 * thumbnail_size
+	 * Array of arguments used if you'd like to create a custom thumbnail size
+	 * for images used on the front end by the cpt.
+	 * Acceptd agrs: [ width, height ]
+	 *
+	 * @var array
+	 * @access protected
+	 */
 	protected $thumbnail_size;
+
+	/**
+	 * tax_slug
+	 * Slug ID used by a taxonomy if you want one.
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $tax_slug;
+
+	/**
+	 * taxonomy_name
+	 * Singular pretty name used by messages/labels
+	 *
+	 * @var mixed
+	 * @access protected
+	 */
 	protected $taxonomy_name;
+
+	/**
+	 * taxonomy_plural
+	 * Plural pretty name used by messages/labels
+	 *
+	 * @var mixed
+	 * @access protected
+	 */
 	protected $taxonomy_plural;
 
+
+	/**
+	 * Hooks function to fire off the events we need.
+	 *
+	 * @see add_action, add_filter, add_shortcode
+	 *
+	 * @return void.
+	 */
 	public function hooks(){
 
 		add_action( 'init', array( $this, 'define_cpt' ) );
@@ -41,15 +158,30 @@ abstract class CPT{
 
 	}
 
-	// Wrapper for loop_cpt in case of legacy naming from V1
-	public function get_cpt( $args ){
+	/**
+	 * Wrapper for loop_cpt in case of legacy naming from V1.
+	 *
+	 * @see loop_cpt
+	 *
+	 * @param array $args Array of arguments to use in the WP_QUery loop.
+	 * @return string HTML contents of the looped query.
+	 */
+	public function get_cpt( $args = array() ){
 
 		return loop_cpt( $args );
 
 	}
 
-	public function loop_cpt( $args = array() ){
 
+	/**
+	 * Loop through custom post type and return combined HTML from posts.
+	 *
+	 * @see WP_Query, $this->display_loop
+	 *
+	 * @param array $args Description.
+	 * @return string Combined HTML contents of the looped query.
+	 */
+	public function loop_cpt( $args = array() ){
 		$html .= "";
 		$defaults = $this->loop_args;
 
@@ -79,7 +211,7 @@ abstract class CPT{
 
 		// If our shortcode passed in a group id OR our taxonomy_loop passes in a group id
 		if ( !empty( $args['group'] ) ){
-			$query[$this->tax_slug]			= array( $args['group'] );
+			$query[$this->tax_slug]		= array( $args['group'] );
 		}
 
 		$objects = new WP_Query( $query );
@@ -108,8 +240,17 @@ abstract class CPT{
 
 	}
 
-	public function display_loop( $pid ){
 
+	/**
+	 * Display a single item from the queried posts.
+	 *
+	 * This is the most often-overrideen function and will often contain CMB
+	 * calls and custom display HTML.
+	 *
+	 * @param int $ Post ID.
+	 * @return string HTML contents for the individual post.
+	 */
+	public function display_loop( $pid ){
 		$html = "";
 
 		$html .= "<li class='".$this->cptslug."'>";
@@ -124,8 +265,19 @@ abstract class CPT{
 
 	}
 
-	public function taxonomy_loop( $args = array() ){
 
+	/**
+	 * Loop through a taxonomy.
+	 *
+	 * This function will loop through all items in a taxonomy and call loop_cpt
+	 * on each and every one.
+	 *
+	 * @see $this->loop_cpt, get_terms
+	 *
+	 * @param array $args Arguments to be passed to get_terms.
+	 * @return string HTML content of the looped taxonomy & posts.
+	 */
+	public function taxonomy_loop( $args = array() ){
 		$html = "";
 
 		$terms = get_terms(
@@ -156,6 +308,15 @@ abstract class CPT{
 
 	}
 
+
+	/**
+	 * Shortcode definition to call a loop of the cpt within the content.
+	 *
+	 * @see shortcode_args, $this->loop_cpt
+	 *
+	 * @param array $atts arguments to be passed through to the loop.
+	 * @return string HTML content of the looped query and posts.
+	 */
 	public function shortcode( $atts ){
 
 		$atts = shortcode_atts(
@@ -180,6 +341,18 @@ abstract class CPT{
 
 	}
 
+
+	/**
+	 * Custom Post Type definition.
+	 *
+	 * We're actually creating out custom post type here and passing in custom
+	 * arguments if we have any. Several defaults include supports of title & editor,
+	 * public, menu position, etc.
+	 *
+	 * @see register_post_type
+	 *
+	 * @return void.
+	 */
 	public function define_cpt(){
 
 		$labels = array(
@@ -214,10 +387,27 @@ abstract class CPT{
 
 	}
 
+
+	/**
+	 * Placeholder for setting metaboxes using the CMB2 library.
+	 *
+	 * Optional.
+	 *
+	 * @param array $meta_boxes Passed through with CMB2.
+	 * @return array Passthrough of all metaboxes.
+	 */
 	public function cmb_metaboxes( array $meta_boxes ){
 		return $meta_boxes;
 	}
 
+
+	/**
+	 * Taxonomy definition if we have set the proper variables at the beginning.
+	 *
+	 * @see register_taxonomy
+	 *
+	 * @return void.
+	 */
 	public function define_taxonomy(){
 
 		$labels = array(
@@ -245,6 +435,14 @@ abstract class CPT{
 
 	}
 
+
+	/**
+	 * Remove the view link from the cpt if we have set hide_view to true.
+	 *
+	 * @param array $actions Array of all action links assigned to the cpt.
+	 * @param object $post Post object of the post we're on.
+	 * @return array Passed through actions array.
+	 */
 	public function remove_view_from_row( $actions, $post ){
 
 	    if( $post->post_type === $this->cptslug ){
@@ -255,6 +453,19 @@ abstract class CPT{
 	    return $actions;
 	}
 
+
+	/**
+	 * Remove the permalink box from the cpt if we have set hide_view to true.
+	 *
+	 * @see get_sample_permalink_html
+	 * @global object $post Post object.
+	 *
+	 * @param string $return Return HTML objects with action buttons & revised link.
+	 * @param integer $id Post ID
+	 * @param string $new_title New title
+	 * @param string $new_slug New slug
+	 * @return string $return Return HTML objects with action buttons & revised link.
+	 */
 	public function remove_permalink_option( $return, $id, $new_title, $new_slug ){
 	    global $post;
 
@@ -265,6 +476,13 @@ abstract class CPT{
 	    return $return;
 	}
 
+
+	/**
+	 * Adds the cpt to our custom count seciont in the Right Now dashboard widget.
+	 *
+	 * @param array $cpt_array Passthrough objects to add.
+	 * @return array $cpt_array Passthrough objects to add.
+	 */
 	public function dashboard_cpt_loop( $cpt_array ){
 
 		$cpt_array[] = array(

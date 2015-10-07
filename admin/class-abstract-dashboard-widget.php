@@ -3,6 +3,14 @@
 /**
   * Abstract class to quickly create dashboard widgets
   */
+/**
+ * Class to quickly and easily generate admin dashboard widgets.
+ *
+ * @abstract
+ * @package    WordPress
+ * @subpackage Evans
+ * @author     Old Town Media
+ */
 abstract class Dashboard_Widget{
 
 	protected $id;
