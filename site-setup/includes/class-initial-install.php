@@ -26,6 +26,7 @@ class Initial_Settings{
 		add_action( 'admin_init', array( $this, 'modify_permalinks' ), 105 );
 		add_action( 'admin_init', array( $this, 'create_menus' ), 105);
 		add_filter( 'admin_init', array( $this, 'update_settings' ), 105 );
+		add_action( 'admin_init', array( $this, 'add_customer_admin_role' ), 105 );
 
 	}
 
@@ -105,6 +106,88 @@ class Initial_Settings{
 		// Our theme setup is now complete, set a value that we can use later
 		// to stop the loading of this file
 		add_option( 'evans_theme_setup', 'setup', '', 'no' );
+
+	}
+
+	/**
+	 * Create a pseudo-admin custom role with limited priveledges
+	 *
+	 * @access public
+	 * @since 1.0.0
+	 */
+	function add_customer_admin_role(){
+
+		$role_id 		= 'customer_admin';
+		$role_name 		= __( 'Customer Administrator', 'evans-mu' );
+		$capabilities 	= array(
+
+			// Allowed Priveledges
+			'edit_files' 			=> true,
+			'moderate_comments' 	=> true,
+			'manage_categories' 	=> true,
+			'manage_links' 			=> true,
+			'upload_files' 			=> true,
+			'unfiltered_html' 		=> true,
+			'edit_posts' 			=> true,
+			'edit_others_posts' 	=> true,
+			'edit_published_posts' 	=> true,
+			'publish_posts' 		=> true,
+			'edit_pages'			=> true,
+			'read' 					=> true,
+			'edit_others_pages' 	=> true,
+			'edit_published_pages' 	=> true,
+			'publish_pages' 		=> true,
+			'delete_pages' 			=> true,
+			'delete_others_pages' 	=> true,
+			'delete_published_pages' => true,
+			'delete_posts' 			=> true,
+			'delete_others_posts' 	=> true,
+			'delete_published_posts' => true,
+			'delete_private_posts' 	=> true,
+			'edit_private_posts' 	=> true,
+			'read_private_posts' 	=> true,
+			'delete_private_pages' 	=> true,
+			'edit_private_pages' 	=> true,
+			'read_private_pages' 	=> true,
+			'unfiltered_upload' 	=> true,
+
+			// Denied Priveledges
+			'edit_theme_options' 	=> false,
+			'manage_options' 		=> false,
+			'edit_dashboard' 		=> false,
+			'activate_plugins' 		=> false,
+			'edit_plugins' 			=> false,
+			'update_plugins' 		=> false,
+			'delete_plugins' 		=> false,
+			'install_plugins' 		=> false,
+			'update_core' 			=> false,
+			'edit_users' 			=> false,
+			'delete_users' 			=> false,
+			'create_users' 			=> false,
+			'list_users' 			=> false,
+			'remove_users' 			=> false,
+			'add_users' 			=> false,
+			'promote_users' 		=> false,
+			'switch_themes' 		=> false,
+			'edit_themes' 			=> false,
+			'update_themes' 		=> false,
+			'install_themes' 		=> false,
+			'delete_themes' 		=> false,
+			'import' 				=> false,
+			'export' 				=> false,
+			'administrator' 		=> false,
+		);
+
+
+		if( ! $GLOBALS['wp_roles']->is_role( $role_id ) ) {
+
+			$result = add_role(
+			    $role_id,
+			    $role_name,
+			    $capabilities
+			);
+
+		}
 
 	}
 
