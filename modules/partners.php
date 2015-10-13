@@ -27,6 +27,7 @@ class Partners extends CPT{
 		'orderby' 		=> 'menu_order',
 		'order' 		=> 'ASC',
 		'quantity'		=> 500,
+		'no_found_rows'	=> false
 	);
 
 	public function display_loop( $pid ){

@@ -22,11 +22,11 @@ class Events extends CPT{
 	protected $loop_args = array(
 		'orderby' 		=> 'meta_value',
 		'order' 		=> 'ASC',
+		'nopaging'		=> false
 	);
 
 	public function loop_cpt( $args = array() ){
-
-		$html .= "";
+		$html = "";
 		$defaults = $this->loop_args;
 
 		$args = wp_parse_args( $args, $defaults );

@@ -2,20 +2,20 @@
 
 //Our variables from the widget settings.
 $title		= apply_filters('widget_title', $instance['title'] );
-$num_posts 	= int( $instance['num_posts'] );
+$num_posts 	= absint( $instance['num_posts'] );
 $category 	= esc_attr( $instance['category'] );
-$char_length= int( $instance['char_length'] );
-
+$char_length= absint( $instance['char_length'] );
+$cat = '';
 
 // If user specifies number of posts, use. Otherwise, just one post.
-if( $num_posts ){
+if( !empty( $num_posts ) ){
 	$posts_per = $num_posts;
 } else {
 	$posts_per = 1;
 }
 
 // If user specifies specific categories, declare. Otherwise use all cats
-if ( $category ) {
+if ( !empty( $category ) ) {
 	$cat = $category;
 } else {
 	$categories = get_categories();

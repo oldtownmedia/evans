@@ -23,12 +23,11 @@ class Alerts extends CPT{
 		'orderby' 		=> 'menu_order',
 		'order' 		=> 'ASC',
 		'quantity'		=> 3,
-
+		'nopaging'		=> true
 	);
 
 	public function loop_cpt( $args = array() ){
-
-		$html .= "";
+		$html = "";
 		$defaults = $this->loop_args;
 
 		$args = wp_parse_args( $args, $defaults );
@@ -92,8 +91,6 @@ class Alerts extends CPT{
 
 		if ( $objects->have_posts() ){
 
-			$title_tag = $args['title_tag'];
-
 			while ( $objects->have_posts() ) : $objects->the_post();
 
 				$html .= $this->display_loop( get_the_id() );
@@ -118,7 +115,7 @@ class Alerts extends CPT{
 
 				$html .= "<div class='".$this->cptslug."'>";
 
-					$html .= "<$title_tag>" . get_the_title() . "</$title_tag>";
+					$html .= "<h4>" . get_the_title() . "</h4>";
 
 					$html .= apply_filters( 'the_content', get_the_content() );
 

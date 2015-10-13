@@ -97,10 +97,12 @@ class Evans_Contact_Info extends WP_Widget {
 		$widget_string .= ob_get_clean();
 		$widget_string .= $after_widget;
 
+		if ( isset( $args['widget_id'] ) ){
 
-		$cache[ $args['widget_id'] ] = $widget_string;
+			$cache[ $args['widget_id'] ] = $widget_string;
+			wp_cache_set( $this->get_widget_slug(), $cache, 'widget' );
 
-		wp_cache_set( $this->get_widget_slug(), $cache, 'widget' );
+		}
 
 		print $widget_string;
 

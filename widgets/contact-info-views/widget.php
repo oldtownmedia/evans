@@ -3,7 +3,6 @@
 //Our variables from the widget settings.
 $title		= apply_filters('widget_title', $instance['title'] );
 $address1 	= esc_attr( $instance['address1'] );
-$address2 	= esc_attr( $instance['address2'] );
 $city		= esc_attr( $instance['city'] );
 $state 		= esc_attr( $instance['state'] );
 $zip 		= esc_attr( $instance['zip'] );

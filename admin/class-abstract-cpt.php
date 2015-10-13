@@ -168,7 +168,7 @@ abstract class CPT{
 	 */
 	public function get_cpt( $args = array() ){
 
-		return loop_cpt( $args );
+		return $this->loop_cpt( $args );
 
 	}
 
@@ -182,7 +182,7 @@ abstract class CPT{
 	 * @return string Combined HTML contents of the looped query.
 	 */
 	public function loop_cpt( $args = array() ){
-		$html .= "";
+		$html = "";
 		$defaults = $this->loop_args;
 
 		$args = wp_parse_args( $args, $defaults );
@@ -469,8 +469,8 @@ abstract class CPT{
 	public function remove_permalink_option( $return, $id, $new_title, $new_slug ){
 	    global $post;
 
-	    if( $post->post_type === $this->cptslug ){
-	        return '';
+	    if( !empty( $post ) && $post->post_type === $this->cptslug ){
+	        return;
 	    }
 
 	    return $return;
