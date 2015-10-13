@@ -192,25 +192,18 @@ CSSland,
 
 	public static function image( $post_id ){
 
-		$images = array();
+		// Get the image from the API
+		$url = self::get_image_link();
+		if ( empty( $url ) ){
+			return;
+		}
 
-		$xml = simplexml_load_file( 'https://unsplash.com/rss' );
-
-	    foreach ( $xml->channel->item as $item ){
-	        foreach ( $item->image->url as $url ){
-	            $images[] = (string) $url;
-	        }
-	    }
-
-	    shuffle( $images );
-
-		$url = $images[0];
 	    $tmp = download_url( $url );
 
-	    $file_array = array(
-	        'name' => 'new test image',
-	        'tmp_name' => $tmp
-	    );
+		// Double check the url for a proper image extension to be sure
+		preg_match( '/[^\?]+\.(jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/', $url, $matches );
+        $file_array['name'] = basename( $matches[0] );
+        $file_array['tmp_name'] = $tmp;
 
 	    // Check for download errors
 	    if ( is_wp_error( $tmp ) ) {
@@ -224,9 +217,38 @@ CSSland,
 	        @unlink( $file_array['tmp_name'] );
 	    }
 
-	    if ( is_wp_error( $image_id ) ) {
-		    return $image_id;
-	   }
+	    return $image_id;
+
+	}
+
+
+	private static function get_image_link(){
+
+		// cURL an image API for a completely random photo
+		$curl = curl_init( "http://www.splashbase.co/api/v1/images/random?images_only=true" );
+
+		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, TRUE );
+
+		$curl_response = curl_exec( $curl );
+
+		// If our cURL failed
+		if ( $curl_response === false ) {
+		    $info = curl_getinfo( $curl );
+		    curl_close( $curl );
+		    die( 'error occured during curl exec. Additional info: ' . var_export( $info ) );
+		}
+
+		curl_close( $curl );
+
+		// Decode the data
+		$response = json_decode( $curl_response, true );
+
+		// Check to make sure that the return contains a valid image extensions
+		preg_match('/[^\?]+\.(jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/', $response['url'], $matches);
+
+		if ( !empty( $matches ) ){
+			return $response['url'];
+		}
 
 	}
 
