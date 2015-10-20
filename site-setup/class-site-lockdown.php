@@ -96,13 +96,13 @@ class Site_Lockdown {
 			return;
 		}
 
-		if ( $_GET['lock_site'] ){
+		if ( isset( $_GET['lock_site'] ) ){
 
 			if ( wp_verify_nonce( $_GET['lock_site'], 'evans_lock_site' ) ){
 				update_option( 'evans_site_lockdown', 'locked' );
 			}
 
-		} else if ( $_GET['unlock_site']  ){
+		} else if ( isset( $_GET['unlock_site'] ) ){
 
 			if ( wp_verify_nonce( $_GET['unlock_site'], 'evans_unlock_site' ) ){
 				update_option( 'evans_site_lockdown', 'unlocked' );
