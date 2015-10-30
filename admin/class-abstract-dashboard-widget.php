@@ -1,10 +1,7 @@
 <?php
 
 /**
-  * Abstract class to quickly create dashboard widgets
-  */
-/**
- * Class to quickly and easily generate admin dashboard widgets.
+ * Abstract lass to quickly and easily generate admin dashboard widgets.
  *
  * @abstract
  * @package    WordPress
