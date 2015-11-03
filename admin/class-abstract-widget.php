@@ -287,7 +287,7 @@ abstract class Evans_Widget extends WP_Widget {
 	 * @param arry $instance Widget data.
 	 * @return string title HTML.
 	 */
-	public function view_title( $args, $instance ){
+	public function get_widget_title( $args, $instance ){
 
 		// Display the widget title
 		if ( $instance['title'] ){

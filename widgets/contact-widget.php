@@ -1,19 +1,25 @@
 <?php
+
 /**
- * Display Contact Information
+ * Display contact information in a widget.
  *
  * @package   Evans
  * @author    OTM <support@oldtownmediainc.com>
  * @link      https://oldtownmediainc.com
  * @copyright 2015 Old Town Media
  */
-
 class ContactWidget extends Evans_Widget{
 
 	protected $base			= 'contact';
 	protected $title		= 'Contact Information';
 	protected $description	= 'Display Your Contact Information';
 
+
+	/**
+	 * Array of fields for the admin editing of the widget.
+	 *
+	 * @return array list of fields
+	 */
 	public function widget_fields(){
 
 		return array(
@@ -77,10 +83,18 @@ class ContactWidget extends Evans_Widget{
 
 	}
 
+
+	/**
+	 * The front-end view of the widget
+	 *
+	 * @param array $args Base widget data such as before_title.
+	 * @param arry $instance Widget data.
+	 * @return string Widget HTML.
+	 */
 	public function view( $args, $instance ){
 		$html = $address_string = '';
 
-		$html .= view_title( $args, $instance );
+		$html .= $this->get_widget_title( $args, $instance );
 
 		// Display the contact information
 		$html .= "<p>";

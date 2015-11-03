@@ -1,19 +1,25 @@
 <?php
+
 /**
- * Display Contact Information
+ * Display the Most Recent News in a widget.
  *
  * @package   Evans
  * @author    OTM <support@oldtownmediainc.com>
  * @link      https://oldtownmediainc.com
  * @copyright 2015 Old Town Media
  */
-
 class RecentNewsWidget extends Evans_Widget{
 
 	protected $base			= 'recent-news';
 	protected $title		= 'Recent News';
 	protected $description	= 'Display the most recent posts from your blog.';
 
+
+	/**
+	 * Array of fields for the admin editing of the widget.
+	 *
+	 * @return array list of fields
+	 */
 	public function widget_fields(){
 
 		// Get list of categories to choose from
@@ -54,6 +60,14 @@ class RecentNewsWidget extends Evans_Widget{
 
 	}
 
+
+	/**
+	 * The front-end view of the widget
+	 *
+	 * @param array $args Base widget data such as before_title.
+	 * @param arry $instance Widget data.
+	 * @return string Widget HTML.
+	 */
 	public function view( $args, $instance ){
 		$html  = $cat = '';
 
@@ -85,7 +99,7 @@ class RecentNewsWidget extends Evans_Widget{
 
 		if ( $objects->have_posts() ) :
 
-			$html .= view_title( $args, $instance );
+			$html .= $this->get_widget_title( $args, $instance );
 
 			while ( $objects->have_posts() ) : $objects->the_post();
 

@@ -11,16 +11,55 @@
  */
 class CompanySupportWidget extends Dashboard_Widget{
 
-	// Defaults
+	/**
+	 * ID
+	 * ID used in the class and as a slug.
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $id 		= 'evans_support_dashboard_widget';
+
+	/**
+	 * title
+	 * Title for the dashboard widget.
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $title 	= 'Welcome to Your Dashboard';
 
-	// Specific widget info
+	/**
+	 * phone
+	 * Phone # of your company.
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $phone = '(970) 568 5250';
+
+	/**
+	 * email
+	 * Email address of your company.
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $email = 'support@oldtownmediainc.com';
+
+	/**
+	 * phone
+	 * Hours of your company.
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $hours = '8:00 am - 5:00 pm';
 
-	// Output function
+
+	/*
+	 * Output the contents of the dashboard widget.
+	 */
 	public function build_the_widget() {
 
 		echo "<img src='".plugins_url( '../resources/images/widget-logo.png', __FILE__ )."' style='float:right;'>";
