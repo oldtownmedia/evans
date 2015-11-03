@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Staff
+ *
+ * Staff custom post type
+ *
+ * @package    WordPress
+ * @subpackage Evans
+ * @author     Old Town Media
+ */
 class Staff extends CPT{
 
 	protected $cptslug 			= 'staff';

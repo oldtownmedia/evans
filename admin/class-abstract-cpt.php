@@ -129,8 +129,6 @@ abstract class CPT{
 	 * Hooks function to fire off the events we need.
 	 *
 	 * @see add_action, add_filter, add_shortcode
-	 *
-	 * @return void.
 	 */
 	public function hooks(){
 
@@ -350,8 +348,6 @@ abstract class CPT{
 	 * public, menu position, etc.
 	 *
 	 * @see register_post_type
-	 *
-	 * @return void.
 	 */
 	public function define_cpt(){
 
@@ -405,8 +401,6 @@ abstract class CPT{
 	 * Taxonomy definition if we have set the proper variables at the beginning.
 	 *
 	 * @see register_taxonomy
-	 *
-	 * @return void.
 	 */
 	public function define_taxonomy(){
 

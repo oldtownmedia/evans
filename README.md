@@ -19,3 +19,20 @@ We settled on a mu-plugin over a regular WordPress plugin for several reasons:
 Several years ago we found ourselves constantly repeating several pieces of functionality for client sites and doing so in an inconsistent manner. So we decided to build a functionality plugin that handled these cases for us - it would have default custom post types, functions that we commonly used, even some setup scripts so that we didn't have to click around when we created a site. 
 
 This worked very well and rapidly evolved over several years but started to show its age greatly in 2015 and we decided to scrap and rebuild form the ground up - a fresh V2.0. That's where Evans comes in. 
+
+
+## Extending
+
+### CPT
+
+
+
+### Widget
+
+
+
+### Dashboard Widget
+
+
+
+### Test Data

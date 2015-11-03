@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Partners
+ *
+ * Partners custom post type
+ *
+ * @package    WordPress
+ * @subpackage Evans
+ * @author     Old Town Media
+ */
 class Partners extends CPT{
 
 	protected $cptslug 			= 'partner';

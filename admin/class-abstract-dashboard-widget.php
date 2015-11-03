@@ -10,7 +10,22 @@
  */
 abstract class Dashboard_Widget{
 
+	/**
+	 * ID
+	 * ID used in the class and as a slug.
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $id;
+
+	/**
+	 * title
+	 * Title for the dashboard widget.
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $title;
 
 	/**

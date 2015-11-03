@@ -80,9 +80,7 @@ class ContactWidget extends Evans_Widget{
 	public function view( $args, $instance ){
 		$html = $address_string = '';
 
-		if ( !empty( $instance['title'] ) ){
-			$html .= $args['before_title'] . apply_filters('widget_title', $instance['title'] ) . $args['after_title'];
-		}
+		$html .= view_title( $args, $instance );
 
 		// Display the contact information
 		$html .= "<p>";

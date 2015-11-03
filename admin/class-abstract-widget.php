@@ -12,14 +12,11 @@ abstract class Evans_Widget extends WP_Widget {
 
 	/**
 	 * base
-	 * General ID used for the widget.
+	 * Base for widget - to be used in referencing files, folders, creating a
+	 * class, etc.
 	 *
 	 * @var string
 	 * @access protected
-	 */
-	/*
-	 * Base for widget - to be used in referencing files, folders, creating a
-	 * class, etc.
 	 */
 	protected $base;
 
@@ -46,8 +43,6 @@ abstract class Evans_Widget extends WP_Widget {
 	 * Constructor function
 	 *
 	 * @see add_action, add_filter
-	 *
-	 * @return void.
 	 */
 	public function __construct() {
 
@@ -75,8 +70,6 @@ abstract class Evans_Widget extends WP_Widget {
 	 * Flushed the cache of the widget.
 	 *
 	 * @see wp_cache_delete
-	 *
-	 * @return void.
 	 */
 	public function flush_widget_cache(){
     	wp_cache_delete( $this->base, 'widget' );
@@ -90,7 +83,6 @@ abstract class Evans_Widget extends WP_Widget {
 	 *
 	 * @param type $args Base widget arguments.
 	 * @param type $instance The data from the widget editing.
-	 * @return void
 	 */
 	public function widget( $args, $instance ){
 
@@ -218,7 +210,6 @@ abstract class Evans_Widget extends WP_Widget {
 	 * @see $this->admin_form, $this->get_defaults()
 	 *
 	 * @param array $instance Data for this instance
-	 * @return void
 	 */
 	public function form( $instance ) {
 
@@ -282,6 +273,26 @@ abstract class Evans_Widget extends WP_Widget {
 	public function view( $args, $instance ){
 
 		return;
+
+	}
+
+
+	/**
+	 * Simple return for a title for widgets.
+	 *
+	 * The title looks the same in almost all widgets so I decided to throw it in
+	 * a reusable function
+	 *
+	 * @param array $args Base widget data such as before_title.
+	 * @param arry $instance Widget data.
+	 * @return string title HTML.
+	 */
+	public function view_title( $args, $instance ){
+
+		// Display the widget title
+		if ( $instance['title'] ){
+			return $args['before_title'] . apply_filters('widget_title', $instance['title'] ) . $args['after_title'];
+		}
 
 	}
 
@@ -465,8 +476,6 @@ abstract class Evans_Widget extends WP_Widget {
 	 * Registering custom CSS for our form.
 	 *
 	 * @see wp_enqueue_style
-	 *
-	 * @return void
 	 */
 	public function register_admin_styles() {
 

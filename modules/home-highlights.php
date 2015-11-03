@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Highlights
+ *
+ * Home highlights custom post type
+ *
+ * @package    WordPress
+ * @subpackage Evans
+ * @author     Old Town Media
+ */
 class Highlights extends CPT{
 
 	protected $cptslug 			= 'highlight';

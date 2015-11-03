@@ -115,4 +115,5 @@ function evans_set_messages( $messages ) {
 	);
 
 	return $messages;
+
 }

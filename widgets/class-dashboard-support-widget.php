@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * CompanySupportWidget
+ *
+ * Support information for display in the admin section
+ *
+ * @package    WordPress
+ * @subpackage Evans
+ * @author     Old Town Media
+ */
 class CompanySupportWidget extends Dashboard_Widget{
 
 	// Defaults
@@ -34,6 +43,3 @@ class CompanySupportWidget extends Dashboard_Widget{
 
 $widget = new CompanySupportWidget();
 $widget->hooks();
-
-
-?>

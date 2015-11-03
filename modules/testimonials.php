@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Testimonials
+ *
+ * Testimonials custom post type
+ *
+ * @package    WordPress
+ * @subpackage Evans
+ * @author     Old Town Media
+ */
 class Testimonials extends CPT{
 
 	protected $cptslug 			= 'testimonial';

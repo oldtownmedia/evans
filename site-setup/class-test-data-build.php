@@ -23,8 +23,6 @@ class BuildTestData{
 	 * Add the admin-side menu item for creating & deleting test data.
 	 *
 	 * @see add_submenu_page
-	 *
-	 * @return void.
 	 */
 	public function add_menu_item() {
 
@@ -43,8 +41,6 @@ class BuildTestData{
 	 * Ajax callback function for triggering the creatin & deletion of test data.
 	 *
 	 * @see wp_ajax filter, $this->add_menu_item
-	 *
-	 * @return void.
 	 */
 	public function handle_test_data_callback() {
 
@@ -75,8 +71,6 @@ class BuildTestData{
 
 	/**
 	 * Print out our admin page to control test data.
-	 *
-	 * @return void.
 	 */
 	public function admin_page(){
 
@@ -162,7 +156,6 @@ class BuildTestData{
 	 *
 	 * @param string $cptslug a custom post type ID.
 	 * @param int $num Optional. Number of posts to create.
-	 * @return void.
 	 */
 	private function create_post_type_content( $cptslug, $num = '' ){
 
@@ -200,7 +193,6 @@ class BuildTestData{
 	 * @see WP_Query, wp_delete_post
 	 *
 	 * @param string $cptslug a custom post type ID.
-	 * @return void.
 	 */
 	private function delete_test_content( $cptslug ){
 
@@ -250,7 +242,6 @@ class BuildTestData{
 	 * @param string $cptslug a custom post type ID.
 	 * @param array $supports Features that the post type supports.
 	 * @param array $supports All CMB2 metaboxes attached to the post type.
-	 * @return void.
 	 */
 	private function create_test_object( $cptslug, $supports, $metaboxes ){
 
@@ -376,7 +367,6 @@ class BuildTestData{
 	 *
 	 * @param int $post_id Single post ID.
 	 * @param array $cmb custom metabox array from CMB2.
-	 * @return void.
 	 */
 	private function random_metabox_content( $post_id, $cmb ){
 

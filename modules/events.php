@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Events
+ *
+ * Events custom post type
+ *
+ * @package    WordPress
+ * @subpackage Evans
+ * @author     Old Town Media
+ */
 class Events extends CPT{
 
 	protected $cptslug 			= 'event';

@@ -5,20 +5,23 @@
  *
  * Cleans up the admin section by removing unnecessary distractions
  *
- * @package WordPress
- * @category mu_plugin
- * @author Old Town Media
+ * @package    WordPress
+ * @subpackage Evans
+ * @author     Old Town Media
  */
 class Clean_Admin {
 
 	/**
-	 * Constructor function.
+	 * Hooks function to fire off the events we need.
 	 *
-	 * @access public
-	 * @since 0.0.0
-	 * @return void
+	 * @see add_action, add_filter
 	 */
-	function __construct() {
+	public function hooks() {
+
+		// Only continue if we're in the admin section
+		if ( !is_admin() ){
+			return;
+		}
 
 		add_filter( 'admin_init' , array( $this , 'register_fields' ) );
 		add_action( 'admin_menu', array( $this, 'evans_remove_menus' ), 105 );
@@ -44,6 +47,7 @@ class Clean_Admin {
 
 	}
 
+
 	/**
 	 * Add new fields to wp-admin/options-general.php page
 	 *
@@ -65,6 +69,7 @@ class Clean_Admin {
 			'general'
 		);
 	}
+
 
 	/**
 	 * HTML for extra settings fields in the general settings page
@@ -143,6 +148,7 @@ class Clean_Admin {
 		}
 	}
 
+
 	/**
 	 * Identify OK items to stay in the top of the admin section
 	 *
@@ -188,6 +194,7 @@ class Clean_Admin {
 		return array_merge( $menu, $penalty_box );
 	}
 
+
 	/**
 	 * Modify the text for Soliloquy & Envira to whitelabeled strings
 	 *
@@ -231,6 +238,7 @@ class Clean_Admin {
 
 	}
 
+
 	/**
 	 * Remove unnecessary post columns from posts and pages
 	 *
@@ -248,6 +256,7 @@ class Clean_Admin {
 
 		return $columns;
 	}
+
 
 	/**
 	 * Remove unnecessary admin bar links
@@ -289,17 +298,22 @@ class Clean_Admin {
 	    $post_types[] = 'portfolio';
 	    $post_types[] = 'staff';
 	    $post_types[] = 'testimonial';
+
 	    return $post_types;
 
 	}
+
 
 	/**
 	 * Remove author & tags boxes from the post edit box
 	 */
 	public function remove_post_meta_boxes() {
+
 		remove_meta_box( 'authordiv', 'post', 'normal' );
 		remove_meta_box( 'tagsdiv-post_tag', 'post', 'normal' );
+
 	}
+
 
 	/**
 	 * Remove unnecesary dashboard widgets from the admin dashboard
@@ -317,15 +331,19 @@ class Clean_Admin {
 
 	}
 
+
 	/**
 	 * Remove default nag
 	 *
 	 * @global string $pagenow Current page in the admin dashboard.
 	 */
 	function remove_core_update_nag() {
+
 	    remove_action( 'admin_notices', 'update_nag', 3 );
 	    remove_action( 'network_admin_notices', 'update_nag', 3 );
+
 	}
+
 
 	/**
 	 * Custom dashboard nag that tells customers to contact us
@@ -333,6 +351,7 @@ class Clean_Admin {
 	 * @global string $pagenow Current page in the admin dashboard.
 	 */
 	public function custom_update_nag() {
+
 	    if ( is_multisite() && !current_user_can('update_core') ){
 	        return false;
 	    }
@@ -356,7 +375,9 @@ class Clean_Admin {
 	    }
 
 	    echo "<div class='update-nag'>$msg</div>";
+
 	}
+
 
 	/**
 	 * Remove author column from post listing
@@ -365,9 +386,12 @@ class Clean_Admin {
 	 * @return array $defaults Modified column listing.
 	 */
 	public function evans_remove_columns( $defaults ) {
+
 		unset( $defaults['author'] );
 		return $defaults;
+
 	}
+
 
 	/**
 	 * Insert our own stylesheet into the login page to customize it
@@ -375,6 +399,7 @@ class Clean_Admin {
 	public function evans_login_css() {
 		wp_enqueue_style( 'login_css', get_template_directory_uri() . '/styles/login.css' );
 	}
+
 
 	/**
 	 * Modify the array of tinymce buttons in the visual editor for row 1
@@ -410,6 +435,7 @@ class Clean_Admin {
 
 	}
 
+
 	/**
 	 * Modify the array of tinymce buttons in the visual editor for row 2 (ie: kill them all!)
 	 *
@@ -417,8 +443,11 @@ class Clean_Admin {
 	 * @return array empty array.
 	 */
 	function evans_extended_editor_mce_buttons_2( $buttons ) {
+
 		return array();
+
 	}
+
 
 	/**
 	 * Remove Yoast SEO columns from all post types
@@ -438,6 +467,7 @@ class Clean_Admin {
 
 	}
 
+
 	/**
 	 * Remove Yoast SEO custom metaboxes from CPTs that don't have their own single
 	 */
@@ -453,7 +483,9 @@ class Clean_Admin {
 	    }
 	}
 
+
 	public function right_now_cpt_count() {
+
 		if ( current_user_can( 'edit_posts' ) && is_admin() ) {
 
 		$cpt_array = apply_filters( 'cpt_array_filter', array() );
@@ -469,7 +501,9 @@ class Clean_Admin {
 
 			}
 		}
+
 	}
+
 
 	/**
 	 * Add all top-level header-menu items in the dropdown under "{site name}"
@@ -492,7 +526,7 @@ class Clean_Admin {
 	    if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $menu_id ] ) ) {
 			$menu = wp_get_nav_menu_object( $locations[ $menu_id ] );
 
-			if ( !empty( $menu ) ){
+			if ( !empty( $menu ) ) :
 
 				$menu_items = wp_get_nav_menu_items( $menu->term_id );
 
@@ -511,11 +545,12 @@ class Clean_Admin {
 
 				endforeach;
 
-			}
+			endif;
 
-		} // End if
+		}
 
 	}
+
 
 	/**
 	 * Customize the dropdown under "Dashboard" in admin bar on front-end
@@ -568,3 +603,4 @@ class Clean_Admin {
 }
 
 $evans_simple_admin = new Clean_Admin();
+$evans_simple_admin->hooks();

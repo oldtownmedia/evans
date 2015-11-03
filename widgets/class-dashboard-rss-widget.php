@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * CompanyRSSFeedWidget
+ *
+ * Calls up the feed URL and the most recent 5 posts from the feed for display
+ * in the admin section
+ *
+ * @package    WordPress
+ * @subpackage Evans
+ * @author     Old Town Media
+ */
 class CompanyRSSFeedWidget extends Dashboard_Widget{
 
 	// Defaults
@@ -91,5 +101,3 @@ class CompanyRSSFeedWidget extends Dashboard_Widget{
 
 $widget = new CompanyRSSFeedWidget();
 $widget->hooks();
-
-?>

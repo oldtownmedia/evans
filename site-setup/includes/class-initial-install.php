@@ -9,7 +9,6 @@ defined( 'ABSPATH' ) OR exit;
  * @package WordPress
  * @category mu_plugin
  * @author Old Town Media
- * @since 0.0.0
  */
 class Initial_Settings{
 
@@ -18,7 +17,6 @@ class Initial_Settings{
 	 *
 	 * @access public
 	 * @since 0.0.0
-	 * @return void
 	 */
 	function __construct() {
 

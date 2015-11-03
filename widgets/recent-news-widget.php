@@ -85,10 +85,7 @@ class RecentNewsWidget extends Evans_Widget{
 
 		if ( $objects->have_posts() ) :
 
-			// Display the widget title
-			if ( $instance['title'] ){
-				$html .= $args['before_title'] . apply_filters('widget_title', $instance['title'] ) . $args['after_title'];
-			}
+			$html .= view_title( $args, $instance );
 
 			while ( $objects->have_posts() ) : $objects->the_post();
 
