@@ -173,5 +173,3 @@ class Site_Lockdown {
 }
 
 $evans_simple_admin = new Site_Lockdown();
-
-?>

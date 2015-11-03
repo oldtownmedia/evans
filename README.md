@@ -1,5 +1,7 @@
 # Evans
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/oldtownmedia/evans/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/oldtownmedia/evans/?branch=master)
+
 Evans is our functionality mu-plugin for all sites that we build. Evans handles most pieces of functionality that we consistently reuse on sites - custom post types, setup scripts, common functions, etc. 
 
 ### How to use
