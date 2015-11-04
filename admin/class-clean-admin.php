@@ -337,7 +337,7 @@ class Clean_Admin {
 	 *
 	 * @global string $pagenow Current page in the admin dashboard.
 	 */
-	function remove_core_update_nag() {
+	public function remove_core_update_nag() {
 
 	    remove_action( 'admin_notices', 'update_nag', 3 );
 	    remove_action( 'network_admin_notices', 'update_nag', 3 );
@@ -407,9 +407,9 @@ class Clean_Admin {
 	 * @param array $buttons Default mce buttons row 1.
 	 * @return array Modified array of buttons for row 1.
 	 */
-	function evans_extended_editor_mce_buttons( $buttons ) {
+	public function evans_extended_editor_mce_buttons( $buttons ) {
 
-		return array(
+		$buttons = array(
 			'formatselect',
 			'bold',
 			'italic',
@@ -433,6 +433,8 @@ class Clean_Admin {
 			'wp_help'
 		);
 
+		return $buttons;
+
 	}
 
 
@@ -442,9 +444,9 @@ class Clean_Admin {
 	 * @param array $buttons Default mce buttons row 1.
 	 * @return array empty array.
 	 */
-	function evans_extended_editor_mce_buttons_2( $buttons ) {
+	public function evans_extended_editor_mce_buttons_2( $buttons ) {
 
-		return array();
+		return $buttons = array();
 
 	}
 
@@ -455,7 +457,7 @@ class Clean_Admin {
 	 * @param type $columns Default column array.
 	 * @return array $columns Modified array of columns.
 	 */
-	function evans_seo_remove_columns( $columns ) {
+	public function evans_seo_remove_columns( $columns ) {
 
 		// remove the Yoast SEO columns
 		unset( $columns['wpseo-score'] );
@@ -471,7 +473,7 @@ class Clean_Admin {
 	/**
 	 * Remove Yoast SEO custom metaboxes from CPTs that don't have their own single
 	 */
-	function evans_remove_seo_metabox() {
+	public function evans_remove_seo_metabox() {
 
 	    if ( !current_user_can( 'edit_others_posts' ) ){
 	        remove_meta_box( 'wpseo_meta', 'alert', 'normal' );
