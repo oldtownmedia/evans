@@ -16,7 +16,7 @@ class Site_Lockdown {
 	 /**
 	 * Constructor function. Run the hooks ONLY if the server is on 104.131.16.207
 	 */
-	function __construct() {
+	public function __construct() {
 
 		// If we're not in the dev.otmoffice.com server
 		if ( $_SERVER['SERVER_ADDR'] != '104.131.16.207' ){
@@ -144,7 +144,7 @@ class Site_Lockdown {
 	 /**
 	 * Initially create the option to ensure the site is NOT locked down
 	 */
-	function set_lockdown_option() {
+	public function set_lockdown_option() {
 
 		if ( get_option( 'evans_site_lockdown' ) === false ){
 			add_option( 'evans_site_lockdown', 'unlocked', '', 'yes' );

@@ -66,7 +66,7 @@ class TestContent{
 	}
 
 
-	public static function paragraphs( $num ){
+	public static function paragraphs(){
 
 		$random_content_types = array(
 			"<p>OK, so images can get quite complicated as we have a few variables to work with! For example the image below has had a caption entered in the WordPress image upload dialog box, this creates a [caption] shortcode which then in turn wraps the whole thing in a <code>div</code> with inline styling! Maybe one day they'll be able to use the <code>figure</code> and <code>figcaption</code> elements for all this. Additionally, images can be wrapped in links which, if you're using anything other than <code>color</code> or <code>text-decoration</code> to style your links can be problematic.</p>",
@@ -191,6 +191,7 @@ CSSland,
 
 
 	public static function image( $post_id ){
+		$file_array = array();
 
 		// Get the image from the API
 		$url = self::get_image_link();

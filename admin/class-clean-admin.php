@@ -382,7 +382,7 @@ class Clean_Admin {
 	/**
 	 * Remove author column from post listing
 	 *
-	 * @param array $defaulgts Default column listin.
+	 * @param array $defaults Default column listin.
 	 * @return array $defaults Modified column listing.
 	 */
 	public function evans_remove_columns( $defaults ) {
@@ -409,7 +409,8 @@ class Clean_Admin {
 	 */
 	public function evans_extended_editor_mce_buttons( $buttons ) {
 
-		$buttons = array(
+		unset( $buttons );
+		return array(
 			'formatselect',
 			'bold',
 			'italic',
@@ -433,8 +434,6 @@ class Clean_Admin {
 			'wp_help'
 		);
 
-		return $buttons;
-
 	}
 
 
@@ -446,7 +445,8 @@ class Clean_Admin {
 	 */
 	public function evans_extended_editor_mce_buttons_2( $buttons ) {
 
-		return $buttons = array();
+		unset( $buttons );
+		return array();
 
 	}
 

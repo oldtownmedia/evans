@@ -176,6 +176,7 @@ abstract class Evans_Widget extends WP_Widget {
 
 			// If the user has chosen an array
 			if ( is_array( $sanitize ) ){
+				$new_value = '';
 
 				foreach ( $sanitize as $filter ){
 					$new_value = $filter( $value );

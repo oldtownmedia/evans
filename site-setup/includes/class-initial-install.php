@@ -16,9 +16,8 @@ class Initial_Settings{
 	 * Constructor function.
 	 *
 	 * @access public
-	 * @since 0.0.0
 	 */
-	function __construct() {
+	public function __construct() {
 
 		add_action( 'admin_init', array( $this, 'set_home_page' ), 105 );
 		add_action( 'admin_init', array( $this, 'modify_permalinks' ), 105 );
@@ -32,9 +31,8 @@ class Initial_Settings{
 	 * Set the home page
 	 *
 	 * @access public
-	 * @since 1.0.0
 	 */
-	function set_home_page(){
+	public function set_home_page(){
 
 		$home = get_page_by_title( 'Sample Page' );
 
@@ -49,9 +47,8 @@ class Initial_Settings{
 	 * Set our permalinks to the proper setting
 	 *
 	 * @access public
-	 * @since 1.0.0
 	 */
-	function modify_permalinks(){
+	public function modify_permalinks(){
 		global $wp_rewrite;
 
 		if ( get_option( 'permalink_structure' ) !== '/%postname%/' ){
@@ -66,9 +63,8 @@ class Initial_Settings{
 	 * Create the header menu and apply to header menu
 	 *
 	 * @access public
-	 * @since 1.0.0
 	 */
-	function create_menus(){
+	public function create_menus(){
 
 		$evans_nav_theme_mod = false;
 
@@ -93,9 +89,8 @@ class Initial_Settings{
 	 * Update blog settings
 	 *
 	 * @access public
-	 * @since 1.0.0
 	 */
-	function update_settings(){
+	public function update_settings(){
 
 		if ( get_option( 'default_comment_status' ) != 'closed' ){	update_option( 'default_comment_status', 'closed' ); }
 		if ( get_option( 'default_ping_status' ) != 'closed' ){		update_option( 'default_ping_status', 'closed' ); }
@@ -111,9 +106,8 @@ class Initial_Settings{
 	 * Create a pseudo-admin custom role with limited priveledges
 	 *
 	 * @access public
-	 * @since 1.0.0
 	 */
-	function add_customer_admin_role(){
+	public function add_customer_admin_role(){
 
 		$role_id 		= 'customer_admin';
 		$role_name 		= __( 'Customer Administrator', 'evans-mu' );

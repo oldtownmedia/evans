@@ -54,7 +54,7 @@ class CompanyRSSFeedWidget extends Dashboard_Widget{
 	 *
 	 * Look for our RSS feed, parse for errors, and then loop through the results.
 	 */
-	function build_the_widget() {
+	public function build_the_widget() {
 	     $rss = fetch_feed( $this->feed_url );
 
 		 // Look for errors and outut if necessary
