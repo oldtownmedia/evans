@@ -1,4 +1,5 @@
 <?php
+namespace evans;
 
 class TestContent{
 
@@ -195,7 +196,8 @@ CSSland,
 
 		// Get the image from the API
 		$url = self::get_image_link();
-		if ( empty( $url ) ){
+
+		if ( empty( $url ) || !is_string( $url ) ){
 			return;
 		}
 
@@ -203,12 +205,20 @@ CSSland,
 
 		// Double check the url for a proper image extension to be sure
 		preg_match( '/[^\?]+\.(jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/', $url, $matches );
+
+		if ( empty( $matches ) ){
+			return;
+		} elseif( is_wp_error( $tmp ) ){
+			return $tmp->get_error_message();
+		}
+
         $file_array['name'] = basename( $matches[0] );
         $file_array['tmp_name'] = $tmp;
 
 	    // Check for download errors
 	    if ( is_wp_error( $tmp ) ) {
 	        @unlink( $file_array[ 'tmp_name' ] );
+	        return;
 	    }
 
 	    $image_id = media_handle_sideload( $file_array, $post_id );

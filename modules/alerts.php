@@ -1,4 +1,5 @@
 <?php
+namespace evans;
 
 class Alerts extends CPT{
 
@@ -87,7 +88,7 @@ class Alerts extends CPT{
 			$query[$this->tax_slug]			= array( $args['group'] );
 		}
 
-		$objects = new WP_Query( $query );
+		$objects = new \WP_Query( $query );
 
 		if ( $objects->have_posts() ){
 

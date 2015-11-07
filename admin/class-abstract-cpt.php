@@ -1,4 +1,5 @@
 <?php
+namespace evans;
 
 /**
  * Class to generate custom post types using only a few variables.
@@ -212,7 +213,7 @@ abstract class CPT{
 			$query[$this->tax_slug]		= array( $args['group'] );
 		}
 
-		$objects = new WP_Query( $query );
+		$objects = new \WP_Query( $query );
 
 		if ( $objects->have_posts() ){
 

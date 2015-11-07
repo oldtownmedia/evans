@@ -1,4 +1,5 @@
 <?php
+namespace evans;
 
 /**
  * Display contact information in a widget.
@@ -145,4 +146,4 @@ class ContactWidget extends Evans_Widget{
 
 }
 
-add_action( 'widgets_init', create_function( '', 'register_widget("ContactWidget");' ) );
+add_action( 'widgets_init', create_function( '', 'register_widget("'.__NAMESPACE__.'\ContactWidget");' ) );

@@ -1,4 +1,5 @@
 <?php
+
 /**
   * Plugin Name: Evans - the functionality framework for your site
   * Plugin URI: http://oldtownmediainc.com/
@@ -12,7 +13,7 @@
 // Define a list of subfolders to poke through for files
 $dirs = array(
 	'admin',
-	'resources',
+	'assets',
 	'modules',
 	'widgets'
 );

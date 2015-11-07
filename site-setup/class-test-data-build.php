@@ -1,4 +1,5 @@
 <?php
+namespace evans;
 
 /**
  * Class to build test data for custom post types.
@@ -115,7 +116,7 @@ class BuildTestData{
 
 					jQuery( '.handle-test-data' ).on( 'click', function(){
 
-						$( this ).after( '<img src="<?php echo plugins_url( '../resources/images/loading.gif', __FILE__ ); ?>" class="loading-icon" style="height: 20px; margin-bottom: -4px; margin-left: 4px;">' );
+						$( this ).after( '<img src="<?php echo plugins_url( '../assets/images/loading.gif', __FILE__ ); ?>" class="loading-icon" style="height: 20px; margin-bottom: -4px; margin-left: 4px;">' );
 
 						var data = {
 							'action' : 'handle_test_data',
@@ -213,7 +214,7 @@ class BuildTestData{
 			),
 		);
 
-		$objects = new WP_Query( $query );
+		$objects = new \WP_Query( $query );
 
 		if ( $objects->have_posts() ){
 
@@ -483,7 +484,7 @@ class BuildTestData{
 			}
 
 			// Value must exist to attempt to insert
-			if ( !empty( $value ) ){
+			if ( !empty( $value ) && !is_wp_error( $value ) ){
 
 				// Files must be treated separately - they use the attachment ID
 				// & url of media for separate cmb values
@@ -494,6 +495,8 @@ class BuildTestData{
 					add_post_meta( $post_id, $cmb['id'], wp_get_attachment_url( $value ), true );
 				}
 
+			} elseif ( is_wp_error( $value ) ){
+				echo $value->get_error_message();
 			}
 
 		} // end if

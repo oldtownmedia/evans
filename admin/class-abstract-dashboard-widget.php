@@ -1,4 +1,5 @@
 <?php
+namespace evans;
 
 /**
  * Abstract lass to quickly and easily generate admin dashboard widgets.

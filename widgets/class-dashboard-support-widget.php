@@ -1,4 +1,5 @@
 <?php
+namespace evans;
 
 /**
  * CompanySupportWidget
@@ -62,7 +63,7 @@ class CompanySupportWidget extends Dashboard_Widget{
 	 */
 	public function build_the_widget() {
 
-		echo "<img src='".plugins_url( '../resources/images/widget-logo.png', __FILE__ )."' style='float:right;'>";
+		echo "<img src='".plugins_url( '../assets/images/widget-logo.png', __FILE__ )."' style='float:right;'>";
 
 		echo "<h2>".__( 'Hello!', 'evans-mu' )."</h2>";
 

@@ -1,5 +1,5 @@
 <?php
-defined( 'ABSPATH' ) OR exit;
+namespace evans;
 
 /**
  * Site Lockdown

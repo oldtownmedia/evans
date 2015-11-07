@@ -1,4 +1,5 @@
 <?php
+namespace evans;
 
 /**
  * Define metabox prefix for entire site
@@ -27,7 +28,7 @@ function evans_cmb_prefix( $slug = '' ){
  * @param string $url The URL for the script resource.
  * @returns string Modified script string
  */
-add_filter('clean_url', 'add_async_forscript', 11, 1);
+add_filter('clean_url', __NAMESPACE__ . '\add_async_forscript', 11, 1);
 function add_async_forscript( $url ){
 
     if ( strpos( $url, '#asyncload' ) === false ){
@@ -50,7 +51,7 @@ function add_async_forscript( $url ){
  * @param string $url The URL for the script resource.
  * @returns string Modified script string
  */
-add_filter('clean_url', 'add_defer_forscript', 11, 1);
+add_filter('clean_url', __NAMESPACE__ . '\add_defer_forscript', 11, 1);
 function add_defer_forscript( $url ){
 
 	if ( strpos( $url, '#deferload' ) === false ){
@@ -73,8 +74,8 @@ function add_defer_forscript( $url ){
  * @param string $src The URL for the script resource.
  * @returns string Modified script string
  */
-add_filter( 'script_loader_src', '_remove_script_version', 15, 1 );
-add_filter( 'style_loader_src', '_remove_script_version', 15, 1 );
+add_filter( 'script_loader_src', __NAMESPACE__ . '\_remove_script_version', 15, 1 );
+add_filter( 'style_loader_src', __NAMESPACE__ . '\_remove_script_version', 15, 1 );
 function _remove_script_version( $src ){
 
 	$parts = explode( '?ver', $src );
@@ -91,7 +92,7 @@ function _remove_script_version( $src ){
  *
  * With thanks from: http://wp-bytes.com/function/2013/02/changing-post-updated-messages/
  */
-add_filter( 'post_updated_messages', 'evans_set_messages' );
+add_filter( 'post_updated_messages', __NAMESPACE__ . '\evans_set_messages' );
 function evans_set_messages( $messages ) {
 
 	global $post, $post_ID;

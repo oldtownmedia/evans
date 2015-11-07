@@ -1,4 +1,5 @@
 <?php
+namespace evans;
 
 /**
  * Events
@@ -58,7 +59,7 @@ class Events extends CPT{
 	        )
 		);
 
-		$objects = new WP_Query( $query );
+		$objects = new \WP_Query( $query );
 
 		if ( $objects->have_posts() ){
 

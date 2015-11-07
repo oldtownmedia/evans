@@ -1,4 +1,5 @@
 <?php
+namespace evans;
 
 /**
  * Display the Most Recent News in a widget.
@@ -95,7 +96,7 @@ class RecentNewsWidget extends Evans_Widget{
 		    'orderby'			=> 'date',
 		);
 
-		$objects = new WP_Query( $query );
+		$objects = new \WP_Query( $query );
 
 		if ( $objects->have_posts() ) :
 
@@ -119,4 +120,4 @@ class RecentNewsWidget extends Evans_Widget{
 
 }
 
-add_action( 'widgets_init', create_function( '', 'register_widget("RecentNewsWidget");' ) );
+add_action( 'widgets_init', create_function( '', 'register_widget("'.__NAMESPACE__.'\RecentNewsWidget");' ) );

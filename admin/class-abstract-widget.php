@@ -1,4 +1,5 @@
 <?php
+namespace evans;
 
 /**
  * Abstract lass to quickly and easily generate widgets.
@@ -8,7 +9,7 @@
  * @subpackage Evans
  * @author     Old Town Media
  */
-abstract class Evans_Widget extends WP_Widget {
+abstract class Evans_Widget extends \WP_Widget {
 
 	/**
 	 * base
@@ -480,7 +481,7 @@ abstract class Evans_Widget extends WP_Widget {
 	 */
 	public function register_admin_styles() {
 
-		wp_enqueue_style( $this->base . '-admin-styles', plugins_url( '../resources/widgets.css', __FILE__ ) );
+		wp_enqueue_style( $this->base . '-admin-styles', plugins_url( '../assets/widgets.css', __FILE__ ) );
 
 	}
 

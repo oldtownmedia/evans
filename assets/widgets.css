@@ -1,0 +1,14 @@
+/* Widget CSS */
+.evans-field.text-box label{
+	display: block;
+}
+
+.evans-field.text-box input,
+.evans-field.select-box input{
+	width: 97%;
+	margin: 3px 0;
+}
+
+.evans-field.checkbox-box label{
+	margin-right: 7px;
+}
