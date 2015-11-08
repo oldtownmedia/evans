@@ -4,7 +4,7 @@ namespace evans;
 /**
  * Testimonials
  *
- * Testimonials custom post type
+ * Testimonials custom post type.
  *
  * @package    WordPress
  * @subpackage Evans
@@ -33,6 +33,16 @@ class Testimonials extends CPT{
 		'quantity'		=> 500,
 	);
 
+
+	/**
+	 * Display a single item from the queried posts.
+	 *
+	 * This is the most often-overrideen function and will often contain CMB
+	 * calls and custom display HTML.
+	 *
+	 * @param int $ Post ID.
+	 * @return string HTML contents for the individual post.
+	 */
 	public function display_loop( $pid ){
 
 		$html = "";
@@ -55,6 +65,13 @@ class Testimonials extends CPT{
 
 	}
 
+
+	/**
+	 * Add in array of custom metabox fields for use with CMB2.
+	 *
+	 * @param array $meta_boxes Passed through with CMB2.
+	 * @return array Revised array of all metaboxes.
+	 */
 	public function cmb_metaboxes( array $meta_boxes ) {
 
 		// Start with an underscore to hide fields from custom fields list
@@ -82,5 +99,9 @@ class Testimonials extends CPT{
 
 }
 
+
+/*
+ * Instantiate the hooks method
+ */
 $testimonials = new Testimonials;
 $testimonials->hooks();

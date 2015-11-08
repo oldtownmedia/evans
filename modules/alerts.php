@@ -1,6 +1,15 @@
 <?php
 namespace evans;
 
+/**
+ * Alerts
+ *
+ * Alerts custom post type.
+ *
+ * @package    WordPress
+ * @subpackage Evans
+ * @author     Old Town Media
+ */
 class Alerts extends CPT{
 
 	protected $cptslug 			= 'alert';
@@ -27,6 +36,15 @@ class Alerts extends CPT{
 		'nopaging'		=> true
 	);
 
+
+	/**
+	 * Loop through custom post type and return combined HTML from posts.
+	 *
+	 * @see WP_Query, $this->display_loop
+	 *
+	 * @param array $args Description.
+	 * @return string Combined HTML contents of the looped query.
+	 */
 	public function loop_cpt( $args = array() ){
 		$html = "";
 		$defaults = $this->loop_args;
@@ -106,6 +124,16 @@ class Alerts extends CPT{
 
 	}
 
+
+	/**
+	 * Display a single item from the queried posts.
+	 *
+	 * This is the most often-overrideen function and will often contain CMB
+	 * calls and custom display HTML.
+	 *
+	 * @param int $ Post ID.
+	 * @return string HTML contents for the individual post.
+	 */
 	public function display_loop( $pid ){
 
 		$html = "";
@@ -128,6 +156,13 @@ class Alerts extends CPT{
 
 	}
 
+
+	/**
+	 * Add in array of custom metabox fields for use with CMB2.
+	 *
+	 * @param array $meta_boxes Passed through with CMB2.
+	 * @return array Revised array of all metaboxes.
+	 */
 	public function cmb_metaboxes( array $meta_boxes ) {
 
 		// Start with an underscore to hide fields from custom fields list
@@ -173,5 +208,9 @@ class Alerts extends CPT{
 
 }
 
+
+/*
+ * Instantiate the hooks method
+ */
 $alerts = new Alerts;
 $alerts->hooks();

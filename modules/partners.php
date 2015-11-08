@@ -4,7 +4,7 @@ namespace evans;
 /**
  * Partners
  *
- * Partners custom post type
+ * Partners custom post type.
  *
  * @package    WordPress
  * @subpackage Evans
@@ -40,6 +40,16 @@ class Partners extends CPT{
 		'no_found_rows'	=> false
 	);
 
+
+	/**
+	 * Display a single item from the queried posts.
+	 *
+	 * This is the most often-overrideen function and will often contain CMB
+	 * calls and custom display HTML.
+	 *
+	 * @param int $ Post ID.
+	 * @return string HTML contents for the individual post.
+	 */
 	public function display_loop( $pid ){
 
 		$html = "";
@@ -62,6 +72,13 @@ class Partners extends CPT{
 
 	}
 
+
+	/**
+	 * Add in array of custom metabox fields for use with CMB2.
+	 *
+	 * @param array $meta_boxes Passed through with CMB2.
+	 * @return array Revised array of all metaboxes.
+	 */
 	public function cmb_metaboxes( array $meta_boxes ) {
 
 		// Start with an underscore to hide fields from custom fields list
@@ -96,5 +113,9 @@ class Partners extends CPT{
 
 }
 
+
+/*
+ * Instantiate the hooks method
+ */
 $partners = new Partners;
 $partners->hooks();

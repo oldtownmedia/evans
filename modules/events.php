@@ -4,7 +4,7 @@ namespace evans;
 /**
  * Events
  *
- * Events custom post type
+ * Events custom post type.
  *
  * @package    WordPress
  * @subpackage Evans
@@ -35,6 +35,15 @@ class Events extends CPT{
 		'nopaging'		=> false
 	);
 
+
+	/**
+	 * Loop through custom post type and return combined HTML from posts.
+	 *
+	 * @see WP_Query, $this->display_loop
+	 *
+	 * @param array $args Description.
+	 * @return string Combined HTML contents of the looped query.
+	 */
 	public function loop_cpt( $args = array() ){
 		$html = "";
 		$defaults = $this->loop_args;
@@ -81,6 +90,16 @@ class Events extends CPT{
 
 	}
 
+
+	/**
+	 * Display a single item from the queried posts.
+	 *
+	 * This is the most often-overrideen function and will often contain CMB
+	 * calls and custom display HTML.
+	 *
+	 * @param int $ Post ID.
+	 * @return string HTML contents for the individual post.
+	 */
 	public function display_loop( $pid ){
 
 		$html = "";
@@ -116,6 +135,13 @@ class Events extends CPT{
 
 	}
 
+
+	/**
+	 * Add in array of custom metabox fields for use with CMB2.
+	 *
+	 * @param array $meta_boxes Passed through with CMB2.
+	 * @return array Revised array of all metaboxes.
+	 */
 	public function cmb_metaboxes( array $meta_boxes ) {
 
 		// Start with an underscore to hide fields from custom fields list
@@ -168,5 +194,9 @@ class Events extends CPT{
 
 }
 
+
+/*
+ * Instantiate the hooks method
+ */
 $events = new Events;
 $events->hooks();

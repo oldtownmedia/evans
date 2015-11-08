@@ -5,7 +5,7 @@ namespace evans;
  * Site Lockdown
  *
  * Serves up a custom splash page to visitors not on our network if
- * the evans_site_lockdown option is set to 'locked'
+ * the evans_site_lockdown option is set to 'locked'.
  *
  * @package    WordPress
  * @subpackage Evans
@@ -13,13 +13,47 @@ namespace evans;
  */
 class Site_Lockdown {
 
+	/**
+	 * server_ip
+	 * IP Address of the server for this script to run on.
+	 *
+	 * @var string
+	 * @access private
+	 */
+	private $server_ip 		= '104.131.16.207';
+
+	/**
+	 * acceptable_ips
+	 * Array of IPs to check whitelisted users against.
+	 *
+	 * @var array
+	 * @access private
+	 */
+	private $acceptable_ips	= array(
+		'50.78.80.53',		// Comcast
+		'209.181.65.144',	// Centurylink
+		'174.16.201.183'
+	);
+
+	/**
+	 * block_page
+	 * URL to pull the block page from.
+	 *
+	 * @var string
+	 * @access private
+	 */
+	private $block_page		= 'http://dev.otmoffice.com/resources/index.html';
+
+
 	 /**
-	 * Constructor function. Run the hooks ONLY if the server is on 104.131.16.207
+	 * Constructor function.
+	 *
+	 * @see add_action
 	 */
 	public function __construct() {
 
-		// If we're not in the dev.otmoffice.com server
-		if ( $_SERVER['SERVER_ADDR'] != '104.131.16.207' ){
+		// If we're not in the correct server, don't do anything.
+		if ( $_SERVER['SERVER_ADDR'] != $this->server_ip ){
 			return;
 		}
 
@@ -31,29 +65,18 @@ class Site_Lockdown {
 
 	}
 
-	 /**
-	 * Build an array of OTM-accessed IPs
-	 *
-	 * @return array Array of IPs that are whitelisted.
-	 */
-	public function evans_acceptible_ips() {
-
-		return array(
-			'50.78.80.53',		// Comcast
-			'209.181.65.144',	// Centurylink
-			'174.16.201.183',	// Mike's House
-		);
-
-	}
 
 	/**
-	 * Create our admin menu main node
+	 * Create our admin menu main node for turning lockdown on or off.
+	 *
+	 * @see get_option, wp_get_current_user, is_super_admin, is_admin_bar_showing
 	 *
 	 * @param type $wp_admin_bar Global wp_admin_bar object.
 	 */
 	public function page_lockdown_display( $wp_admin_bar ) {
 
-		if (!is_super_admin() || !is_admin_bar_showing() ){
+		// Chck that the admin bar is showing and is admin user
+		if ( !is_super_admin() || !is_admin_bar_showing() ){
 			return;
 		}
 
@@ -63,11 +86,11 @@ class Site_Lockdown {
 			$locked = get_option( 'evans_site_lockdown' );
 
 			if ( $locked == 'locked' ){
-				$title = '<span style="color:green">'.__( 'Site is locked', 'evans-mu' ).'</span>';
-				$link = $this->maybe_add_get_to_url() . 'unlock_site=' . wp_create_nonce( 'evans_unlock_site' );
+				$title	= '<span style="color:green">'.__( 'Site is locked', 'evans-mu' ).'</span>';
+				$link	= $this->maybe_add_get_to_url() . 'unlock_site=' . wp_create_nonce( 'evans_unlock_site' );
 			} else {
-				$title = '<span style="color:red">'.__( 'Site is unlocked', 'evans-mu' ).'</span>';
-				$link = $this->maybe_add_get_to_url() . 'lock_site=' . wp_create_nonce( 'evans_lock_site' );
+				$title	= '<span style="color:red">'.__( 'Site is unlocked', 'evans-mu' ).'</span>';
+				$link	= $this->maybe_add_get_to_url() . 'lock_site=' . wp_create_nonce( 'evans_lock_site' );
 			}
 
 			$wp_admin_bar->add_node(
@@ -83,40 +106,42 @@ class Site_Lockdown {
 
 	}
 
+
 	/**
 	 * Check our option value and see if we need to block out the site
 	 *
 	 * If the site lock option was clicked, lock or unlock the sites from
-	 * outsiders
+	 * outsiders.
+	 *
+	 * @see wp_verify_nonce, update_option
 	 */
 	public function lockdown_this_thing() {
 
 		// If there's no parameter, stop
-		if ( !$_GET ){
+		if ( empty( $_GET ) ){
 			return;
 		}
 
-		if ( isset( $_GET['lock_site'] ) ){
+		if ( isset( $_GET['lock_site'] ) && wp_verify_nonce( $_GET['lock_site'], 'evans_lock_site' ) ){
 
-			if ( wp_verify_nonce( $_GET['lock_site'], 'evans_lock_site' ) ){
-				update_option( 'evans_site_lockdown', 'locked' );
-			}
+			update_option( 'evans_site_lockdown', 'locked' );
 
-		} else if ( isset( $_GET['unlock_site'] ) ){
+		} else if ( isset( $_GET['unlock_site'] ) && wp_verify_nonce( $_GET['unlock_site'], 'evans_unlock_site' ) ){
 
-			if ( wp_verify_nonce( $_GET['unlock_site'], 'evans_unlock_site' ) ){
-				update_option( 'evans_site_lockdown', 'unlocked' );
-			}
+			update_option( 'evans_site_lockdown', 'unlocked' );
 
 		}
 
 	}
 
+
 	/**
-	 * Check our option value and see if we need to block out the site
+	 * Check our option value and see if we need to block out the site.
 	 *
 	 * If we get the wrong IP back and the site is locked, we display
-	 * a page served from the dev server resources folder
+	 * a page served from the dev server resources folder.
+	 *
+	 * @see wp_remote_get
 	 */
 	public function lockdown_actions() {
 
@@ -125,9 +150,9 @@ class Site_Lockdown {
 		if ( $locked == 'locked' && !is_admin() ){
 
 			// Check to see if the current user is allowed
-			if ( !in_array( $_SERVER['REMOTE_ADDR'], $this->evans_acceptible_ips() ) ){
+			if ( !in_array( $_SERVER['REMOTE_ADDR'], $this->acceptable_ips ) ){
 
-				$response = wp_remote_get( 'http://dev.otmoffice.com/resources/index.html' );
+				$response = wp_remote_get( $this->block_page );
 
 				if( is_array( $response ) ) {
 				  echo $response['body']; // use the content
@@ -141,8 +166,13 @@ class Site_Lockdown {
 
 	}
 
+
 	 /**
-	 * Initially create the option to ensure the site is NOT locked down
+	 * Initially create the option to ensure the site is NOT locked down.
+	 *
+	 * Option is autoloaded.
+	 *
+	 * @see get_option,add_option
 	 */
 	public function set_lockdown_option() {
 
@@ -152,8 +182,9 @@ class Site_Lockdown {
 
 	}
 
+
 	/**
-	 * Parse the current url to see which type of prefix needs to be added to our URL
+	 * Parse the current url to see which type of prefix needs to be added to our URL.
 	 *
 	 * @return string reformatted URL with our parameter appended
 	 */
@@ -172,4 +203,7 @@ class Site_Lockdown {
 
 }
 
+/*
+ * Instantiate our class
+ */
 $evans_simple_admin = new Site_Lockdown();
