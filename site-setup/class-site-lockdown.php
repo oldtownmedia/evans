@@ -7,9 +7,9 @@ namespace evans;
  * Serves up a custom splash page to visitors not on our network if
  * the evans_site_lockdown option is set to 'locked'
  *
- * @package WordPress
- * @category mu_plugin
- * @author Old Town Media
+ * @package    WordPress
+ * @subpackage Evans
+ * @author     Old Town Media
  */
 class Site_Lockdown {
 

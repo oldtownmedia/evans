@@ -3,6 +3,10 @@ namespace evans;
 
 /**
  * Class to build test data for custom post types.
+ *
+ * @package    WordPress
+ * @subpackage Evans
+ * @author     Old Town Media
  */
 class BuildTestData{
 

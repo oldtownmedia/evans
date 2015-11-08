@@ -4,34 +4,41 @@ namespace evans;
 /**
  * Initial Settings
  *
- * Sets the WordPress site up with the proper settings to save time on install
+ * Sets the WordPress site up with the proper settings to save time on install.
  *
- * @package WordPress
- * @category mu_plugin
- * @author Old Town Media
+ * @package    WordPress
+ * @subpackage Evans
+ * @author     Old Town Media
  */
 class Initial_Settings{
 
 	/**
-	 * Constructor function.
-	 *
-	 * @access public
-	 */
+	  * Constructor function to
+	  *
+	  * Description.
+	  *
+	  * @see add_action
+	  */
 	public function __construct() {
+
+		// Only run if we're in the admin section
+		if ( !is_admin() ){
+			return;
+		}
 
 		add_action( 'admin_init', array( $this, 'set_home_page' ), 105 );
 		add_action( 'admin_init', array( $this, 'modify_permalinks' ), 105 );
-		add_action( 'admin_init', array( $this, 'create_menus' ), 105);
+		add_action( 'admin_init', array( $this, 'create_menus' ), 105 );
 		add_filter( 'admin_init', array( $this, 'update_settings' ), 105 );
 		add_action( 'admin_init', array( $this, 'add_customer_admin_role' ), 105 );
 
 	}
 
 	/**
-	 * Set the home page
-	 *
-	 * @access public
-	 */
+	  * Set our front page to the first page created.
+	  *
+	  * @see get_page_by_title, get_option, update_option
+	  */
 	public function set_home_page(){
 
 		$home = get_page_by_title( 'Sample Page' );
@@ -44,10 +51,11 @@ class Initial_Settings{
 	}
 
 	/**
-	 * Set our permalinks to the proper setting
-	 *
-	 * @access public
-	 */
+	  * Set permalinks to pretty rewrites.
+	  *
+	  * @see get_option, update_option
+	  * @global object $wp_rewrite Rewrite functionality
+	  */
 	public function modify_permalinks(){
 		global $wp_rewrite;
 
@@ -60,10 +68,10 @@ class Initial_Settings{
 	}
 
 	/**
-	 * Create the header menu and apply to header menu
-	 *
-	 * @access public
-	 */
+	  * Create a default "Header Menu" object.
+	  *
+	  * @see has_nav_menu, set_theme_mod
+	  */
 	public function create_menus(){
 
 		$evans_nav_theme_mod = false;
@@ -86,10 +94,10 @@ class Initial_Settings{
 	}
 
 	/**
-	 * Update blog settings
-	 *
-	 * @access public
-	 */
+	  * Set ping status & comment status to default closed & timezone to America/Denver.
+	  *
+	  * @see get_option, add_option
+	  */
 	public function update_settings(){
 
 		if ( get_option( 'default_comment_status' ) != 'closed' ){	update_option( 'default_comment_status', 'closed' ); }
@@ -97,16 +105,21 @@ class Initial_Settings{
 		if ( get_option( 'timezone_string' ) != 'America/Denver' ){ update_option( 'timezone_string', 'America/Denver' ); }
 
 		// Our theme setup is now complete, set a value that we can use later
-		// to stop the loading of this file
+		// to stop the loading of this file.
 		add_option( 'evans_theme_setup', 'setup', '', 'no' );
 
 	}
 
 	/**
-	 * Create a pseudo-admin custom role with limited priveledges
-	 *
-	 * @access public
-	 */
+	  * Add a new user role titled "Customer Admin".
+	  *
+	  * We created this role for development purposes. Clients should not be
+	  * worrying about plugins, themes, tools, etc. until the site is live - only
+	  * content areas. This role removes all of the unnnecessary items a client
+	  * doesn't need. As part of go-live, we then assign them full admin access.
+	  *
+	  * @see add_role
+	  */
 	public function add_customer_admin_role(){
 
 		$role_id 		= 'customer_admin';
@@ -170,7 +183,7 @@ class Initial_Settings{
 			'administrator' 		=> false,
 		);
 
-
+		// Actually create our new role if it doesn't already exist.
 		if( ! $GLOBALS['wp_roles']->is_role( $role_id ) ) {
 
 			$result = add_role(

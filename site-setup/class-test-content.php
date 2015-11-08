@@ -1,6 +1,13 @@
 <?php
 namespace evans;
 
+/**
+ * Class to run create test content on the fly.
+ *
+ * @package    WordPress
+ * @subpackage Evans
+ * @author     Old Town Media
+ */
 class TestContent{
 
 	private static $instance;
