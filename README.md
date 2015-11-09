@@ -8,6 +8,11 @@ Evans is our functionality mu-plugin for all sites that we build. Evans handles 
 
 The mu-plugin can simply be downloaded and placed your wp-content folder and will work automatically without any modifications. However, Evans is very opinionated and by default includes setup scripts that could override existing settings if you do not delete the site-setup files first. Decide what functionality you would like to keep first and delete the unnecessary files - Evans will know what to load and the order in which to load it.
 
+### Requirements
+
+* PHP 5.3
+* WordPress 4.0
+
 ### Why a mu-plugin?
 
 We settled on a mu-plugin over a regular WordPress plugin for several reasons:
@@ -27,14 +32,34 @@ This worked very well and rapidly evolved over several years but started to show
 
 ### CPT
 
+You can spin up a Custom Post Type by extending the `evans\CPT` class. There are a few required protected variables - everything else beyond is optional. For organization sake, files should be put in the `/modules` subdirectory. See example below:
+
+```php
+protected $cptslug 			= 'testimonial';
+protected $cptslug_plural	= 'testimonials';
+protected $singular			= 'Testimonial';
+protected $plural			= 'Testimonials';
+protected $icon				= 'dashicons-format-quote';
+```
+
+Beyond that, you can add a taxonomy by defining the `$tax_slug`, `$taxonomy_name`, and `$taxonomy_plural` variables. You can override any of the methods in the child class to modify the loop, display, or add metaboxes in CMB2.
+
+
+### Test Data
+
+You can spin up test data in a variety of formats using the `evans\TestContent` class. There are a variety of formats and all methods are static only because you only need each one one at a time. Methods inclue: 
+
+```php
+title()
+paragraphs()
+plain_text()
+image()
+date()
+phone()
+email()
+```
 
 
 ### Widget
 
-
-
-### Dashboard Widget
-
-
-
-### Test Data
+Widgets can be spun up by extending the `evans\Widget` class. You need to define the few protected variables `$base`, `$title`, and `$description`. Then, override the `widget_fields` method and feed it an array of potential fields with id, title, and potentially options, and override the `view` method with the front-end HTML for the view.

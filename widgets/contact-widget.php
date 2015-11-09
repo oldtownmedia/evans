@@ -9,7 +9,7 @@ namespace evans;
  * @link      https://oldtownmediainc.com
  * @copyright 2015 Old Town Media
  */
-class ContactWidget extends Evans_Widget{
+class ContactWidget extends Widget{
 
 	protected $base			= 'contact';
 	protected $title		= 'Contact Information';

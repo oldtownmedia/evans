@@ -9,7 +9,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-abstract class Evans_Widget extends \WP_Widget {
+abstract class Widget extends \WP_Widget {
 
 	/**
 	 * base

@@ -9,7 +9,7 @@ namespace evans;
  * @link      https://oldtownmediainc.com
  * @copyright 2015 Old Town Media
  */
-class RecentNewsWidget extends Evans_Widget{
+class RecentNewsWidget extends Widget{
 
 	protected $base			= 'recent-news';
 	protected $title		= 'Recent News';
