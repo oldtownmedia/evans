@@ -11,9 +11,9 @@ namespace evans;
 class BuildTestData{
 
 	/**
-	 * Hooks function
+	 * Hooks function.
 	 *
-	 * This function is used to avoid loading any unnecessary functions/code
+	 * This function is used to avoid loading any unnecessary functions/code.
 	 *
 	 * @see admin_menu, wp_ajax actions
 	 */
@@ -43,7 +43,7 @@ class BuildTestData{
 	}
 
 	/**
-	 * Ajax callback function for triggering the creatin & deletion of test data.
+	 * Ajax callback function for triggering the creation & deletion of test data.
 	 *
 	 * @see wp_ajax filter, $this->add_menu_item
 	 */
@@ -54,21 +54,21 @@ class BuildTestData{
 		$nonce		= $_REQUEST['nonce'];
 
 		// Verify that we have a proper logged in user and it's the right person
-		if ( !empty( $nonce ) && wp_verify_nonce( $nonce, 'handle-test-data' ) ){
+		if ( empty( $nonce ) || !wp_verify_nonce( $nonce, 'handle-test-data' ) ){
+			return;
+		}
 
-			if ( $action == 'delete' ){
+		if ( $action == 'delete' ){
 
-				$this->delete_test_content( $cptslug );
-				echo "Deleted " . $cptslug ."s";
+			$this->delete_test_content( $cptslug );
+			echo "Deleted " . $cptslug ."s";
 
-			} elseif ( $action == 'create' ){
+		} elseif ( $action == 'create' ){
 
-				$this->create_post_type_content( $cptslug );
-				echo "Created " . $cptslug ."s";
+			$this->create_post_type_content( $cptslug );
+			echo "Created " . $cptslug ."s";
 
-			}
-
-		} // end nonce check
+		}
 
 		die();
 
@@ -129,7 +129,6 @@ class BuildTestData{
 							'nonce' : '<?php echo wp_create_nonce( 'handle-test-data' ); ?>'
 						};
 
-						// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 						jQuery.post( ajaxurl, data, function(response) {
 							console.log( '<?php __( 'Got this from the server: ', 'evans-mu' ); ?>' + response );
 							$( '.loading-icon' ).remove();
@@ -201,6 +200,8 @@ class BuildTestData{
 	 */
 	private function delete_test_content( $cptslug ){
 
+		// Check that $cptslg has a string.
+		// Also make sure that the current user is logged in & has full permissions.
 		if ( empty( $cptslug ) || !is_user_logged_in() || !current_user_can( 'delete_posts' ) ){
 			return;
 		}
@@ -317,7 +318,7 @@ class BuildTestData{
 
 
 	/**
-	 * Gets all CMBS custom metaboxes associated with a post type.
+	 * Gets all CMB2 custom metaboxes associated with a post type.
 	 *
 	 * Loops through all custom metabox fields registered with CMB2 and
 	 * looks through them for matches on the given post type ID. Returns a single
@@ -375,135 +376,140 @@ class BuildTestData{
 	 */
 	private function random_metabox_content( $post_id, $cmb ){
 
-		if ( !empty( $cmb ) && !empty( $post_id ) ){
+		// First check that our post ID & cmb array aren't empty
+		if ( empty( $cmb ) || empty( $post_id ) ){
+			return;
+		}
 
-			switch( $cmb['type'] ){
+		switch( $cmb['type'] ){
 
-				case 'text':
-				case 'text_small':
-				case 'text_medium':
+			case 'text':
+			case 'text_small':
+			case 'text_medium':
 
-					if ( stripos( $cmb['id'], 'phone' ) ){
-						$value = TestContent::phone();
-					} elseif ( stripos( $cmb['id'], 'email' ) ){
-						$value = TestContent::email();
-					} else {
-						$value = TestContent::plain_text();
-					}
+				// If phone is in the id, fetch a phone #
+				if ( stripos( $cmb['id'], 'phone' ) ){
+					$value = TestContent::phone();
 
-					break;
-
-				case 'text_url':
-
-					$value = TestContent::link();
-
-					break;
-
-				case 'text_email':
-
+				// If email is in the id, fetch an email address
+				} elseif ( stripos( $cmb['id'], 'email' ) ){
 					$value = TestContent::email();
 
-					break;
-
-				// case 'text_time': break;
-				// case 'select_timezone': break;
-
-				case 'text_date':
-
-					$value = TestContent::date( 'm/d/Y' );
-
-					break;
-
-				case 'text_date_timestamp':
-				case 'text_datetime_timestamp':
-
-					$value = TestContent::date( 'U' );
-
-					break;
-
-				// case 'text_datetime_timestamp_timezone': break;
-
-				case 'text_money':
-
-					$value = rand( 0, 100000 );
-
-					break;
-
-				case 'test_colorpicker':
-
-					$value = '#' . str_pad( dechex( mt_rand( 0, 0xFFFFFF ) ), 6, '0', STR_PAD_LEFT );
-
-					break;
-
-				case 'textarea':
-				case 'textarea_small':
-				case 'textarea_code':
-
-					$value = TestContent::plain_text();
-
-					break;
-
-				// case 'title': break;
-
-				case 'select':
-				case 'radio_inline':
-				case 'radio':
-
-					// Grab a random item out of the array and return the key
-					$new_val = array_slice( $cmb['options'], rand( 0, count( $cmb['options'] ) ), 1 );
-					$value = key( $new_val );
-
-					break;
-
-				// case 'taxonomy_radio': break;
-				// case 'taxonomy_select': break;
-				// case 'taxonomy_multicheck': break;
-
-				case 'checkbox':
-
-					// 50/50 odds of being turned on
-					if ( rand( 0, 1 ) == 1 ){
-						$value = 'on';
-					}
-
-					break;
-
-				// case 'multicheck': break;
-
-				case 'wysiwyg':
-
-					$value = TestContent::paragraphs();
-
-					break;
-
-				case 'file':
-
-					$value = TestContent::image( $post_id );
-
-					break;
-
-				// case 'file_list': break;
-				// case 'embed': break;
-
-			}
-
-			// Value must exist to attempt to insert
-			if ( !empty( $value ) && !is_wp_error( $value ) ){
-
-				// Files must be treated separately - they use the attachment ID
-				// & url of media for separate cmb values
-				if ( $cmb['type'] != 'file' ){
-					add_post_meta( $post_id, $cmb['id'], $value, true );
+				// Otherwise, just a random text string
 				} else {
-					add_post_meta( $post_id, $cmb['id'].'_id', $value, true );
-					add_post_meta( $post_id, $cmb['id'], wp_get_attachment_url( $value ), true );
+					$value = TestContent::plain_text();
 				}
 
-			} elseif ( is_wp_error( $value ) ){
-				echo $value->get_error_message();
+				break;
+
+			case 'text_url':
+
+				$value = TestContent::link();
+
+				break;
+
+			case 'text_email':
+
+				$value = TestContent::email();
+
+				break;
+
+			// case 'text_time': break;
+			// case 'select_timezone': break;
+
+			case 'text_date':
+
+				$value = TestContent::date( 'm/d/Y' );
+
+				break;
+
+			case 'text_date_timestamp':
+			case 'text_datetime_timestamp':
+
+				$value = TestContent::date( 'U' );
+
+				break;
+
+			// case 'text_datetime_timestamp_timezone': break;
+
+			case 'text_money':
+
+				$value = rand( 0, 100000 );
+
+				break;
+
+			case 'test_colorpicker':
+
+				$value = '#' . str_pad( dechex( mt_rand( 0, 0xFFFFFF ) ), 6, '0', STR_PAD_LEFT );
+
+				break;
+
+			case 'textarea':
+			case 'textarea_small':
+			case 'textarea_code':
+
+				$value = TestContent::plain_text();
+
+				break;
+
+			case 'select':
+			case 'radio_inline':
+			case 'radio':
+
+				// Grab a random item out of the array and return the key
+				$new_val = array_slice( $cmb['options'], rand( 0, count( $cmb['options'] ) ), 1 );
+				$value = key( $new_val );
+
+				break;
+
+			// case 'taxonomy_radio': break;
+			// case 'taxonomy_select': break;
+			// case 'taxonomy_multicheck': break;
+
+			case 'checkbox':
+
+				// 50/50 odds of being turned on
+				if ( rand( 0, 1 ) == 1 ){
+					$value = 'on';
+				}
+
+				break;
+
+			// case 'multicheck': break;
+
+			case 'wysiwyg':
+
+				$value = TestContent::paragraphs();
+
+				break;
+
+			case 'file':
+
+				$value = TestContent::image( $post_id );
+
+				break;
+
+			// case 'file_list': break;
+			// case 'embed': break;
+
+		}
+
+		// Value must exist to attempt to insert
+		if ( !empty( $value ) && !is_wp_error( $value ) ){
+
+			// Files must be treated separately - they use the attachment ID
+			// & url of media for separate cmb values
+			if ( $cmb['type'] != 'file' ){
+				add_post_meta( $post_id, $cmb['id'], $value, true );
+			} else {
+				add_post_meta( $post_id, $cmb['id'].'_id', $value, true );
+				add_post_meta( $post_id, $cmb['id'], wp_get_attachment_url( $value ), true );
 			}
 
-		} // end if
+		// If we're dealing with a WP Error object, just return the message for debugging
+		} elseif ( is_wp_error( $value ) ){
+			echo $value->get_error_message();
+		}
 
 	} // end random_metabox_content
 

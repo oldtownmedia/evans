@@ -2,7 +2,13 @@
 namespace evans;
 
 /**
- * Class to run create test content on the fly.
+ * Test Content
+ *
+ * Class to create test content on the fly for multiple situations.
+ *
+ * Run any of the methods in this class to get random data of a particular type.
+ * All methods are static and can be called indepenently of the type of data
+ * you're trying to create (i.e. posts, cpts, or even cutom table data).
  *
  * @package    WordPress
  * @subpackage Evans
@@ -10,18 +16,16 @@ namespace evans;
  */
 class TestContent{
 
-	private static $instance;
-
-	public static function get_data(){
-
-        if (null === static::$instance) {
-            static::$instance = new static();
-        }
-
-        return static::$instance;
-
-    }
-
+	/**
+	 * Title function.
+	 *
+	 * Builds a short random title.
+	 *
+	 * @see substr
+	 *
+	 * @param int $num_words Number of words to return.
+	 * @return string Random title string.
+	 */
 	public static function title( $num_words = '' ){
 
 		$title = '';
@@ -62,19 +66,32 @@ class TestContent{
 
 		);
 
+		// If we didn't choose a count, make one
 		if ( empty( $num_words ) ){
 			$num_words = rand( 2, 10 );
 		}
 
+		// Pull random words
 		for( $i = 1; $i <= $num_words; $i++ ){
 			$title .= $random_words[ rand( 0, 31 ) ] . " ";
 		}
 
 		return substr( $title, 0, -1 );
+
 	}
 
 
+	/**
+	 * Paragraphs full of random tags.
+	 *
+	 * Returns raond full TinyMCE-compatible paragraphs with random content such
+	 * as tables, images, quotes, etc.
+	 *
+	 * @return string Paragraph(s) of text.
+	 */
 	public static function paragraphs(){
+
+		$content = '';
 
 		$random_content_types = array(
 			"<p>OK, so images can get quite complicated as we have a few variables to work with! For example the image below has had a caption entered in the WordPress image upload dialog box, this creates a [caption] shortcode which then in turn wraps the whole thing in a <code>div</code> with inline styling! Maybe one day they'll be able to use the <code>figure</code> and <code>figcaption</code> elements for all this. Additionally, images can be wrapped in links which, if you're using anything other than <code>color</code> or <code>text-decoration</code> to style your links can be problematic.</p>",
@@ -168,8 +185,6 @@ CSSland,
 			'Sed porttitor augue vitae ante posuere sodales iaculis nec neque. Etiam dapibus nulla id vulputate tempus. Quisque tempus nisi dui, a commodo nulla sodales ut. Nulla nec odio tempus, sodales diam quis, feugiat odio. Nulla tincidunt tincidunt turpis, eget cursus felis tempor lacinia. Aenean molestie libero ut erat luctus aliquam. Sed vel enim quis nisl lacinia posuere. Ut fringilla ligula ligula, nec rhoncus mi suscipit id. Praesent volutpat blandit felis, et suscipit elit vulputate sit amet. Morbi sit amet justo quis sem rutrum euismod. Pellentesque at dictum sem, sed condimentum ex. Vivamus massa nisi, convallis in semper sit amet, venenatis convallis lectus. Nunc tristique, ex ac rutrum vehicula, arcu ex efficitur justo, sed euismod ligula nulla ut purus.',
 		);
 
-		$content = '';
-
 		for( $i = 1; $i < 6; $i++ ){
 			$content .= $random_content_types[rand( 0, 9 )];
 		}
@@ -178,6 +193,14 @@ CSSland,
 
 	}
 
+
+	/**
+	 * Plain text.
+	 *
+	 * Return paragraphs of plain text.
+	 *
+	 * @return string Plain text paragraphs.
+	 */
 	public static function plain_text(){
 
 		$paragraphs = array(
@@ -198,26 +221,38 @@ CSSland,
 	}
 
 
+	/**
+	 * Image.
+	 *
+	 * Fetch a random image, make sure it is formatted right, download it, and
+	 * put it in the media library.
+	 *
+	 * @see $this::get_image_link(), download_url, media_handle_sideload
+	 *
+	 * @param int $post_id Post ID.
+	 * @return mixed Attachment ID or WP Error.
+	 */
 	public static function image( $post_id ){
 		$file_array = array();
 
 		// Get the image from the API
 		$url = self::get_image_link();
 
+		// If the returned string is empty or it's not a string, try again.
 		if ( empty( $url ) || !is_string( $url ) ){
-			return;
+
+			// Try again
+			$url = self::get_image_link();
+
+			// If it fails again, just give up
+			if ( empty( $url ) || !is_string( $url ) ){
+				return;
+			}
+
 		}
 
+		// Download the file
 	    $tmp = download_url( $url );
-
-		// Double check the url for a proper image extension to be sure
-		preg_match( '/[^\?]+\.(jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/', $url, $matches );
-
-		if ( empty( $matches ) ){
-			return;
-		} elseif( is_wp_error( $tmp ) ){
-			return $tmp->get_error_message();
-		}
 
         $file_array['name'] = basename( $matches[0] );
         $file_array['tmp_name'] = $tmp;
@@ -225,14 +260,16 @@ CSSland,
 	    // Check for download errors
 	    if ( is_wp_error( $tmp ) ) {
 	        @unlink( $file_array[ 'tmp_name' ] );
-	        return;
+	        return $tmp->get_error_message();
 	    }
 
+		// Pull the image into the media library
 	    $image_id = media_handle_sideload( $file_array, $post_id );
 
 	    // Check for handle sideload errors.
 	    if ( is_wp_error( $image_id ) ) {
 	        @unlink( $file_array['tmp_name'] );
+	        return $image_id->get_error_message();
 	    }
 
 	    return $image_id;
@@ -240,6 +277,13 @@ CSSland,
 	}
 
 
+	/**
+	 * Fetch an image url from the splashbase API.
+	 *
+	 * @see cURL functions, preg_match
+	 *
+	 * @return string Image URL.
+	 */
 	private static function get_image_link(){
 
 		// cURL an image API for a completely random photo
@@ -271,6 +315,16 @@ CSSland,
 	}
 
 
+	/**
+	 * Date.
+	 *
+	 * Return a date in the future (up to 60 days out) in the format prescribed.
+	 *
+	 * @see Function/method/class relied on
+	 *
+	 * @param string $format PHP Date format.
+	 * @return mixed Date in the format requested.
+	 */
 	public static function date( $format ){
 
 		$num_days = rand( 1, 60 );
@@ -279,6 +333,13 @@ CSSland,
 	}
 
 
+	/**
+	 * Phone.
+	 *
+	 * Returns a random phone # in multiple international formats.
+	 *
+	 * @return string Phone #.
+	 */
 	public static function phone(){
 
 		$phone_numbers = array(
@@ -300,6 +361,13 @@ CSSland,
 	}
 
 
+	/**
+	 * Email.
+	 *
+	 * Returns a random email address in random lengths/formats.
+	 *
+	 * @return string Email address.
+	 */
 	public static function email(){
 
 		$email_addresses = array(
@@ -318,6 +386,15 @@ CSSland,
 	}
 
 
+	/**
+	 * Link.
+	 *
+	 * Returns link in a completely random format.
+	 *
+	 * @see site_url
+	 *
+	 * @return string URL.
+	 */
 	public static function link(){
 
 		$links = array(

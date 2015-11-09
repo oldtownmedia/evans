@@ -32,9 +32,9 @@ class Clean_Admin {
 		add_action( 'admin_notices', array( $this, 'custom_update_nag' ), 99 );
 		add_filter( 'menu_order', array( $this, 'menu_order' ), 9999 );
 		add_filter( 'custom_menu_order', '__return_true' );
-        add_filter( 'manage_posts_columns', array( $this, 'evans_remove_columns' ) );
-        add_filter( 'gettext', array( $this, 'tgm_soliloquy_envira_whitelabel' ), 10, 3 );
+		add_filter( 'gettext', array( $this, 'tgm_soliloquy_envira_whitelabel' ), 10, 3 );
         add_filter( 'envira_gallery_skipped_posttypes', array( $this, 'envira_skip_custom_post_type' ) );
+        add_filter( 'manage_posts_columns', array( $this, 'evans_remove_columns' ) );
         add_action( 'admin_menu', array( $this, 'remove_post_meta_boxes' ) );
         add_filter( 'manage_pages_columns', array( $this, 'clean_post_columns' ) );
         add_action( 'wp_before_admin_bar_render', array( $this, 'remove_admin_bar_links' ) );
@@ -50,10 +50,12 @@ class Clean_Admin {
 
 
 	/**
-	 * Add new fields to wp-admin/options-general.php page
+	 * Add new fields to wp-admin/options-general.php page.
 	 *
-	 * Add an option for a user to override the clean-admin
-	 * options and show the default WP layout
+	 * Add an option for a user to override the clean-admin options and show
+	 * the default WP layout.
+	 *
+	 * @see register_setting, add_settings_field
 	 */
 	public function register_fields() {
 
@@ -73,7 +75,9 @@ class Clean_Admin {
 
 
 	/**
-	 * HTML for extra settings fields in the general settings page
+	 * HTML for extra settings fields in the general settings page.
+	 *
+	 * @see get_option
 	 */
 	public function fields_html() {
 		$value = get_option( 'evans_clean_admin_bar', 'on' );
@@ -96,8 +100,9 @@ class Clean_Admin {
 	*************/
 
 	/**
-	 * Remove Unnecesary Menu & Sub-Menu Items
+	 * Remove unnecesary menu & sub-menu items.
 	 *
+	 * @see get_option, remove_menu_page, remove_submenu_page
 	 * @global array $menu Array of main menu items.
 	 * @global array $submenu Array of submenu items.
 	 */
@@ -196,8 +201,13 @@ class Clean_Admin {
 	}
 
 
+	/******************
+	* Plugin Specific *
+	******************/
+
+
 	/**
-	 * Modify the text for Soliloquy & Envira to whitelabeled strings
+	 * Modify the text for Soliloquy & Envira to whitelabeled strings.
 	 *
 	 * @param string $translated_text translated version of the string.
 	 * @param string $source_text original text.
@@ -241,46 +251,7 @@ class Clean_Admin {
 
 
 	/**
-	 * Remove unnecessary post columns from posts and pages
-	 *
-	 * Remove author & comments columns
-	 *
-	 * @param array $columns columns for the post type.
-	 * @return array $columns Modified columns array.
-	 */
-	public function clean_post_columns( $columns ){
-
-		unset(
-			$columns['author'],
-			$columns['comments']
-		);
-
-		return $columns;
-	}
-
-
-	/**
-	 * Remove unnecessary admin bar links
-	 *
-	 * @global array $wp_admin_bar Full admin bar object.
-	 */
-	public function remove_admin_bar_links() {
-	    global $wp_admin_bar;
-
-	    $wp_admin_bar->remove_menu( 'wp-logo' );          // Remove the WordPress logo
-	    $wp_admin_bar->remove_menu( 'about' );            // Remove the about WordPress link
-	    $wp_admin_bar->remove_menu( 'wporg' );            // Remove the WordPress.org link
-	    $wp_admin_bar->remove_menu( 'documentation' );    // Remove the WordPress documentation link
-	    $wp_admin_bar->remove_menu( 'support-forums' );   // Remove the support forums link
-	    $wp_admin_bar->remove_menu( 'feedback' );         // Remove the feedback link
-	    $wp_admin_bar->remove_menu( 'comments' );         // Remove the comments link
-	}
-
-
-	/**
 	 * Filter out Envira from showing on a custom post type.
-	 *
-	 * @since 1.0.0
 	 *
 	 * @param array $post_types  Default post types to skip.
 	 * @return array $post_types Modified post types to skip.
@@ -305,8 +276,53 @@ class Clean_Admin {
 	}
 
 
+	/****************
+	* General Admin *
+	****************/
+
+
 	/**
-	 * Remove author & tags boxes from the post edit box
+	 * Remove unnecessary post columns from posts and pages.
+	 *
+	 * Remove author & comments columns
+	 *
+	 * @param array $columns columns for the post type
+	 * @return array $columns Modified columns array
+	 */
+	public function clean_post_columns( $columns ){
+
+		unset(
+			$columns['author'],
+			$columns['comments']
+		);
+
+		return $columns;
+	}
+
+
+	/**
+	 * Remove unnecessary admin bar links.
+	 *
+	 * @global array $wp_admin_bar Full admin bar object.
+	 */
+	public function remove_admin_bar_links() {
+	    global $wp_admin_bar;
+
+	    $wp_admin_bar->remove_menu( 'wp-logo' );          // Remove the WordPress logo
+	    $wp_admin_bar->remove_menu( 'about' );            // Remove the about WordPress link
+	    $wp_admin_bar->remove_menu( 'wporg' );            // Remove the WordPress.org link
+	    $wp_admin_bar->remove_menu( 'documentation' );    // Remove the WordPress documentation link
+	    $wp_admin_bar->remove_menu( 'support-forums' );   // Remove the support forums link
+	    $wp_admin_bar->remove_menu( 'feedback' );         // Remove the feedback link
+	    $wp_admin_bar->remove_menu( 'comments' );         // Remove the comments link
+
+	}
+
+
+	/**
+	 * Remove author & tags boxes from the post edit box.
+	 *
+	 * @see remove_meta_box
 	 */
 	public function remove_post_meta_boxes() {
 
@@ -317,7 +333,9 @@ class Clean_Admin {
 
 
 	/**
-	 * Remove unnecesary dashboard widgets from the admin dashboard
+	 * Remove unnecesary dashboard widgets from the admin dashboard.
+	 *
+	 * @see remove_meta_box
 	 */
 	public function evans_remove_dashboard_widgets() {
 
@@ -336,7 +354,7 @@ class Clean_Admin {
 	/**
 	 * Remove default nag
 	 *
-	 * @global string $pagenow Current page in the admin dashboard.
+	 * @see remove_meta_box
 	 */
 	public function remove_core_update_nag() {
 
@@ -347,8 +365,9 @@ class Clean_Admin {
 
 
 	/**
-	 * Custom dashboard nag that tells customers to contact us
+	 * Custom dashboard nag that tells customers to contact us.
 	 *
+	 * @see get_preferred_from_update_core, is_multisite, current_user_can
 	 * @global string $pagenow Current page in the admin dashboard.
 	 */
 	public function custom_update_nag() {
@@ -381,7 +400,7 @@ class Clean_Admin {
 
 
 	/**
-	 * Remove author column from post listing
+	 * Remove author column from post listing.
 	 *
 	 * @param array $defaults Default column listin.
 	 * @return array $defaults Modified column listing.
@@ -395,7 +414,9 @@ class Clean_Admin {
 
 
 	/**
-	 * Insert our own stylesheet into the login page to customize it
+	 * Insert our own stylesheet into the login page to customize it.
+	 *
+	 * @see wp_enqueue_style, get_template_directory_uri
 	 */
 	public function evans_login_css() {
 		wp_enqueue_style( 'login_css', get_template_directory_uri() . '/styles/login.css' );
@@ -403,7 +424,7 @@ class Clean_Admin {
 
 
 	/**
-	 * Modify the array of tinymce buttons in the visual editor for row 1
+	 * Modify the array of tinymce buttons in the visual editor for row 1.
 	 *
 	 * @param array $buttons Default mce buttons row 1.
 	 * @return array Modified array of buttons for row 1.
@@ -439,9 +460,9 @@ class Clean_Admin {
 
 
 	/**
-	 * Modify the array of tinymce buttons in the visual editor for row 2 (ie: kill them all!)
+	 * Modify the array of tinymce buttons in the visual editor for row 2 (ie: kill them all!).
 	 *
-	 * @param array $buttons Default mce buttons row 1.
+	 * @param array $buttons Default mce buttons row 2.
 	 * @return array empty array.
 	 */
 	public function evans_extended_editor_mce_buttons_2( $buttons ) {
@@ -453,7 +474,7 @@ class Clean_Admin {
 
 
 	/**
-	 * Remove Yoast SEO columns from all post types
+	 * Remove Yoast SEO columns from all post types.
 	 *
 	 * @param type $columns Default column array.
 	 * @return array $columns Modified array of columns.
@@ -472,7 +493,9 @@ class Clean_Admin {
 
 
 	/**
-	 * Remove Yoast SEO custom metaboxes from CPTs that don't have their own single
+	 * Remove Yoast SEO custom metaboxes from CPTs that don't have their own single.
+	 *
+	 * @see current_user_can, remove_meta_box
 	 */
 	public function evans_remove_seo_metabox() {
 
@@ -487,6 +510,11 @@ class Clean_Admin {
 	}
 
 
+	/**
+	 * Remove Yoast SEO custom metaboxes from CPTs that don't have their own single.
+	 *
+	 * @see current_user_can, apply_filters, wp_count_posts, number_format_i18n
+	 */
 	public function right_now_cpt_count() {
 
 		if ( current_user_can( 'edit_posts' ) && is_admin() ) {
