@@ -38,7 +38,6 @@ class Clean_Admin {
         add_action( 'admin_menu', array( $this, 'remove_post_meta_boxes' ) );
         add_filter( 'manage_pages_columns', array( $this, 'clean_post_columns' ) );
         add_action( 'wp_before_admin_bar_render', array( $this, 'remove_admin_bar_links' ) );
-        add_action( 'login_head', array( $this, 'evans_login_css' ) );
         add_filter( 'mce_buttons', array( $this, 'evans_extended_editor_mce_buttons' ), 0 );
 		add_filter( 'mce_buttons_2', array( $this, 'evans_extended_editor_mce_buttons_2' ), 0 );
 		add_action( 'add_meta_boxes', array( $this, 'evans_remove_seo_metabox' ), 11 );
@@ -410,16 +409,6 @@ class Clean_Admin {
 		unset( $defaults['author'] );
 		return $defaults;
 
-	}
-
-
-	/**
-	 * Insert our own stylesheet into the login page to customize it.
-	 *
-	 * @see wp_enqueue_style, get_template_directory_uri
-	 */
-	public function evans_login_css() {
-		wp_enqueue_style( 'login_css', get_template_directory_uri() . '/styles/login.css' );
 	}
 
 
