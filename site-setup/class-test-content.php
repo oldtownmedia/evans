@@ -252,7 +252,9 @@ CSSland,
 		}
 
 		// Download the file
-	    $tmp = download_url( $url );
+	    $tmp = \download_url( $url );
+
+	    preg_match( '/[^\?]+\.(jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/', $url, $matches );
 
         $file_array['name'] = basename( $matches[0] );
         $file_array['tmp_name'] = $tmp;
@@ -320,8 +322,6 @@ CSSland,
 	 *
 	 * Return a date in the future (up to 60 days out) in the format prescribed.
 	 *
-	 * @see Function/method/class relied on
-	 *
 	 * @param string $format PHP Date format.
 	 * @return mixed Date in the format requested.
 	 */
@@ -329,6 +329,30 @@ CSSland,
 
 		$num_days = rand( 1, 60 );
 		return date( $format, strtotime( " +$num_days days" ) );
+
+	}
+
+
+	/**
+	 * Time.
+	 *
+	 * Return a random time in various formats
+	 *
+	 * @return string Time string
+	 */
+	public static function time(){
+
+		$times = array(
+			'8:00 am',
+			'5:00PM',
+			'13:00',
+			'2015',
+			date( 'G:i', strtotime( " +".rand( 4, 24 )." hours" ) ),
+			date( 'g:i', strtotime( " +".rand( 4, 24 )." hours" ) ),
+			date( 'G:i A', strtotime( " +".rand( 4, 24 )." hours" ) )
+		);
+
+		return $times[ rand( 0, 6 ) ];
 
 	}
 

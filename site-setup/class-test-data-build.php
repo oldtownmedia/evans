@@ -395,9 +395,13 @@ class BuildTestData{
 				} elseif ( stripos( $cmb['id'], 'email' ) ){
 					$value = TestContent::email();
 
+				// If time is in the id, fetch a time string
+				} elseif ( stripos( $cmb['id'], 'time' ) ){
+					$value = TestContent::time();
+
 				// Otherwise, just a random text string
 				} else {
-					$value = TestContent::plain_text();
+					$value = TestContent::title( rand( 10, 50 ) );
 				}
 
 				break;
