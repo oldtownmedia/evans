@@ -56,11 +56,6 @@ function my_theme_register_required_plugins() {
 			'required' 	=> true,
 		),
 		array(
-			'name' 		=> 'Disable Emojis',
-			'slug' 		=> 'disable-emojis',
-			'required' 	=> true,
-		),
-		array(
 			'name' 		=> 'Google Analytics for WordPress',
 			'slug' 		=> 'google-analytics-for-wordpress',
 			'required' 	=> false,
