@@ -225,6 +225,9 @@ class BuildTestData{
 
 			while ( $objects->have_posts() ) : $objects->the_post();
 
+				// Find any media associated with the test post and delete it as well
+				$this->delete_associated_media( get_the_id() );
+
 				// Force delete the post
 				wp_delete_post( get_the_id(), true );
 
@@ -233,6 +236,41 @@ class BuildTestData{
 		}
 
 	}
+
+
+	/**
+	 * Find and delete attachments associated with a post ID.
+	 *
+	 * This function finds each attachment that is associated with a post ID
+	 * and deletes it completely from the site. This is to prevent leftover
+	 * random images from sitting on the site forever.
+	 *
+	 * @access private
+	 *
+	 * @see get_attached_media, wp_delete_attachment
+	 *
+	 * @param int $pid a custom post type ID.
+	 */
+	private function delete_associated_media( $pid ){
+
+		if ( !is_int( $pid ) ){
+			return;
+		}
+
+		// Get our images
+		$media = get_attached_media( 'image', $pid );
+
+		if ( !empty( $media ) ){
+
+			// Loop through the media & delete each one
+			foreach ( $media as $attachment ){
+				wp_delete_attachment( $attachment->ID, true );
+			}
+
+		}
+
+	}
+
 
 	/**
 	 * Creates the individual test data post.
