@@ -177,6 +177,8 @@ class BuildTestData{
 			$num = rand( 5, 30 );
 		}
 
+		$num = 2;
+
 		// Create test posts
 		for( $i = 1; $i <= $num; $i++ ){
 			$this->create_test_object( $cptslug, $supports, $metaboxes );
@@ -419,7 +421,12 @@ class BuildTestData{
 				break;
 
 			// case 'text_time': break;
-			// case 'select_timezone': break;
+
+			case 'select_timezone':
+
+				$value = TestContent::timezone();
+
+				break;
 
 			case 'text_date':
 
@@ -479,7 +486,23 @@ class BuildTestData{
 
 				break;
 
-			// case 'multicheck': break;
+			case 'multicheck':
+
+				$new_option = array();
+
+				// Loop through each of our options
+				foreach ( $cmb['options'] as $key => $value ){
+
+					// 50/50 chance of being included
+					if ( rand( 0, 1 ) ){
+						$new_option[] = $key;
+					}
+
+				}
+
+				$value = $new_option;
+
+				break;
 
 			case 'wysiwyg':
 
@@ -494,7 +517,12 @@ class BuildTestData{
 				break;
 
 			// case 'file_list': break;
-			// case 'embed': break;
+
+			case 'oembed':
+
+				$value = TestContent::oembed();
+
+				break;
 
 		}
 

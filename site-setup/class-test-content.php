@@ -358,6 +358,37 @@ CSSland,
 
 
 	/**
+	 * Timezone.
+	 *
+	 * Return a random timezone from a subset of available options.
+	 *
+	 * @return string Timezone
+	 */
+	public static function timezone(){
+
+		$timezones = array(
+			'America/Denver',
+			'America/New_York',
+			'America/Los_Angeles',
+			'Europe/London',
+			'Europe/Paris',
+			'Europe/Zurich',
+			'Europe/Dublin',
+			'Atlantic/Reykjavik',
+			'Australia/Brisbane',
+			'UTC+0',
+			'UTC+7',
+			'UTC-1',
+			'UTC'
+		);
+
+		return $timezones[ rand( 0, 12 ) ];
+
+	}
+
+
+
+	/**
 	 * Phone.
 	 *
 	 * Returns a random phone # in multiple international formats.
@@ -433,6 +464,28 @@ CSSland,
 		);
 
 		return $links[ rand( 0, 7 ) ];
+
+	}
+
+	/**
+	 * Oembed.
+	 *
+	 * Returns a random oembed-compatible link.
+	 *
+	 * @return string URL.
+	 */
+	public static function oembed(){
+
+		$links = array(
+			'https://www.youtube.com/watch?v=A85-YQsm6pY',
+			'https://vimeo.com/140327103',
+			'https://twitter.com/WordPress/status/664594697093009408',
+			'https://embed-ssl.ted.com/talks/regina_hartley_why_the_best_hire_might_not_have_the_perfect_resume.html',
+			'http://www.slideshare.net/laurengalanter/choose-your-own-career-adventure',
+			'https://www.instagram.com/p/-eyLo0RMfX',
+		);
+
+		return $links[ rand( 0, 5 ) ];
 
 	}
 
