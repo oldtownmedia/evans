@@ -177,8 +177,6 @@ class BuildTestData{
 			$num = rand( 5, 30 );
 		}
 
-		$num = 2;
-
 		// Create test posts
 		for( $i = 1; $i <= $num; $i++ ){
 			$this->create_test_object( $cptslug, $supports, $metaboxes );
