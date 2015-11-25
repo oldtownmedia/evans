@@ -47,7 +47,7 @@ class Testimonials extends CPT{
 
 		$html = "";
 
-		$reviewer = get_post_meta( $pid, evans_cmb_prefix( $this->cptslug ) . 'reviewer', true );
+		$reviewer = get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'reviewer', true );
 
 		$html .= "<li class='".$this->cptslug."'>";
 
@@ -75,7 +75,7 @@ class Testimonials extends CPT{
 	public function cmb_metaboxes( array $meta_boxes ) {
 
 		// Start with an underscore to hide fields from custom fields list
-		$prefix = evans_cmb_prefix( $this->cptslug );
+		$prefix = cmb_prefix( $this->cptslug );
 
 		$meta_boxes[] = array(
 			'id'			=> $this->cptslug.'_metabox',

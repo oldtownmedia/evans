@@ -8,7 +8,7 @@ namespace evans;
  * @param string $slug The appended id of the cmb key
  * @return string The full CMB key
  */
-function evans_cmb_prefix( $slug = '' ){
+function cmb_prefix( $slug = '' ){
 
 	$base = '_cmb2_';
 	if ( $slug ) {
@@ -92,8 +92,8 @@ function _remove_script_version( $src ){
  *
  * With thanks from: http://wp-bytes.com/function/2013/02/changing-post-updated-messages/
  */
-add_filter( 'post_updated_messages', __NAMESPACE__ . '\evans_set_messages' );
-function evans_set_messages( $messages ) {
+add_filter( 'post_updated_messages', __NAMESPACE__ . '\set_messages' );
+function set_messages( $messages ) {
 
 	global $post, $post_ID;
 	$post_type = get_post_type( $post_ID );
