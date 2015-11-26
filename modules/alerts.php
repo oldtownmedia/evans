@@ -58,53 +58,10 @@ class Alerts extends CPT{
 	        'order'            	=> $args['order'],
 	        'orderby'			=> $args['orderby'],
 	        'nopaging'			=> $args['nopaging'],
-			'meta_query' 	=> array(
-				'relation'	=> 'OR',
-	            array(
-		            array(
-		                'key' 		=> cmb_prefix( $this->cptslug ) . 'active',
-		                'value' 	=> 'active',
-		                'compare' 	=> '=',
-		            ),
-		            array(
-		                'key' 		=> cmb_prefix( $this->cptslug ) . 'start_date',
-		                'compare' 	=> 'NOT EXISTS',
-		            ),
-	            ),
-	            array(
-		            array(
-		                'key' 		=> cmb_prefix( $this->cptslug ) . 'active',
-		                'value' 	=> 'active',
-		                'compare' 	=> '=',
-		            ),
-		            array(
-		                'key' 		=> cmb_prefix( $this->cptslug ) . 'start_date',
-		                'value' 	=> time(),
-		                'compare' 	=> '<=',
-		                'type'		=> 'char'
-		            ),
-	            ),
-	        ),
 		);
 
-		// If our shortcode passed in the random as true
-		if ( !empty( $args['random'] ) && $args['random'] == true ){
-			$query['no_found_rows']		= false;
-			$query['posts_per_page']	= 1;
-			$query['orderby']			= 'rand';
-		}
-
-		// If our shortcode passed in an id
-		if ( !empty( $args['pid'] ) ){
-			$query['no_found_rows']		= false;
-			$query['posts_per_page']	= 1;
-			$query['post__in']			= array( $args['pid'] );
-		}
-
-		// If our shortcode passed in a group id OR our taxonomy_loop passes in a group id
-		if ( !empty( $args['group'] ) ){
-			$query[$this->tax_slug]			= array( $args['group'] );
-		}
+		// Run potential modifications on our query
+		$query = $this->query_mods( $query, $args );
 
 		$objects = new \WP_Query( $query );
 
@@ -121,6 +78,48 @@ class Alerts extends CPT{
 		wp_reset_postdata();
 
 		return $html;
+
+	}
+
+
+	/**
+	 * Perform query modifications without touching our loop function.
+	 *
+	 * @param array $query Set query arguments.
+	 * @param array $args Incoming arguments.
+	 * @return string Modified query arguments.
+	 */
+	public function query_mods( $query, $args ){
+
+		$query['meta_query'] 	= array(
+			'relation'	=> 'OR',
+            array(
+	            array(
+	                'key' 		=> cmb_prefix( $this->cptslug ) . 'active',
+	                'value' 	=> 'active',
+	                'compare' 	=> '=',
+	            ),
+	            array(
+	                'key' 		=> cmb_prefix( $this->cptslug ) . 'start_date',
+	                'compare' 	=> 'NOT EXISTS',
+	            ),
+            ),
+            array(
+	            array(
+	                'key' 		=> cmb_prefix( $this->cptslug ) . 'active',
+	                'value' 	=> 'active',
+	                'compare' 	=> '=',
+	            ),
+	            array(
+	                'key' 		=> cmb_prefix( $this->cptslug ) . 'start_date',
+	                'value' 	=> time(),
+	                'compare' 	=> '<=',
+	                'type'		=> 'char'
+	            ),
+            ),
+        );
+
+		return parent::query_mods( $query, $args );
 
 	}
 

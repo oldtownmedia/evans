@@ -30,63 +30,34 @@ class Events extends CPT{
 
 	// Arguments for the CPT loop
 	protected $loop_args = array(
-		'orderby' 		=> 'meta_value',
-		'order' 		=> 'ASC',
-		'nopaging'		=> false
+		'orderby' 			=> 'meta_value',
+		'order' 			=> 'ASC',
+		'nopaging'			=> false,
+		'no_found_rows' 	=> true,
+		'update_post_term_cache' => false,
 	);
 
 
 	/**
-	 * Loop through custom post type and return combined HTML from posts.
+	 * Perform query modifications without touching our loop function.
 	 *
-	 * @see WP_Query, $this->display_loop
-	 *
-	 * @param array $args Description.
-	 * @return string Combined HTML contents of the looped query.
+	 * @param array $query Set query arguments.
+	 * @param array $args Incoming arguments.
+	 * @return string Modified query arguments.
 	 */
-	public function loop_cpt( $args = array() ){
-		$html = "";
-		$defaults = $this->loop_args;
+	public function query_mods( $query, $args ){
 
-		$args = wp_parse_args( $args, $defaults );
+		$query['meta_key']		= cmb_prefix( $this->cptslug ) . 'date';
+		$query['meta_query'] 	= array(
+            array(
+                'key' 		=> cmb_prefix( $this->cptslug ) . 'date',
+                'value' 	=> date( 'U', strtotime( '-1 day' ) ),
+                'compare' 	=> '>=',
+                'type'		=> 'char'
+            ),
+        );
 
-		$query = array(
-			'no_found_rows' 	=> true,
-			'update_post_term_cache' => false,
-	        'post_type'        	=> $this->cptslug,
-	        'order'            	=> $args['order'],
-	        'orderby'			=> $args['orderby'],
-	        'nopaging'			=> $args['nopaging'],
-	        'meta_key'			=> cmb_prefix( $this->cptslug ) . 'date',
-			'meta_query' 		=> array(
-	            array(
-	                'key' 		=> cmb_prefix( $this->cptslug ) . 'date',
-	                'value' 	=> date( 'U', strtotime( '-1 day' ) ),
-	                'compare' 	=> '>=',
-	                'type'		=> 'char'
-	            ),
-	        )
-		);
-
-		$objects = new \WP_Query( $query );
-
-		if ( $objects->have_posts() ){
-
-			$html .= "<ul class='".$this->cptslug."-listing group'>";
-
-			while ( $objects->have_posts() ) : $objects->the_post();
-
-				$html .= $this->display_loop( get_the_id() );
-
-			endwhile;
-
-			$html .= "</ul>";
-
-		}
-
-		wp_reset_postdata();
-
-		return $html;
+		return parent::query_mods( $query, $args );
 
 	}
 
@@ -121,7 +92,7 @@ class Events extends CPT{
 
 				if ( !empty( $date ) || !empty( $time ) || !empty( $location ) || !empty( $cost ) ){ $html .= "<p>"; }
 
-					$html .= esc_attr( $date ) ." ". esc_attr( $time )."<br>";
+					$html .= date( 'm/d/Y', esc_attr( $date ) ) ." ". esc_attr( $time )."<br>";
 					if ( !empty( $location ) ){ $html .= __( 'Location:', 'evans-mu' ) . " <span itemprop='location'>".esc_attr( $location )."</span><br>"; }
 					if ( !empty( $cost ) ){ $html .= __( 'Cost:', 'evans-mu' ) . " ".esc_attr( $cost )."<br>"; }
 

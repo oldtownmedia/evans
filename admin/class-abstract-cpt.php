@@ -177,7 +177,7 @@ abstract class CPT{
 	 *
 	 * @see WP_Query, $this->display_loop
 	 *
-	 * @param array $args Description.
+	 * @param array $args Query arguments.
 	 * @return string Combined HTML contents of the looped query.
 	 */
 	public function loop_cpt( $args = array() ){
@@ -194,24 +194,8 @@ abstract class CPT{
 			'orderby'			=> $args['orderby'],
 		);
 
-		// If our shortcode passed in the random as true
-		if ( !empty( $args['random'] ) && $args['random'] == true ){
-			$query['no_found_rows']		= false;
-			$query['posts_per_page']	= 1;
-			$query['orderby']			= 'rand';
-		}
-
-		// If our shortcode passed in an id
-		if ( !empty( $args['pid'] ) ){
-			$query['no_found_rows']		= false;
-			$query['posts_per_page']	= 1;
-			$query['post__in']			= array( $args['pid'] );
-		}
-
-		// If our shortcode passed in a group id OR our taxonomy_loop passes in a group id
-		if ( !empty( $args['group'] ) ){
-			$query[$this->tax_slug]		= array( $args['group'] );
-		}
+		// Run potential modifications on our query
+		$query = $this->query_mods( $query, $args );
 
 		$objects = new \WP_Query( $query );
 
@@ -236,6 +220,39 @@ abstract class CPT{
 		wp_reset_postdata();
 
 		return $html;
+
+	}
+
+
+	/**
+	 * Perform query modifications without touching our loop function.
+	 *
+	 * @param array $query Set query arguments.
+	 * @param array $args Incoming arguments.
+	 * @return string Modified query arguments.
+	 */
+	public function query_mods( $query, $args ){
+
+		// If our shortcode passed in the random as true
+		if ( !empty( $args['random'] ) && $args['random'] == true ){
+			$query['no_found_rows']		= false;
+			$query['posts_per_page']	= 1;
+			$query['orderby']			= 'rand';
+		}
+
+		// If our shortcode passed in an id
+		if ( !empty( $args['pid'] ) ){
+			$query['no_found_rows']		= false;
+			$query['posts_per_page']	= 1;
+			$query['post__in']			= array( $args['pid'] );
+		}
+
+		// If our shortcode passed in a group id OR our taxonomy_loop passes in a group id
+		if ( !empty( $args['group'] ) ){
+			$query[$this->tax_slug]		= array( $args['group'] );
+		}
+
+		return $query;
 
 	}
 
