@@ -186,7 +186,7 @@ class Initial_Settings{
 		// Actually create our new role if it doesn't already exist.
 		if( ! $GLOBALS['wp_roles']->is_role( $role_id ) ) {
 
-			$result = add_role(
+			add_role(
 			    $role_id,
 			    $role_name,
 			    $capabilities

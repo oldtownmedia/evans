@@ -213,7 +213,7 @@ class Clean_Admin {
 	 * @param string $domain textdomain.
 	 * @return string modified text.
 	 */
-	public function tgm_soliloquy_envira_whitelabel( $translated_text, $source_text, $domain ) {
+	public function tgm_soliloquy_envira_whitelabel( $translated_text, $source_text ) {
 
 	    // If not in the admin, return the default string.
 	    if ( ! is_admin() ) {

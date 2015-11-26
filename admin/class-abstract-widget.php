@@ -431,9 +431,7 @@ abstract class Widget extends \WP_Widget {
 
 			case 'radio' :
 
-				if ( empty( $field['options'] ) ){
-					// DO nothing - we have no options to show so won't show the field
-				} else {
+				if ( !empty( $field['options'] ) ){
 
 					foreach ( $field['options'] as $key => $value ){
 						$selected = '';

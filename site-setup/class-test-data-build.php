@@ -31,7 +31,7 @@ class BuildTestData{
 	 */
 	public function add_menu_item() {
 
-		$page = add_submenu_page(
+		add_submenu_page(
 			'tools.php',
 			__( 'Create Test Data', 'evans-mu' ),
 			__( 'Test Data', 'evans-mu' ),
@@ -308,7 +308,7 @@ class BuildTestData{
 
 		// Add main content if supported
 		if ( $supports['editor'] === true ){
-			$post['post_content'] = TestContent::paragraphs( rand( 1, 5 ) );
+			$post['post_content'] = TestContent::paragraphs();
 		}
 
 		// Insert then post object
@@ -413,6 +413,7 @@ class BuildTestData{
 	 * @param array $cmb custom metabox array from CMB2.
 	 */
 	private function random_metabox_content( $post_id, $cmb ){
+		$value = '';
 
 		// First check that our post ID & cmb array aren't empty
 		if ( empty( $cmb ) || empty( $post_id ) ){

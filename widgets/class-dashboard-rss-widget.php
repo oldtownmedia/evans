@@ -72,12 +72,12 @@ class CompanyRSSFeedWidget extends Dashboard_Widget{
 		// Loop through posts
 		foreach ( $rss->get_items( 0, $this->num_posts ) as $item ) {
 
-			$publisher = $site_link = $link = $content = '';
+			$date = $link = $title = $content = '';
 
-			$date = $item->get_date( 'F jS, Y' );
-			$link = esc_url( strip_tags( $item->get_link() ) );
-			$title = esc_html( $item->get_title() );
-			$content = wp_html_excerpt( $item->get_content(), 350 ) . '...';
+			$date		= $item->get_date( 'F jS, Y' );
+			$link		= esc_url( strip_tags( $item->get_link() ) );
+			$title		= esc_html( $item->get_title() );
+			$content 	= wp_html_excerpt( $item->get_content(), 350 ) . '...';
 
 			echo "<li class='rss-widget'><a class='rsswidget' href='$link'>$title</a><span class='rss-date'> - $date</span>\n<div class='rssSummary'>$content</div>\n\r\n";
 
