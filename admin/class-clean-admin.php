@@ -210,7 +210,6 @@ class Clean_Admin {
 	 *
 	 * @param string $translated_text translated version of the string.
 	 * @param string $source_text original text.
-	 * @param string $domain textdomain.
 	 * @return string modified text.
 	 */
 	public function tgm_soliloquy_envira_whitelabel( $translated_text, $source_text ) {
