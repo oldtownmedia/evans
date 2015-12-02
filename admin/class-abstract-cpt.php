@@ -151,7 +151,7 @@ abstract class CPT{
 		// If we don't want links to the single to appear in the admin section
 		if ( $this->hide_view === true ){
 			add_filter( 'post_row_actions', array( $this, 'remove_view_from_row' ), 10, 2 );
-			add_filter( 'page_row_actions', array( $this, 'remove_view_from_row' ), 10, 2 );	// In case pot is hierarchical
+			add_filter( 'page_row_actions', array( $this, 'remove_view_from_row' ), 10, 2 );	// In case post is hierarchical
 			add_filter( 'get_sample_permalink_html', array( $this, 'remove_permalink_option' ), '', 4 );
 		}
 

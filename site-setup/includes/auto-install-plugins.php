@@ -51,6 +51,11 @@ function my_theme_register_required_plugins() {
 			'required' 	=> true,
 		),
 		array(
+			'name' 		=> 'Crop Thumbnails',
+			'slug' 		=> 'crop-thumbnails',
+			'required' 	=> true,
+		),
+		array(
 			'name' 		=> 'Custom sidebars',
 			'slug' 		=> 'custom-sidebars',
 			'required' 	=> true,
