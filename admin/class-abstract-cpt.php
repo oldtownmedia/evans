@@ -152,7 +152,7 @@ abstract class CPT{
 		if ( $this->hide_view === true ){
 			add_filter( 'post_row_actions', array( $this, 'remove_view_from_row' ), 10, 2 );
 			add_filter( 'page_row_actions', array( $this, 'remove_view_from_row' ), 10, 2 );	// In case post is hierarchical
-			add_filter( 'get_sample_permalink_html', array( $this, 'remove_permalink_option' ), '', 4 );
+			add_filter( 'get_sample_permalink_html', array( $this, 'remove_permalink_option' ), '', 1 );
 		}
 
 	}
@@ -175,29 +175,15 @@ abstract class CPT{
 	/**
 	 * Loop through custom post type and return combined HTML from posts.
 	 *
-	 * @see WP_Query, $this->display_loop
+	 * @see WP_Query, $this->display_single
 	 *
 	 * @param array $args Query arguments.
 	 * @return string Combined HTML contents of the looped query.
 	 */
 	public function loop_cpt( $args = array() ){
 		$html = "";
-		$defaults = $this->loop_args;
 
-		$args = wp_parse_args( $args, $defaults );
-
-		$query = array(
-			'post_type'			=> $this->cptslug,
-			'no_found_rows' 	=> $args['no_found_rows'],
-			'posts_per_page'	=> $args['quantity'],
-			'order'				=> $args['order'],
-			'orderby'			=> $args['orderby'],
-		);
-
-		// Run potential modifications on our query
-		$query = $this->query_mods( $query, $args );
-
-		$objects = new \WP_Query( $query );
+		$objects = new \WP_Query( $this->query_mods( array(), $args ) );
 
 		if ( $objects->have_posts() ){
 
@@ -205,7 +191,7 @@ abstract class CPT{
 
 			while ( $objects->have_posts() ) : $objects->the_post();
 
-				$html .= $this->display_loop( get_the_id() );
+				$html .= $this->display_single( get_the_id() );
 
 			endwhile;
 
@@ -231,7 +217,22 @@ abstract class CPT{
 	 * @param array $args Incoming arguments.
 	 * @return string Modified query arguments.
 	 */
-	public function query_mods( $query, $args ){
+	public function query_mods( $original_query, $args ){
+
+		$defaults = $this->loop_args;
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$query = array(
+			'post_type'			=> $this->cptslug,
+			'no_found_rows' 	=> $args['no_found_rows'],
+			'posts_per_page'	=> $args['quantity'],
+			'order'				=> $args['order'],
+			'orderby'			=> $args['orderby'],
+		);
+
+		// Merge in a passed array with our default arguments
+		$query = array_merge( $original_query, $query );
 
 		// If our shortcode passed in the random as true
 		if ( !empty( $args['random'] ) && $args['random'] == true ){
@@ -266,7 +267,7 @@ abstract class CPT{
 	 * @param int $ Post ID.
 	 * @return string HTML contents for the individual post.
 	 */
-	public function display_loop( $pid ){
+	public function display_single( $pid ){
 		$html = "";
 
 		$html .= "<li class='".$this->cptslug."'>";
@@ -478,7 +479,7 @@ abstract class CPT{
 	 * @param string $new_slug New slug
 	 * @return string $return Return HTML objects with action buttons & revised link.
 	 */
-	public function remove_permalink_option( $return, $id, $new_title, $new_slug ){
+	public function remove_permalink_option( $return ){
 	    global $post;
 
 	    if( !empty( $post ) && $post->post_type === $this->cptslug ){

@@ -71,7 +71,7 @@ class Events extends CPT{
 	 * @param int $ Post ID.
 	 * @return string HTML contents for the individual post.
 	 */
-	public function display_loop( $pid ){
+	public function display_single( $pid ){
 
 		$html = "";
 
@@ -90,13 +90,13 @@ class Events extends CPT{
 
 				$html .= "<h3>" . get_the_title() . "</h3>";
 
-				if ( !empty( $date ) || !empty( $time ) || !empty( $location ) || !empty( $cost ) ){ $html .= "<p>"; }
+				$html .= "<p>";
 
 					$html .= date( 'm/d/Y', esc_attr( $date ) ) ." ". esc_attr( $time )."<br>";
 					if ( !empty( $location ) ){ $html .= __( 'Location:', 'evans-mu' ) . " <span itemprop='location'>".esc_attr( $location )."</span><br>"; }
 					if ( !empty( $cost ) ){ $html .= __( 'Cost:', 'evans-mu' ) . " ".esc_attr( $cost )."<br>"; }
 
-				if ( !empty( $date ) || !empty( $time ) || !empty( $location ) || !empty( $cost ) ){ $html .= "</p>"; }
+				$html .= "</p>";
 
 				$html .= apply_filters( 'the_content', get_the_content() );
 

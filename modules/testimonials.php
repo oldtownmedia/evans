@@ -43,7 +43,7 @@ class Testimonials extends CPT{
 	 * @param int $ Post ID.
 	 * @return string HTML contents for the individual post.
 	 */
-	public function display_loop( $pid ){
+	public function display_single( $pid ){
 
 		$html = "";
 

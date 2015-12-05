@@ -33,43 +33,28 @@ class Alerts extends CPT{
 		'orderby' 		=> 'menu_order',
 		'order' 		=> 'ASC',
 		'quantity'		=> 3,
-		'nopaging'		=> true
+		'nopaging'		=> true,
 	);
 
 
 	/**
 	 * Loop through custom post type and return combined HTML from posts.
 	 *
-	 * @see WP_Query, $this->display_loop
+	 * @see WP_Query, $this->display_single
 	 *
 	 * @param array $args Description.
 	 * @return string Combined HTML contents of the looped query.
 	 */
 	public function loop_cpt( $args = array() ){
 		$html = "";
-		$defaults = $this->loop_args;
 
-		$args = wp_parse_args( $args, $defaults );
-
-		$query = array(
-			'no_found_rows' 	=> true,
-			'update_post_term_cache' => false,
-	        'post_type'        	=> $this->cptslug,
-	        'order'            	=> $args['order'],
-	        'orderby'			=> $args['orderby'],
-	        'nopaging'			=> $args['nopaging'],
-		);
-
-		// Run potential modifications on our query
-		$query = $this->query_mods( $query, $args );
-
-		$objects = new \WP_Query( $query );
+		$objects = new \WP_Query( $this->query_mods( array(), $args ) );
 
 		if ( $objects->have_posts() ){
 
 			while ( $objects->have_posts() ) : $objects->the_post();
 
-				$html .= $this->display_loop( get_the_id() );
+				$html .= $this->display_single( get_the_id() );
 
 			endwhile;
 
@@ -133,7 +118,7 @@ class Alerts extends CPT{
 	 * @param int $ Post ID.
 	 * @return string HTML contents for the individual post.
 	 */
-	public function display_loop( $pid ){
+	public function display_single( $pid ){
 
 		$html = "";
 

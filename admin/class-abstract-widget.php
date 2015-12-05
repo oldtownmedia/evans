@@ -405,9 +405,7 @@ abstract class Widget extends \WP_Widget {
 
 			case 'select' :
 
-				if ( empty( $field['options'] ) ){
-					// DO nothing - we have no options to show so won't show the field
-				} else {
+				if ( !empty( $field['options'] ) ){
 
 					$html .="<select id='".$this->get_field_id( 'category' )."' name='".$this->get_field_name( 'category' )."' >";
 
