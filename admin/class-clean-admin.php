@@ -19,7 +19,11 @@ class Clean_Admin {
 	 */
 	public function hooks() {
 
-		// Only continue if we're in the admin section
+		// Couple of public functions
+		add_filter( 'xmlrpc_enabled', '__return_false' );	// Disable xmlrpc
+		add_action( 'admin_bar_menu', array( $this, 'add_toolbar_links' ), 999 );
+
+		// Only keep going if we're in the admin section
 		if ( !is_admin() ){
 			return;
 		}
@@ -42,7 +46,6 @@ class Clean_Admin {
 		add_filter( 'mce_buttons_2', array( $this, 'extended_editor_mce_buttons_2' ), 0 );
 		add_action( 'add_meta_boxes', array( $this, 'remove_seo_metabox' ), 11 );
 		add_action( 'dashboard_glance_items', array( $this, 'right_now_cpt_count' ) );
-		add_action( 'admin_bar_menu', array( $this, 'add_toolbar_links' ), 999 );
 		add_action( 'admin_bar_menu', array( $this, 'add_admin_toolbar_links' ), 999 );
 
 	}

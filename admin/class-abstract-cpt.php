@@ -213,7 +213,7 @@ abstract class CPT{
 	/**
 	 * Perform query modifications without touching our loop function.
 	 *
-	 * @param array $query Set query arguments.
+	 * @param array $original_query Original array to parse.
 	 * @param array $args Incoming arguments.
 	 * @return string Modified query arguments.
 	 */
@@ -264,7 +264,7 @@ abstract class CPT{
 	 * This is the most often-overrideen function and will often contain CMB
 	 * calls and custom display HTML.
 	 *
-	 * @param int $ Post ID.
+	 * @param int $pid Post ID.
 	 * @return string HTML contents for the individual post.
 	 */
 	public function display_single( $pid ){
@@ -474,9 +474,6 @@ abstract class CPT{
 	 * @global object $post Post object.
 	 *
 	 * @param string $return Return HTML objects with action buttons & revised link.
-	 * @param integer $id Post ID
-	 * @param string $new_title New title
-	 * @param string $new_slug New slug
 	 * @return string $return Return HTML objects with action buttons & revised link.
 	 */
 	public function remove_permalink_option( $return ){
