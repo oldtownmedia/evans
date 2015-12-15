@@ -122,7 +122,7 @@ class Alerts extends CPT{
 
 		$html = "";
 
-			$end = get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'end_date', true );
+			$end = get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'end_date', true );
 
 			if ( !$end || time() <= $end ){
 

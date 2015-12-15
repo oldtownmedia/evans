@@ -75,12 +75,11 @@ class Events extends CPT{
 
 		$html = "";
 
-		$date		= get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'date', true);
-		$time		= get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'time', true);
-		$cost		= get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'cost', true);
-		$location	= get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'location', true);
-		$img_id		= get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'image_id', true);
-		$img		= wp_get_attachment_image_src( $img_id, $this->cptslug.'-thumb' );
+		$date		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'date', true);
+		$time		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'time', true);
+		$cost		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'cost', true);
+		$img_id		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true);
+		$img		= wp_get_attachment_image_src( $img_id, get_post_type().'-thumb' );
 
 			$html .= "<li itemscope itemtype='http://data-vocabulary.org/Event' class='".$this->cptslug." group'>";
 
@@ -143,12 +142,6 @@ class Events extends CPT{
 					'desc' => __( 'Enter the guest cost for your '.$this->cptslug.' (optional)', 'evans-mu' ),
 					'id'   => $prefix . 'cost',
 					'type' => 'text_money',
-				),
-				array(
-					'name' => __( 'Location', 'evans-mu' ),
-					'desc' => __( 'Enter a location name or address for your '.$this->cptslug, 'evans-mu' ),
-					'id'   => $prefix . 'location',
-					'type' => 'text',
 				),
 				array(
 					'name' => __( 'Image', 'evans-mu' ),

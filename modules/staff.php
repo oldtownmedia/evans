@@ -50,11 +50,9 @@ class Staff extends CPT{
 
 		$html = "";
 
-		$img_id		= get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'image_id', true);
-		$img		= wp_get_attachment_image_src( $img_id, $this->cptslug.'-thumb' );
-		$title		= get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'position', true );
-		$phone		= get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'phone', true );
-		$email		= get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'email', true );
+		$img_id		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true);
+		$img		= wp_get_attachment_image_src( $img_id, get_post_type().'-thumb' );
+		$title		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'position', true );
 
 		$html .= "<li class='".$this->cptslug."' itemscope itemtype ='http://schema.org/Person'>";
 
@@ -64,21 +62,11 @@ class Staff extends CPT{
 
 			$html .= "<h3 itemprop='name'>".get_the_title()."</h3>";
 
-			if ( !empty( $title ) || !empty( $phone ) || !empty( $email ) ){ $html .= "<p>"; }
 
-				if ( !empty( $title ) ){
-					$html .= "<strong>" . __( 'Position:', 'evans-mu' ) . "</strong> <span itemprop='jobTitle'>".esc_attr( $title )."</span><br>";
-				}
+			if ( !empty( $title ) ){
+				$html .= "<p><strong>" . __( 'Position:', 'evans-mu' ) . "</strong> <span itemprop='jobTitle'>".esc_attr( $title )."</span></p>";
+			}
 
-				if ( !empty( $phone ) ){
-					$html .= "<strong>" . __( 'Phone:', 'evans-mu' ) . "</strong> <span itemprop='contactPoint'>".esc_attr( $phone )."</span><br>";
-				}
-
-				if ( !empty( $email ) && is_email( $email ) ){
-					$html .= "<strong>" . __( 'Email:', 'evans-mu' ) . "</strong> <span itemprop='email'><a href='mailt:o".esc_attr( $email )."'>".esc_attr( $email )."</a></span><br>";
-				}
-
-			if ( !empty( $title ) || !empty( $phone ) || !empty( $email ) ){ $html .= "</p>"; }
 
 			$html .= apply_filters( 'the_content', get_the_content() );
 
@@ -112,18 +100,6 @@ class Staff extends CPT{
 					'name' => __( 'Position/Title', 'evans-mu' ),
 					'desc' => __( 'Enter the title for the '.$this->cptslug, 'evans-mu' ),
 					'id'   => $prefix . 'position',
-					'type' => 'text',
-				),
-				array(
-					'name' => __( 'Phone #', 'evans-mu' ),
-					'desc' => __( 'Enter the phone # for the '.$this->cptslug, 'evans-mu' ),
-					'id'   => $prefix . 'phone',
-					'type' => 'text',
-				),
-				array(
-					'name' => __( 'Email', 'evans-mu' ),
-					'desc' => __( 'Enter the email for the '.$this->cptslug, 'evans-mu' ),
-					'id'   => $prefix . 'email',
 					'type' => 'text',
 				),
 				array(

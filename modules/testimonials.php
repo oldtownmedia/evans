@@ -47,7 +47,7 @@ class Testimonials extends CPT{
 
 		$html = "";
 
-		$reviewer = get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'reviewer', true );
+		$reviewer = get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'reviewer', true );
 
 		$html .= "<li class='".$this->cptslug."'>";
 

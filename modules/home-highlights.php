@@ -54,11 +54,11 @@ class Highlights extends CPT{
 
 		$html = "";
 
-		$link		= get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'url', true );
-		$link_text	= get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'url_text', true );
-		$content	= get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'content', true );
-		$img_id		= get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'image_id', true);
-		$img		= wp_get_attachment_image_src( $img_id, $this->cptslug.'-thumb' );
+		$link		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'url', true );
+		$link_text	= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'url_text', true );
+		$content	= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'content', true );
+		$img_id		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true);
+		$img		= wp_get_attachment_image_src( $img_id, get_post_type().'-thumb' );
 
 		$html .= "<li class='".$this->cptslug."'>";
 

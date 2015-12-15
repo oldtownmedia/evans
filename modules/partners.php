@@ -54,9 +54,9 @@ class Partners extends CPT{
 
 		$html = "";
 
-		$link	= get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'url', true );
-		$img_id	= get_post_meta( $pid, cmb_prefix( $this->cptslug ) . 'image_id', true);
-		$img	= wp_get_attachment_image_src( $img_id, $this->cptslug.'-thumb' );
+		$link	= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'url', true );
+		$img_id	= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true);
+		$img	= wp_get_attachment_image_src( $img_id, get_post_type().'-thumb' );
 
 		$html .= "<li class='".$this->cptslug."'>";
 
