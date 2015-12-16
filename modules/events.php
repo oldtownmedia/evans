@@ -92,7 +92,6 @@ class Events extends CPT{
 				$html .= "<p>";
 
 					$html .= date( 'm/d/Y', esc_attr( $date ) ) ." ". esc_attr( $time )."<br>";
-					if ( !empty( $location ) ){ $html .= __( 'Location:', 'evans-mu' ) . " <span itemprop='location'>".esc_attr( $location )."</span><br>"; }
 					if ( !empty( $cost ) ){ $html .= __( 'Cost:', 'evans-mu' ) . " ".esc_attr( $cost )."<br>"; }
 
 				$html .= "</p>";
