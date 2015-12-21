@@ -1,12 +1,12 @@
 <?php
 namespace evans;
 
-class HelperFunctionsTest extends \PHPUnit_Framework_TestCase {
+class HelperFunctionsTests extends \PHPUnit_Framework_TestCase {
 
 	public function setUp() {
 	    \WP_Mock::setUp();
 
-	    require_once dirname( __FILE__ ) . '/../default-modules/helper-functions.php';
+	    require_once dirname( __FILE__ ) . '/../admin/helper-functions.php';
 	}
 
 	public function tearDown() {
