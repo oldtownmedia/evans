@@ -4,7 +4,7 @@ filter:
         - site-setup/includes/class-tgm-plugin-activation.php
 
 build:
-	environment:
+    environment:
         php:
             version: 5.6.10
     dependencies:
