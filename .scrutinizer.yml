@@ -2,7 +2,7 @@ filter:
     excluded_paths:
         - site-setup/includes/auto-install-plugins.php
         - site-setup/includes/class-tgm-plugin-activation.php
-        - site-setup/tests/*
+        - tests/*
 
 build:
     environment:

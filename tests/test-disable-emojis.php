@@ -16,7 +16,7 @@ class DisableEmojisTests extends \PHPUnit_Framework_TestCase {
 	public function test_disable_emojis_tinymce(){
 
 		$this->assertEmpty( disable_emojis_tinymce( 'string' ) );
-		$this->assertNotContains( disable_emojis_tinymce( 'wpemoji', array( 'tinymce', 'stuffs', 'wpemoji' ) ) );
+		$this->assertNotContains( 'wpemoji', disable_emojis_tinymce( array( 'tinymce', 'stuffs', 'wpemoji' ) ) );
 
 	}
 
