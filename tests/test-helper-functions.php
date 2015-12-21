@@ -13,10 +13,10 @@ class HelperFunctionsTests extends \PHPUnit_Framework_TestCase {
         \WP_Mock::tearDown();
     }
 
-	public function test_otm_cmb_prefix(){
+	public function test_cmb_prefix(){
 
 		$slug = 'portfolio';
-		$this->assertEquals( '_cmb2_portfolio_', otm_cmb_prefix( $slug ) );
+		$this->assertEquals( '_cmb2_portfolio_', cmb_prefix( $slug ) );
 
 	}
 
@@ -60,19 +60,19 @@ class HelperFunctionsTests extends \PHPUnit_Framework_TestCase {
 
 	}
 
-	public function test__remove_script_version(){
+	public function test_remove_script_version(){
 
 		$url = 'http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js';
-		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js", _remove_script_version( $url ) );
+		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js", remove_script_version( $url ) );
 
 		$url = 'http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js?ver=4.12';
-		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js", _remove_script_version( $url ) );
+		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js", remove_script_version( $url ) );
 
 		$url = 'http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js?ver=1.2458.78';
-		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js", _remove_script_version( $url ) );
+		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js", remove_script_version( $url ) );
 
 		$url = 'http://dev.otmoffice.com/wp-content/themes/otm/style/main.css?ver=4.12';
-		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/style/main.css", _remove_script_version( $url ) );
+		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/style/main.css", remove_script_version( $url ) );
 
 	}
 

@@ -74,9 +74,9 @@ function add_defer_forscript( $url ){
  * @param string $src The URL for the script resource.
  * @returns string Modified script string
  */
-add_filter( 'script_loader_src', __NAMESPACE__ . '\_remove_script_version', 15, 1 );
-add_filter( 'style_loader_src', __NAMESPACE__ . '\_remove_script_version', 15, 1 );
-function _remove_script_version( $src ){
+add_filter( 'script_loader_src', __NAMESPACE__ . '\remove_script_version', 15, 1 );
+add_filter( 'style_loader_src', __NAMESPACE__ . '\remove_script_version', 15, 1 );
+function remove_script_version( $src ){
 
 	$parts = explode( '?ver', $src );
 	return $parts[0];
