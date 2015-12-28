@@ -100,9 +100,23 @@ class Initial_Settings{
 	  */
 	public function update_settings(){
 
-		if ( get_option( 'default_comment_status' ) != 'closed' ){	update_option( 'default_comment_status', 'closed' ); }
-		if ( get_option( 'default_ping_status' ) != 'closed' ){		update_option( 'default_ping_status', 'closed' ); }
-		if ( get_option( 'timezone_string' ) != 'America/Denver' ){ update_option( 'timezone_string', 'America/Denver' ); }
+		// All of our options
+		$option = array(
+			'blogdescription'			=> '',
+			'use_trackback'				=> '',
+			'default_comment_status'	=> 'closed',
+			'default_ping_status'		=> 'closed',
+			'default_comment_status'	=> 'closed',
+			'timezone_string'			=> 'America/Denver',
+			'use_smilies'				=> ''
+		);
+
+		// Loop through each option and set it up.
+		foreach ( $option as $key => $value ) {
+		    if ( get_option( $key ) != $value ){
+			    update_option( $key, $value );
+			}
+		}
 
 		// Our theme setup is now complete, set a value that we can use later
 		// to stop the loading of this file.
