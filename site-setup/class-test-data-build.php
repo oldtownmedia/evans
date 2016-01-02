@@ -60,13 +60,11 @@ class BuildTestData{
 
 		if ( $action == 'delete' ){
 
-			$this->delete_test_content( $cptslug );
-			echo "Deleted " . $cptslug ."s";
+			$this->delete_test_content( $cptslug, true );
 
 		} elseif ( $action == 'create' ){
 
-			$this->create_post_type_content( $cptslug );
-			echo "Created " . $cptslug ."s";
+			$this->create_post_type_content( $cptslug, true );
 
 		}
 
@@ -159,9 +157,10 @@ class BuildTestData{
 	 * @see $this-get_cpt_supports, $this->get_cpt_metaboxes, $this->create_test_object
 	 *
 	 * @param string $cptslug a custom post type ID.
+	 * @param boolean $true Whether or not to echo. Optional.
 	 * @param int $num Optional. Number of posts to create.
 	 */
-	private function create_post_type_content( $cptslug, $num = '' ){
+	private function create_post_type_content( $cptslug, $echo = false, $num = '' ){
 
 		// If we're missing a custom post type id - don't do anything
 		if ( empty( $cptslug ) ){
@@ -179,8 +178,16 @@ class BuildTestData{
 
 		// Create test posts
 		for( $i = 1; $i <= $num; $i++ ){
-			$this->create_test_object( $cptslug, $supports, $metaboxes );
+
+			$return = $this->create_test_object( $cptslug, $supports, $metaboxes );
+
+			if ( $echo === true ){
+				echo $return;
+			}
+
 		}
+
+		echo "Created $i objects";
 
 	}
 
@@ -198,7 +205,7 @@ class BuildTestData{
 	 *
 	 * @param string $cptslug a custom post type ID.
 	 */
-	private function delete_test_content( $cptslug ){
+	private function delete_test_content( $cptslug, $echo = false ){
 
 		// Check that $cptslg has a string.
 		// Also make sure that the current user is logged in & has full permissions.
@@ -228,10 +235,17 @@ class BuildTestData{
 				// Find any media associated with the test post and delete it as well
 				$this->delete_associated_media( get_the_id() );
 
+				if ( $echo === true ){
+					echo "Deleted ".get_post_type( get_the_id() )." " . get_the_id()."
+";
+				}
+
 				// Force delete the post
 				wp_delete_post( get_the_id(), true );
 
 			endwhile;
+
+			echo "Deleted objects";
 
 		}
 
@@ -325,8 +339,15 @@ class BuildTestData{
 		// Spin up metaboxes
 		if ( !empty( $metaboxes ) ){
 			foreach ( $metaboxes as $cmb ) :
-				$this->random_metabox_content( $post_id, $cmb );
+				$return = $this->random_metabox_content( $post_id, $cmb );
 			endforeach;
+		}
+
+		if ( is_wp_error( $return ) ){
+			return $return;
+		} else {
+			return "Created ".get_post_type( $post_id )." $post_id: ".admin_url( '/post.php?post='.$post_id.'&action=edit' )."
+";
 		}
 
 	}
@@ -577,7 +598,7 @@ class BuildTestData{
 
 		// If we're dealing with a WP Error object, just return the message for debugging
 		} elseif ( is_wp_error( $value ) ){
-			echo $value->get_error_message();
+			return $value->get_error_message();
 		}
 
 	} // end random_metabox_content
