@@ -442,7 +442,7 @@ class BuildTestData{
 
 			// Return the error if it exists
 			if ( is_wp_error( $return ) ){
-				return $pid->get_error_messages();
+				return $return->get_error_messages();
 			}
 
 		}
