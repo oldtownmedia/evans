@@ -23,7 +23,7 @@ class Evans{
 			return;
 		}
 
-		$class_name = "evans\$class";
+		$class_name = 'evans\\' . $class;
 		return new $class_name;
 
 	}

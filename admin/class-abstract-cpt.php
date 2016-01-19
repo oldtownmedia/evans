@@ -311,7 +311,9 @@ abstract class CPT{
 
 				$html .= "<h2>".$term->name."</h2>";
 
-				$html .= "<p>".term_description( $term->term_id, $this->tax_slug )."</p>";
+				if ( !empty( term_description( $term->term_id, $this->tax_slug ) ) ){
+					$html .= "<p>".term_description( $term->term_id, $this->tax_slug )."</p>";
+				}
 
 				// Add the group we're querying to the get_cpt arguments
 				$args['group'] = $term->slug;
