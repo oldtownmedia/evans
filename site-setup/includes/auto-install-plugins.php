@@ -46,8 +46,8 @@ function my_theme_register_required_plugins() {
 	$plugins = array(
 
 		array(
-			'name' 		=> 'ARYO Activity Log',
-			'slug' 		=> 'aryo-activity-log',
+			'name' 		=> 'Stream',
+			'slug' 		=> 'stream',
 			'required' 	=> true,
 		),
 		array(
