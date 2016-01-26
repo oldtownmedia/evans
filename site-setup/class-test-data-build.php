@@ -107,6 +107,8 @@ class BuildTestData{
 
 			}
 
+			$html .= "<pre style='display: block; width:95%; height:300px; overflow-y: scroll; background: #fff; padding: 10px;' id='status-updates'></pre>";
+
 		$html .= "</div>";
 
 			ob_start();
@@ -136,13 +138,16 @@ class BuildTestData{
 						for( var i=1; i<=count; i++ ){
 
 							jQuery.post( ajaxurl, data, function(response) {
-								console.log( '<?php __( 'Got this from the server: ', 'evans-mu' ); ?>' + response );
+								jQuery( '#status-updates' ).append( '<?php __( 'Got this from the server: ', 'evans-mu' ); ?>' + response );
 							});
 
 						}
 
 						jQuery( '.loading-icon' ).remove();
-						console.log( 'Creating ' + count + ' objects' );
+
+						if ( jQuery( this ).data( 'todo' ) == 'create' ){
+							jQuery( '#status-updates' ).append( 'Creating ' + count + ' objects\n' );
+						}
 
 					});
 
@@ -255,7 +260,7 @@ class BuildTestData{
 
 			endwhile;
 
-			echo "Deleted objects";
+			echo "Deleted objects\n";
 
 		}
 
