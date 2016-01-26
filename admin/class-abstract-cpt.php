@@ -219,17 +219,13 @@ abstract class CPT{
 	 */
 	public function query_mods( $original_query, $args ){
 
+		// Pull in the defaults we set in the variables
 		$defaults = $this->loop_args;
 
-		$args = wp_parse_args( $args, $defaults );
+		$query = wp_parse_args( $args, $defaults );
 
-		$query = array(
-			'post_type'			=> $this->cptslug,
-			'no_found_rows' 	=> $args['no_found_rows'],
-			'posts_per_page'	=> $args['quantity'],
-			'order'				=> $args['order'],
-			'orderby'			=> $args['orderby'],
-		);
+		// Set the post type because it's kind of important
+		$query['post_type']	= $this->cptslug;
 
 		// Merge in a passed array with our default arguments
 		$query = array_merge( $original_query, $query );

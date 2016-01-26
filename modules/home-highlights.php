@@ -37,7 +37,7 @@ class Highlights extends CPT{
 		'no_found_rows'	=> true,
 		'orderby' 		=> 'menu_order',
 		'order' 		=> 'ASC',
-		'quantity'		=> 3,
+		'posts_per_page'=> 3,
 	);
 
 

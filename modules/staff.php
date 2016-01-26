@@ -32,7 +32,7 @@ class Staff extends CPT{
 	protected $loop_args = array(
 		'orderby' 		=> 'menu_order',
 		'order' 		=> 'ASC',
-		'quantity'		=> 500,
+		'posts_per_page'=> 500,
 		'no_found_rows'	=> false
 	);
 
