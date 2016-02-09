@@ -136,7 +136,10 @@ class Clean_Admin {
 		unset( $menu[20] );		// Remove spot that pages was in
 		unset( $submenu['themes.php'][6] );	// Alternative method of removing customizer
 
-		$submenu['themes.php'][7][0] = 'Sidebar Items';		// Rename Widget
+		if ( isset( $submenu['themes.php'][7] ) ){
+			$submenu['themes.php'][7][0] = 'Sidebar Items';		// Rename Widgets
+		}
+
 		$submenu['edit.php?post_type=page'][15] = array( 	// Move Media into Pages menu item
 			'0' => 'Media',
 			'1'	=> 'edit_pages',
