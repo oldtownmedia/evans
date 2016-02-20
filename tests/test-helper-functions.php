@@ -20,43 +20,37 @@ class HelperFunctionsTests extends \PHPUnit_Framework_TestCase {
 
 	}
 
-	public function test_add_async_forscript(){
+	public function test_add_loading_variables(){
 
 		\WP_Mock::wpFunction( 'is_admin', array(
-		    'return_in_order' => array( false, false, true )
+		    'return_in_order' => array( false, false, true, false, false, true )
 		) );
 
+		// Defer checks
 		$url = 'http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js?ver=1';
-		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js?ver=1", add_async_forscript( $url ) );
-
-		$url = 'http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js?ver=1#asyncload';
-		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js?ver=1' async='async", add_async_forscript( $url ) );
-
-		$url = 'http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js #asyncload';
-		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js' async='async", add_async_forscript( $url ) );
-
-		$url = 'http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js#asyncload';
-		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js", add_async_forscript( $url ) );
-
-	}
-
-	public function test_add_defer_forscript(){
-
-		\WP_Mock::wpFunction( 'is_admin', array(
-		    'return_in_order' => array( false, false, true )
-		) );
-
-		$url = 'http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js?ver=1';
-		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js?ver=1", add_defer_forscript( $url ) );
+		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js?ver=1", add_loading_variables( $url ) );
 
 		$url = 'http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js?ver=1#deferload';
-		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js?ver=1' defer='defer", add_defer_forscript( $url ) );
+		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js?ver=1' defer='defer", add_loading_variables( $url ) );
 
 		$url = 'http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js #deferload';
-		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js' defer='defer", add_defer_forscript( $url ) );
+		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js' defer='defer", add_loading_variables( $url ) );
 
 		$url = 'http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js#deferload';
-		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js", add_defer_forscript( $url ) );
+		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js", add_loading_variables( $url ) );
+
+		// Async checks
+		$url = 'http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js?ver=1';
+		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js?ver=1", add_loading_variables( $url ) );
+
+		$url = 'http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js?ver=1#asyncload';
+		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js?ver=1' async='async", add_loading_variables( $url ) );
+
+		$url = 'http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js #asyncload';
+		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js' async='async", add_loading_variables( $url ) );
+
+		$url = 'http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js#asyncload';
+		$this->assertEquals( "http://dev.otmoffice.com/wp-content/themes/otm/js/myscript.js", add_loading_variables( $url ) );
 
 	}
 
