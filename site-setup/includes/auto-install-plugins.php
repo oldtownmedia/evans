@@ -46,11 +46,6 @@ function my_theme_register_required_plugins() {
 	$plugins = array(
 
 		array(
-			'name' 		=> 'Stream',
-			'slug' 		=> 'stream',
-			'required' 	=> true,
-		),
-		array(
 			'name' 		=> 'Crop Thumbnails',
 			'slug' 		=> 'crop-thumbnails',
 			'required' 	=> true,
@@ -101,6 +96,11 @@ function my_theme_register_required_plugins() {
 			'required' 	=> true,
 		),
 		array(
+			'name' 		=> 'Stream',
+			'slug' 		=> 'stream',
+			'required' 	=> true,
+		),
+		array(
 			'name' 		=> 'WordPress SEO by Yoast',
 			'slug' 		=> 'wordpress-seo',
 			'required' 	=> true,
@@ -109,7 +109,13 @@ function my_theme_register_required_plugins() {
 			'name' 		=> 'The WP Remote WordPress Plugin',
 			'slug' 		=> 'wpremote',
 			'required' 	=> true,
-		)
+		),
+		array(
+			'name' 		=> 'Test Content Generator',
+			'slug' 		=> 'test-content-suite',
+			'external_url' => 'https://github.com/oldtownmedia/test-content-suite',
+			'required' 	=> true,
+		),
 	);
 
 	// If we have a path for premium plugins - include here

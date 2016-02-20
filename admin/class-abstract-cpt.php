@@ -91,7 +91,7 @@ abstract class CPT{
 	 * thumbnail_size
 	 * Array of arguments used if you'd like to create a custom thumbnail size
 	 * for images used on the front end by the cpt.
-	 * Acceptd agrs: [ width, height ]
+	 * Accepted args: [ width, height ]
 	 *
 	 * @var array
 	 * @access protected
@@ -351,7 +351,6 @@ abstract class CPT{
 			'group'		=> $atts['group'],
 			'random'	=> $atts['random'],
 			'pid'		=> $atts['id'],
-			'echo'		=> false
 		);
 
 		return $this->loop_cpt( $args );
