@@ -22,45 +22,36 @@ function cmb_prefix( $slug = '' ){
 /**
  * Add possibility to asynchroniously load javascript files
  *
- * Filters all URL strings called in clean_url() for the #asyncload value
- * and replaces said string with async='async'
+ * Filters all URL strings called in clean_url() for the  || #deferload value
+ * and replaces said string with async='async' OR defer='defer'
  *
  * @param string $url The URL for the script resource.
  * @returns string Modified script string
  */
-add_filter('clean_url', __NAMESPACE__ . '\add_async_forscript', 11, 1);
-function add_async_forscript( $url ){
+add_filter('clean_url', __NAMESPACE__ . '\add_loading_variables', 11, 1);
+function add_loading_variables( $url ){
 
-    if ( strpos( $url, '#asyncload' ) === false ){
-        return $url;
-    } elseif ( is_admin() ){
-        return str_replace( '#asyncload', '', $url );
-    } else {
-        return trim( str_replace( '#asyncload', '', $url ) ) . "' async='async";
+	// Catchall replace text in admin
+	if ( is_admin() ){
+		$url = str_replace( '#asyncload', '', $url );
+		$url = str_replace( '#deferload', '', $url );
+	}
+
+	// Asyncload
+    if ( strpos( $url, '#asyncload' ) !== false ){
+        if (  ! is_admin() ){
+	        $url = trim( str_replace( '#asyncload', '', $url ) ) . "' async='async";
+	    }
     }
 
-}
-
-
-/**
- * Add possibility to Defer load javascript files
- *
- * Filters all URL strings called in clean_url() for the #deferload value
- * and replaces said string with defer='defer'
- *
- * @param string $url The URL for the script resource.
- * @returns string Modified script string
- */
-add_filter('clean_url', __NAMESPACE__ . '\add_defer_forscript', 11, 1);
-function add_defer_forscript( $url ){
-
-	if ( strpos( $url, '#deferload' ) === false ){
-        return $url;
-    } elseif ( is_admin() ){
-        return str_replace( '#deferload', '', $url );
-    } else {
-        return trim( str_replace( '#deferload', '', $url ) ) . "' defer='defer";
+    // Deferload
+    if ( strpos( $url, '#deferload' ) !== false ){
+        if ( ! is_admin() ){
+	        $url = trim( str_replace( '#deferload', '', $url ) ) . "' defer='defer";
+	    }
     }
+
+    return $url;
 
 }
 

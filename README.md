@@ -45,21 +45,6 @@ protected $icon				= 'dashicons-format-quote';
 Beyond that, you can add a taxonomy by defining the `$tax_slug`, `$taxonomy_name`, and `$taxonomy_plural` variables. You can override any of the methods in the child class to modify the loop, display, or add metaboxes in CMB2.
 
 
-### Test Data
-
-You can spin up test data in a variety of formats using the `evans\TestContent` class. There are a variety of formats and all methods are static only because you only need each one one at a time. Methods inclue: 
-
-```php
-title()
-paragraphs()
-plain_text()
-image()
-date()
-phone()
-email()
-```
-
-
 ### Widget
 
 Widgets can be spun up by extending the `evans\Widget` class. You need to define the few protected variables `$base`, `$title`, and `$description`. Then, override the `widget_fields` method and feed it an array of potential fields with id, title, and potentially options, and override the `view` method with the front-end HTML for the view.
