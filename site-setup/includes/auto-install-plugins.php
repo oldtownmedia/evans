@@ -113,7 +113,7 @@ function my_theme_register_required_plugins() {
 		array(
 			'name' 		=> 'Test Content Generator',
 			'slug' 		=> 'test-content-suite',
-			'external_url' => 'https://github.com/oldtownmedia/test-content-suite',
+			'source' 	=> 'https://github.com/oldtownmedia/test-content-suite/archive/master.zip',
 			'required' 	=> true,
 		),
 	);
