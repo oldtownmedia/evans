@@ -187,7 +187,7 @@ abstract class CPT{
 
 		if ( $objects->have_posts() ){
 
-			$html .= "<ul class='".$this->cptslug."-listing group'>";
+			$html .= "<ul class='".$this->cptslug."-listing'>";
 
 			while ( $objects->have_posts() ) : $objects->the_post();
 
