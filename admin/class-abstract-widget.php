@@ -407,13 +407,13 @@ abstract class Widget extends \WP_Widget {
 
 				if ( !empty( $field['options'] ) ){
 
-					$html .="<select id='".$this->get_field_id( 'category' )."' name='".$this->get_field_name( 'category' )."' >";
+					$html .="<select id='".$this->get_field_id( $field['id'] )."' name='".$this->get_field_name( $field['id'] )."' >";
 
 						foreach ( $field['options'] as $key => $value ){
 							$selected = '';
 
-							if ( $key === $instance[ $field['id'] ] ){
-								$selected = ' selected="selected"';
+							if ( $key == $instance[ $field['id'] ] ){
+								$selected = 'selected';
 							}
 
 							$html .= "<option value='$key' $selected>";
@@ -453,7 +453,7 @@ abstract class Widget extends \WP_Widget {
 					$checked = ' checked';
 				}
 
-				$html .= "<input type='checkbox' id='".$this->get_field_id( $field['id'] )."' name='".$this->get_field_name( $field['id'] )."' $checked/>";
+				$html .= "<input type='checkbox' id='".$this->get_field_id( $field['id'] )."' name='".$this->get_field_name( $field['id'] )."' $checked value='on' />";
 
 			break;
 
