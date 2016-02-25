@@ -157,20 +157,6 @@ abstract class CPT{
 
 	}
 
-	/**
-	 * Wrapper for loop_cpt in case of legacy naming from V1.
-	 *
-	 * @see loop_cpt
-	 *
-	 * @param array $args Array of arguments to use in the WP_QUery loop.
-	 * @return string HTML contents of the looped query.
-	 */
-	public function get_cpt( $args = array() ){
-
-		return $this->loop_cpt( $args );
-
-	}
-
 
 	/**
 	 * Loop through custom post type and return combined HTML from posts.
