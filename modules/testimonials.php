@@ -10,7 +10,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-class Testimonials extends CPT{
+final class Testimonials extends CPT{
 
 	protected $cptslug 			= 'testimonial';
 	protected $cptslug_plural	= 'testimonials';

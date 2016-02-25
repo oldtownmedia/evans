@@ -10,7 +10,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-class Events extends CPT{
+final class Events extends CPT{
 
 	protected $cptslug 			= 'event';
 	protected $cptslug_plural	= 'events';

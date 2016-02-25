@@ -10,7 +10,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-class Staff extends CPT{
+final class Staff extends CPT{
 
 	protected $cptslug 			= 'staff';
 	protected $cptslug_plural	= 'staff';

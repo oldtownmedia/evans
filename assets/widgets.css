@@ -4,7 +4,7 @@
 }
 
 .evans-field.text-box input,
-.evans-field.select-box input{
+.evans-field.select-box select{
 	width: 97%;
 	margin: 3px 0;
 }

@@ -10,7 +10,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-class CompanySupportWidget extends Dashboard_Widget{
+final class CompanySupportWidget extends Dashboard_Widget{
 
 	/**
 	 * ID

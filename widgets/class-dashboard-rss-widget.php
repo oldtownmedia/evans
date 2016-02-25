@@ -11,7 +11,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-class CompanyRSSFeedWidget extends Dashboard_Widget{
+final class CompanyRSSFeedWidget extends Dashboard_Widget{
 
 	/**
 	 * ID
