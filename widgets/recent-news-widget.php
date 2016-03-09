@@ -36,7 +36,7 @@ final class RecentNewsWidget extends Widget{
 				'id'		=> 'title',
 				'name'		=> 'Title',
 				'type'		=> 'text',
-				'default'	=> 'Contact Info'
+				'default'	=> 'Recent News'
 			),
 			array(
 				'id'		=> 'category',
@@ -52,8 +52,8 @@ final class RecentNewsWidget extends Widget{
 				'type'		=> 'text',
 			),
 			array(
-				'id'		=> 'char_length',
-				'name'		=> 'Snippet Length in characters',
+				'id'		=> 'word_length',
+				'name'		=> 'Number of Words pre Post to Display',
 				'desc'		=> 'optional',
 				'type'		=> 'text',
 			)
@@ -88,6 +88,12 @@ final class RecentNewsWidget extends Widget{
 			}
 		}
 
+		if ( isset( $instance['word_length'] ) ){
+			$word_length = $instance['word_length'];
+		} else {
+			$word_length = 50;
+		}
+
 		// Our loop arguments
 		$query = array(
 			'posts_per_page'	=> $posts_per,
@@ -106,7 +112,7 @@ final class RecentNewsWidget extends Widget{
 
 				$html .= "<h3>".get_the_title()."</h3>";
 
-				$html .= apply_filters( 'the_content', wp_trim_words( get_the_content(), '50' ) );
+				$html .= apply_filters( 'the_content', wp_trim_words( get_the_content(), $word_length ) );
 
 				$html .= "<a href='".get_permalink()."' class='button'>Read More</a>";
 
