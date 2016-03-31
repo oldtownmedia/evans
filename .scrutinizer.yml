@@ -11,3 +11,10 @@ build:
     dependencies:
         before:
             - composer require --dev 10up/wp_mock:dev-master
+    tests:
+        override:
+            -
+                command: 'phpunit --coverage-clover=coverage.xml'
+                coverage:
+                    file: 'coverage.xml'
+                    format: 'php-clover'
