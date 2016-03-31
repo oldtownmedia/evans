@@ -248,7 +248,7 @@ abstract class Widget extends \WP_Widget {
 				'type'		=> 'text',
 				'default'	=> 'My Widget',		// optional
 				'sanitize'	=> 'esc_url'		// optional
-				'option'	=> array()			// If using radio or select
+				'options'	=> array()			// If using radio or select
 			)
 		*/
 
@@ -399,7 +399,7 @@ abstract class Widget extends \WP_Widget {
 
 			case 'textarea' :
 
-				$html .= "<textarea id='".$this->get_field_id( $field['id'] )."' name='".$this->get_field_name( $field['id'] )."' />".$instance[ $field['id'] ]."</textarea>";
+				$html .= "<textarea id='".$this->get_field_id( $field['id'] )."' name='".$this->get_field_name( $field['id'] )."'>".$instance[ $field['id'] ]."</textarea>";
 
 			break;
 
