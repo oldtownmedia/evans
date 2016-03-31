@@ -23,8 +23,19 @@ class HelperFunctionsTests extends \PHPUnit_Framework_TestCase {
 	public function test_add_loading_variables(){
 
 		\WP_Mock::wpFunction( 'is_admin', array(
-		    'return_in_order' => array( false, false, false, true,
-		    							false, false, false, true )
+		    'return_in_order' => array(
+		    	// Defer checks
+		    	false, false,
+		    	false, false,
+		    	false, false,
+		    	true, true,
+
+		    	// Async checks
+		    	false, false,
+		    	false, false,
+		    	false, false,
+		    	true, true
+		    )
 		) );
 
 		// Defer checks

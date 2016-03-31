@@ -37,18 +37,18 @@ function add_loading_variables( $url ){
 		$url = str_replace( '#deferload', '', $url );
 	}
 
-	// Asyncload
-    if ( strpos( $url, '#asyncload' ) !== false ){
-        if (  ! is_admin() ){
+	if ( ! is_admin() ){
+
+		// Asyncload
+	    if ( strpos( $url, '#asyncload' ) !== false ){
 	        $url = trim( str_replace( '#asyncload', '', $url ) ) . "' async='async";
 	    }
-    }
 
-    // Deferload
-    if ( strpos( $url, '#deferload' ) !== false ){
-        if ( ! is_admin() ){
+	    // Deferload
+	    if ( strpos( $url, '#deferload' ) !== false ){
 	        $url = trim( str_replace( '#deferload', '', $url ) ) . "' defer='defer";
 	    }
+
     }
 
     return $url;
