@@ -24,8 +24,10 @@ function button_shortcode( $atts ){
 		return;
 	}
 
-	$link = "<a href='".esc_url( $atts['link'] )."'";
+	$link = "<a class='button'";
+		$link .= "href='".esc_url( $atts['link'] )."'";
 		if ( !empty( $atts['target'] ) ){ $link .= " target='".esc_attr(  $atts['target'] )."'"; }
+	$link .= ">";
 		$link .= esc_attr( $atts['text'] );
 	$link .="</a>";
 
