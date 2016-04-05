@@ -146,12 +146,6 @@ function my_theme_register_required_plugins() {
 				'slug' 		=> 'wp-rocket',
 				'source'	=> premium_plugins_path() . '/wp-rocket.zip',
 				'required' 	=> false,
-			),
-			array(
-				'name' 		=> 'Wp Sent Mail',
-				'slug' 		=> 'wp-sent-mail',
-				'source'	=> premium_plugins_path() . '/wp-sent-mail.zip',
-				'required' 	=> true,
 			)
 		);
 
