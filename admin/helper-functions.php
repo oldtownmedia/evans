@@ -122,7 +122,7 @@ function set_messages( $messages ) {
 add_filter( 'gform_notification', __NAMESPACE__ . '\add_siteurl_to_notifications', 10, 3 );
 function add_siteurl_to_notifications( $notification, $form, $entry ) {
 
-    $notification['message'] .= "\n Sent from ".site_url();
+    $notification['message'] .= "\n<small> Sent from ".site_url()."</small>";
     return $notification;
 
 }

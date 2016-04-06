@@ -76,7 +76,6 @@ final class Events extends CPT{
 		$html = "";
 
 		$date		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'date', true);
-		$time		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'time', true);
 		$cost		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'cost', true);
 		$img_id		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true);
 		$img		= wp_get_attachment_image_src( $img_id, get_post_type().'-thumb' );
@@ -91,8 +90,11 @@ final class Events extends CPT{
 
 				$html .= "<p>";
 
-					$html .= date( 'm/d/Y', esc_attr( $date ) ) ." ". esc_attr( $time )."<br>";
-					if ( !empty( $cost ) ){ $html .= __( 'Cost:', 'evans-mu' ) . " ".esc_attr( $cost )."<br>"; }
+					$html .= date( 'm/d/Y', esc_attr( $date ) ) . " " . date( 'g:i A', esc_attr( $date ) )."<br>";
+
+					if ( !empty( $cost ) ){
+						$html .= __( 'Cost:', 'evans-mu' ) . " ".esc_attr( $cost )."<br>";
+					}
 
 				$html .= "</p>";
 
@@ -128,13 +130,7 @@ final class Events extends CPT{
 					'name' => __( 'Start Date/Time', 'evans-mu' ),
 					'desc' => __( 'Enter a date for your '.$this->cptslug, 'evans-mu' ),
 					'id'   => $prefix . 'date',
-					'type' => 'text_date_timestamp',
-				),
-				array(
-					'name' => __( 'Time', 'evans-mu' ),
-					'desc' => __( 'Enter a time for your '.$this->cptslug, 'evans-mu' ),
-					'id'   => $prefix . 'time',
-					'type' => 'text',
+					'type' => 'text_datetime_timestamp',
 				),
 				array(
 					'name' => __( 'Event Cost', 'evans-mu' ),
