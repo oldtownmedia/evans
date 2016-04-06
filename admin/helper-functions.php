@@ -109,3 +109,20 @@ function set_messages( $messages ) {
 	return $messages;
 
 }
+
+
+/**
+ * Add the site url to the bottom of every Gravity Form notification.
+ *
+ * @param array $notification Current notification information
+ * @param array $form Form config & info
+ * @param array $entry Entry data
+ * @returns array Modified notification
+ */
+add_filter( 'gform_notification', __NAMESPACE__ . '\add_siteurl_to_notifications', 10, 3 );
+function add_siteurl_to_notifications( $notification, $form, $entry ) {
+
+    $notification['message'] .= "\n Sent from ".site_url();
+    return $notification;
+
+}
