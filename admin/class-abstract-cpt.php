@@ -254,7 +254,7 @@ abstract class CPT{
 
 		$html .= "<li class='".$this->cptslug."'>";
 
-			$html .= "<h3>".get_the_title( $pid )."</h3>";
+			$html .= "<h3>".esc_attr( get_the_title( $pid ) )."</h3>";
 
 			$html .= apply_filters( 'the_content', get_the_content() );
 
@@ -291,12 +291,12 @@ abstract class CPT{
 
 			foreach ( $terms as $term ) :
 
-				$html .= "<h2>".$term->name."</h2>";
+				$html .= "<h2>".apply_filters( 'the_title', $term->name )."</h2>";
 
 				$description = term_description( $term->term_id, $this->tax_slug );
 
 				if ( !empty( $description ) ){
-					$html .= "<p>$description</p>";
+					$html .= apply_filters( 'the_content', $description );
 				}
 
 				// Add the group we're querying to the get_cpt arguments

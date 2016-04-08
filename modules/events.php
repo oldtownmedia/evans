@@ -83,10 +83,10 @@ final class Events extends CPT{
 			$html .= "<li itemscope itemtype='http://data-vocabulary.org/Event' class='".$this->cptslug." group'>";
 
 				if ( !empty( $img[0] ) ){
-					$html .= "<img src='$img[0]' itemprop='image' alt='".get_the_title()."'>";
+					$html .= "<img src='$img[0]' itemprop='image' alt='".esc_attr( get_the_title() )."'>";
 				}
 
-				$html .= "<h3>" . get_the_title() . "</h3>";
+				$html .= "<h3>" . esc_attr( get_the_title() ) . "</h3>";
 
 				$html .= "<p>";
 

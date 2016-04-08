@@ -128,7 +128,7 @@ final class Alerts extends CPT{
 
 				$html .= "<div class='".$this->cptslug."'>";
 
-					$html .= "<h4>" . get_the_title() . "</h4>";
+					$html .= "<h4>" . esc_attr( get_the_title() ) . "</h4>";
 
 					$html .= apply_filters( 'the_content', get_the_content() );
 

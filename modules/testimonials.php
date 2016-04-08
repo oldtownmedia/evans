@@ -51,7 +51,7 @@ final class Testimonials extends CPT{
 
 		$html .= "<li class='".$this->cptslug."'>";
 
-			$html .= "<h3>".get_the_title()."</h3>";
+			$html .= "<h3>".esc_attr( get_the_title() )."</h3>";
 
 			$html .= apply_filters( 'the_content', get_the_content() );
 

@@ -62,7 +62,7 @@ final class Partners extends CPT{
 
 			if ( !empty( $link ) ){ $html .= "<a class='group' href='".esc_url( $link )."'>"; }
 
-				if ( !empty( $img[0] ) ){ $html .= "<img src='$img[0]' alt='".get_the_title()."'>"; }
+				if ( !empty( $img[0] ) ){ $html .= "<img src='$img[0]' alt='".esc_attr( get_the_title() )."'>"; }
 
 			if ( !empty( $link ) ){ $html .= "</a>"; }
 

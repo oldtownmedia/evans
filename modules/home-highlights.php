@@ -63,10 +63,10 @@ final class Highlights extends CPT{
 		$html .= "<li class='".$this->cptslug."'>";
 
 			if ( !empty( $img[0] ) ){
-				$html .= "<a href='".esc_url( $link )."'><img src='$img[0]' alt='".get_the_title()."'></a>";
+				$html .= "<a href='".esc_url( $link )."'><img src='$img[0]' alt='".esc_attr( get_the_title() )."'></a>";
 			}
 
-			$html .= "<h3><a href='".esc_url( $link )."'>".get_the_title()."</a></h3>";
+			$html .= "<h3><a href='".esc_url( $link )."'>".esc_attr( get_the_title() )."</a></h3>";
 
 			if ( !empty( $content ) ){
 				$html .=  apply_filters( 'the_content', $content );
