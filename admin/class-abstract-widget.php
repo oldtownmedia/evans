@@ -207,8 +207,6 @@ abstract class Widget extends \WP_Widget {
 	/**
 	 * Build and print our admin form for editing the widget
 	 *
-	 * @access (for functions: only use if private)
-	 *
 	 * @see $this->admin_form, $this->get_defaults()
 	 *
 	 * @param array $instance Data for this instance

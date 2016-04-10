@@ -56,9 +56,7 @@ final class Staff extends CPT{
 
 		$html .= "<li class='".$this->cptslug."' itemscope itemtype ='http://schema.org/Person'>";
 
-			if ( !empty( $img[0] ) ){
-				$html .= "<img src='$img[0]' itemprop='image' alt='".esc_attr( get_the_title() )." photo'>";
-			}
+			$html .= $this->get_img( $img );
 
 			$html .= "<h3 itemprop='name'>".esc_attr( get_the_title() )."</h3>";
 

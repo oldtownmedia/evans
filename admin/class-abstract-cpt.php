@@ -80,7 +80,7 @@ abstract class CPT{
 	/**
 	 * loop_args
 	 * Array of arguments used in the WP_Query loop.
-	 Generally [ orderby, order, quantity ]
+	 * Generally [ orderby, order, quantity ]
 	 *
 	 * @var array
 	 * @access protected
@@ -243,7 +243,7 @@ abstract class CPT{
 	/**
 	 * Display a single item from the queried posts.
 	 *
-	 * This is the most often-overrideen function and will often contain CMB
+	 * This is the most often-overridden function and will often contain CMB
 	 * calls and custom display HTML.
 	 *
 	 * @param int $pid Post ID.
@@ -259,6 +259,35 @@ abstract class CPT{
 			$html .= apply_filters( 'the_content', get_the_content() );
 
 		$html .= "</li>";
+
+		return $html;
+
+	}
+
+
+	/**
+	 * Assemble the HTML for an img tag to display within a loop.
+	 *
+	 * @param object $img Attachment source object
+	 * @param string $link Link to put around the img. Optional.
+	 * @return string HTML contents for the image and link.
+	 */
+	private function get_img( $img, $link = '' ){
+		$html = "";
+
+		if ( empty( $img ) ){
+			return;
+		}
+
+		if ( !empty( $link ) ){
+			$html .= "<a href='$link'>";
+		}
+
+			$html .= "<img src='".$img[0]."' alt='".esc_attr( get_the_title() )."' />";
+
+		if ( !empty( $link ) ){
+			$html .= "</a>";
+		}
 
 		return $html;
 

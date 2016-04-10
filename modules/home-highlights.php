@@ -62,9 +62,7 @@ final class Highlights extends CPT{
 
 		$html .= "<li class='".$this->cptslug."'>";
 
-			if ( !empty( $img[0] ) ){
-				$html .= "<a href='".esc_url( $link )."'><img src='$img[0]' alt='".esc_attr( get_the_title() )."'></a>";
-			}
+			$html .= $this->get_img( $img, $link );
 
 			$html .= "<h3><a href='".esc_url( $link )."'>".esc_attr( get_the_title() )."</a></h3>";
 
