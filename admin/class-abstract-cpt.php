@@ -272,7 +272,7 @@ abstract class CPT{
 	 * @param string $link Link to put around the img. Optional.
 	 * @return string HTML contents for the image and link.
 	 */
-	private function get_img( $img, $link = '' ){
+	protected function get_img( $img, $link = '' ){
 		$html = "";
 
 		if ( empty( $img ) ){
