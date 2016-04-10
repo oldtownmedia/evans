@@ -80,23 +80,23 @@ final class Alerts extends CPT{
 			'relation'	=> 'OR',
             array(
 	            array(
-	                'key' 		=> cmb_prefix( $this->cptslug ) . 'active',
+	                'key' 		=> $this->prefix . 'active',
 	                'value' 	=> 'active',
 	                'compare' 	=> '=',
 	            ),
 	            array(
-	                'key' 		=> cmb_prefix( $this->cptslug ) . 'start_date',
+	                'key' 		=> $this->prefix . 'start_date',
 	                'compare' 	=> 'NOT EXISTS',
 	            ),
             ),
             array(
 	            array(
-	                'key' 		=> cmb_prefix( $this->cptslug ) . 'active',
+	                'key' 		=> $this->prefix . 'active',
 	                'value' 	=> 'active',
 	                'compare' 	=> '=',
 	            ),
 	            array(
-	                'key' 		=> cmb_prefix( $this->cptslug ) . 'start_date',
+	                'key' 		=> $this->prefix . 'start_date',
 	                'value' 	=> time(),
 	                'compare' 	=> '<=',
 	                'type'		=> 'char'
@@ -149,9 +149,6 @@ final class Alerts extends CPT{
 	 */
 	public function cmb_metaboxes( array $meta_boxes ) {
 
-		// Start with an underscore to hide fields from custom fields list
-		$prefix = cmb_prefix( $this->cptslug );
-
 		$meta_boxes[] = array(
 			'id'			=> $this->cptslug.'_metabox',
 			'title'			=> sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
@@ -163,7 +160,7 @@ final class Alerts extends CPT{
 				array(
 					'name'    => __( 'Active?', 'evans-mu' ),
 					'desc'    => __( 'Choose whether this '.$this->cptslug.' should be active or not', 'evans-mu' ),
-					'id'      => $prefix . 'active',
+					'id'      => $this->prefix . 'active',
 					'type'    => 'radio',
 					'options' => array(
 						'active'	=> __( 'Active', 'evans-mu' ),
@@ -173,14 +170,14 @@ final class Alerts extends CPT{
 				array(
 					'name' 		=> __( 'Start Date', 'evans-mu' ),
 					'desc' 		=> __( 'If you would like to schedule this '.$this->cptslug.', enter a start date.', 'evans-mu' ),
-					'id'   		=> $prefix . 'start_date',
+					'id'   		=> $this->prefix . 'start_date',
 					'type' 		=> 'text_datetime_timestamp',
 					'default'	=> time()
 				),
 				array(
 					'name' => __( 'End Date', 'evans-mu' ),
 					'desc' => __( 'If you would like to schedule this '.$this->cptslug.', enter an end date.', 'evans-mu' ),
-					'id'   => $prefix . 'end_date',
+					'id'   => $this->prefix . 'end_date',
 					'type' => 'text_datetime_timestamp',
 				),
 			),

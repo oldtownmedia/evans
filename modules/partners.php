@@ -77,9 +77,6 @@ final class Partners extends CPT{
 	 */
 	public function cmb_metaboxes( array $meta_boxes ) {
 
-		// Start with an underscore to hide fields from custom fields list
-		$prefix = cmb_prefix( $this->cptslug );
-
 		$meta_boxes[] = array(
 			'id'			=> $this->cptslug.'_metabox',
 			'title'			=> sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
@@ -91,12 +88,12 @@ final class Partners extends CPT{
 				array(
 					'name' => __( 'Link URL', 'evans-mu' ),
 					'desc' => __( 'Enter the URL from the page you want to link to.', 'evans-mu' ),
-					'id'   => $prefix . 'url',
+					'id'   => $this->prefix . 'url',
 					'type' => 'text',
 				),
 				array(
 					'name' => __( 'Image', 'evans-mu' ),
-					'id'   => $prefix . 'image',
+					'id'   => $this->prefix . 'image',
 					'type' => 'file',
 					'allow' => array( 'attachment' )
 				),

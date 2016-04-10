@@ -47,10 +47,10 @@ final class Events extends CPT{
 	 */
 	public function query_mods( $query, $args ){
 
-		$query['meta_key']		= cmb_prefix( $this->cptslug ) . 'date';
+		$query['meta_key']		= $this->prefix . 'date';
 		$query['meta_query'] 	= array(
             array(
-                'key' 		=> cmb_prefix( $this->cptslug ) . 'date',
+                'key' 		=> $this->prefix . 'date',
                 'value' 	=> date( 'U', strtotime( '-1 day' ) ),
                 'compare' 	=> '>=',
                 'type'		=> 'char'
@@ -113,9 +113,6 @@ final class Events extends CPT{
 	 */
 	public function cmb_metaboxes( array $meta_boxes ) {
 
-		// Start with an underscore to hide fields from custom fields list
-		$prefix = cmb_prefix( $this->cptslug );
-
 		$meta_boxes[] = array(
 			'id'			=> $this->cptslug.'_metabox',
 			'title'			=> sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
@@ -127,18 +124,18 @@ final class Events extends CPT{
 				array(
 					'name' => __( 'Start Date/Time', 'evans-mu' ),
 					'desc' => __( 'Enter a date for your '.$this->cptslug, 'evans-mu' ),
-					'id'   => $prefix . 'date',
+					'id'   => $this->prefix . 'date',
 					'type' => 'text_datetime_timestamp',
 				),
 				array(
 					'name' => __( 'Event Cost', 'evans-mu' ),
 					'desc' => __( 'Enter the guest cost for your '.$this->cptslug.' (optional)', 'evans-mu' ),
-					'id'   => $prefix . 'cost',
+					'id'   => $this->prefix . 'cost',
 					'type' => 'text_money',
 				),
 				array(
 					'name' => __( 'Image', 'evans-mu' ),
-					'id'   => $prefix . 'image',
+					'id'   => $this->prefix . 'image',
 					'type' => 'file',
 					'allow' => array( 'attachment' )
 				),

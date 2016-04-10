@@ -74,9 +74,6 @@ final class Testimonials extends CPT{
 	 */
 	public function cmb_metaboxes( array $meta_boxes ) {
 
-		// Start with an underscore to hide fields from custom fields list
-		$prefix = cmb_prefix( $this->cptslug );
-
 		$meta_boxes[] = array(
 			'id'			=> $this->cptslug.'_metabox',
 			'title'			=> sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
@@ -87,7 +84,7 @@ final class Testimonials extends CPT{
 			'fields'		=> array(
 				array(
 					'name'	=> __( 'Reviewer Name', 'evans-mu' ),
-					'id'	=> $prefix . 'reviewer',
+					'id'	=> $this->prefix . 'reviewer',
 					'type'	=> 'text',
 				),
 			),

@@ -125,6 +125,15 @@ abstract class CPT{
 	 */
 	protected $taxonomy_plural;
 
+	/**
+	 * prefix
+	 * Prefix string used by all metaboxes
+	 *
+	 * @var string
+	 * @access protected
+	 */
+	protected $prefix;
+
 
 	/**
 	 * Hooks function to fire off the events we need.
@@ -132,6 +141,9 @@ abstract class CPT{
 	 * @see add_action, add_filter, add_shortcode
 	 */
 	public function hooks(){
+
+		// Define our prefix for metaboxes
+		$this->prefix = cmb_prefix( $this->cptslug );
 
 		add_action( 'init', array( $this, 'define_cpt' ) );
 		add_filter( 'cmb2_meta_boxes', array( $this, 'cmb_metaboxes' ) );

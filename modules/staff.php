@@ -83,9 +83,6 @@ final class Staff extends CPT{
 	 */
 	public function cmb_metaboxes( array $meta_boxes ) {
 
-		// Start with an underscore to hide fields from custom fields list
-		$prefix = cmb_prefix( $this->cptslug );
-
 		$meta_boxes[] = array(
 			'id'			=> $this->cptslug.'_metabox',
 			'title'			=> sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
@@ -97,12 +94,12 @@ final class Staff extends CPT{
 				array(
 					'name' => __( 'Position/Title', 'evans-mu' ),
 					'desc' => __( 'Enter the title for the '.$this->cptslug, 'evans-mu' ),
-					'id'   => $prefix . 'position',
+					'id'   => $this->prefix . 'position',
 					'type' => 'text',
 				),
 				array(
 					'name' => __( 'Image', 'evans-mu' ),
-					'id'   => $prefix . 'image',
+					'id'   => $this->prefix . 'image',
 					'type' => 'file',
 					'allow' => array( 'attachment' )
 				),
