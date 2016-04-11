@@ -434,8 +434,7 @@ abstract class CPT{
 	 *
 	 * Optional.
 	 *
-	 * @param array $meta_boxes Passed through with CMB2.
-	 * @return array Passthrough of all metaboxes.
+	 * @return object Passthrough of all metaboxes.
 	 */
 	public function cmb_metaboxes(){
 

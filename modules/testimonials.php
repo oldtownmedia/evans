@@ -68,9 +68,6 @@ final class Testimonials extends CPT{
 
 	/**
 	 * Add in array of custom metabox fields for use with CMB2.
-	 *
-	 * @param array $meta_boxes Passed through with CMB2.
-	 * @return array Revised array of all metaboxes.
 	 */
 	public function cmb_metaboxes() {
 
