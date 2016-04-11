@@ -107,42 +107,32 @@ final class Events extends CPT{
 
 	/**
 	 * Add in array of custom metabox fields for use with CMB2.
-	 *
-	 * @param array $meta_boxes Passed through with CMB2.
-	 * @return array Revised array of all metaboxes.
 	 */
-	public function cmb_metaboxes( array $meta_boxes ) {
+	public function cmb_metaboxes() {
 
-		$meta_boxes[] = array(
-			'id'			=> $this->cptslug.'_metabox',
-			'title'			=> sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
-			'object_types'	=> array( $this->cptslug, ),
-			'context'		=> 'normal',
-			'priority'		=> 'high',
-			'show_names'	=> true,
-			'fields'		=> array(
-				array(
-					'name' => __( 'Start Date/Time', 'evans-mu' ),
-					'desc' => __( 'Enter a date for your '.$this->cptslug, 'evans-mu' ),
-					'id'   => $this->prefix . 'date',
-					'type' => 'text_datetime_timestamp',
-				),
-				array(
-					'name' => __( 'Event Cost', 'evans-mu' ),
-					'desc' => __( 'Enter the guest cost for your '.$this->cptslug.' (optional)', 'evans-mu' ),
-					'id'   => $this->prefix . 'cost',
-					'type' => 'text_money',
-				),
-				array(
-					'name' => __( 'Image', 'evans-mu' ),
-					'id'   => $this->prefix . 'image',
-					'type' => 'file',
-					'allow' => array( 'attachment' )
-				),
-			),
-		);
+		// Setup the main CMB box
+		$cmb = parent::cmb_metaboxes();
 
-		return $meta_boxes;
+		$cmb->add_field( array(
+			'name' => __( 'Start Date/Time', 'evans-mu' ),
+			'desc' => __( 'Enter a date for your '.$this->cptslug, 'evans-mu' ),
+			'id'   => $this->prefix . 'date',
+			'type' => 'text_datetime_timestamp'
+	    ) );
+
+		$cmb->add_field( array(
+			'name' => __( 'Event Cost', 'evans-mu' ),
+			'desc' => __( 'Enter the guest cost for your '.$this->cptslug.' (optional)', 'evans-mu' ),
+			'id'   => $this->prefix . 'cost',
+			'type' => 'text_money'
+		) );
+
+		$cmb->add_field( array(
+			'name' => __( 'Image', 'evans-mu' ),
+			'id'   => $this->prefix . 'image',
+			'type' => 'file',
+			'allow' => array( 'attachment' )
+		) );
 
 	}
 

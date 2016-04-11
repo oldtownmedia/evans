@@ -143,47 +143,37 @@ final class Alerts extends CPT{
 
 	/**
 	 * Add in array of custom metabox fields for use with CMB2.
-	 *
-	 * @param array $meta_boxes Passed through with CMB2.
-	 * @return array Revised array of all metaboxes.
 	 */
-	public function cmb_metaboxes( array $meta_boxes ) {
+	public function cmb_metaboxes() {
 
-		$meta_boxes[] = array(
-			'id'			=> $this->cptslug.'_metabox',
-			'title'			=> sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
-			'object_types'	=> array( $this->cptslug, ),
-			'context'		=> 'normal',
-			'priority'		=> 'high',
-			'show_names'	=> true,
-			'fields'		=> array(
-				array(
-					'name'    => __( 'Active?', 'evans-mu' ),
-					'desc'    => __( 'Choose whether this '.$this->cptslug.' should be active or not', 'evans-mu' ),
-					'id'      => $this->prefix . 'active',
-					'type'    => 'radio',
-					'options' => array(
-						'active'	=> __( 'Active', 'evans-mu' ),
-						'inactive'	=>  __( 'Inactive', 'evans-mu' )
-					),
-				),
-				array(
-					'name' 		=> __( 'Start Date', 'evans-mu' ),
-					'desc' 		=> __( 'If you would like to schedule this '.$this->cptslug.', enter a start date.', 'evans-mu' ),
-					'id'   		=> $this->prefix . 'start_date',
-					'type' 		=> 'text_datetime_timestamp',
-					'default'	=> time()
-				),
-				array(
-					'name' => __( 'End Date', 'evans-mu' ),
-					'desc' => __( 'If you would like to schedule this '.$this->cptslug.', enter an end date.', 'evans-mu' ),
-					'id'   => $this->prefix . 'end_date',
-					'type' => 'text_datetime_timestamp',
-				),
+		// Setup the main CMB box
+		$cmb = parent::cmb_metaboxes();
+
+		$cmb->add_field( array(
+			'name'    => __( 'Active?', 'evans-mu' ),
+			'desc'    => __( 'Choose whether this '.$this->cptslug.' should be active or not', 'evans-mu' ),
+			'id'      => $this->prefix . 'active',
+			'type'    => 'radio',
+			'options' => array(
+				'active'	=> __( 'Active', 'evans-mu' ),
+				'inactive'	=>  __( 'Inactive', 'evans-mu' )
 			),
-		);
+	    ) );
 
-		return $meta_boxes;
+		$cmb->add_field( array(
+			'name' 		=> __( 'Start Date', 'evans-mu' ),
+			'desc' 		=> __( 'If you would like to schedule this '.$this->cptslug.', enter a start date.', 'evans-mu' ),
+			'id'   		=> $this->prefix . 'start_date',
+			'type' 		=> 'text_datetime_timestamp',
+			'default'	=> time()
+		) );
+
+		$cmb->add_field( array(
+			'name' => __( 'End Date', 'evans-mu' ),
+			'desc' => __( 'If you would like to schedule this '.$this->cptslug.', enter an end date.', 'evans-mu' ),
+			'id'   => $this->prefix . 'end_date',
+			'type' => 'text_datetime_timestamp',
+		) );
 
 	}
 

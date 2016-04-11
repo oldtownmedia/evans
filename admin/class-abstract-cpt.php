@@ -146,7 +146,7 @@ abstract class CPT{
 		$this->prefix = cmb_prefix( $this->cptslug );
 
 		add_action( 'init', array( $this, 'define_cpt' ) );
-		add_filter( 'cmb2_meta_boxes', array( $this, 'cmb_metaboxes' ) );
+		add_filter( 'cmb2_admin_init', array( $this, 'cmb_metaboxes' ) );
 		add_filter( 'cpt_array_filter', array( $this, 'dashboard_cpt_loop' ), 10 );
 		add_shortcode( $this->cptslug_plural, array( $this, 'shortcode' ) );
 
@@ -437,8 +437,19 @@ abstract class CPT{
 	 * @param array $meta_boxes Passed through with CMB2.
 	 * @return array Passthrough of all metaboxes.
 	 */
-	public function cmb_metaboxes( array $meta_boxes ){
-		return $meta_boxes;
+	public function cmb_metaboxes(){
+
+		$cmb = new_cmb2_box( array(
+	        'id'            => $this->cptslug . '_metabox',
+	        'title'         => sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
+	        'object_types'  => array( $this->cptslug ),
+	        'context'       => 'normal',
+	        'priority'      => 'high',
+	        'show_names'    => true,
+	    ) );
+
+		return $cmb;
+
 	}
 
 

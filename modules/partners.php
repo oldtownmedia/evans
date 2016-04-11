@@ -75,32 +75,24 @@ final class Partners extends CPT{
 	 * @param array $meta_boxes Passed through with CMB2.
 	 * @return array Revised array of all metaboxes.
 	 */
-	public function cmb_metaboxes( array $meta_boxes ) {
+	public function cmb_metaboxes() {
 
-		$meta_boxes[] = array(
-			'id'			=> $this->cptslug.'_metabox',
-			'title'			=> sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
-			'object_types'	=> array( $this->cptslug, ),
-			'context'		=> 'normal',
-			'priority'		=> 'high',
-			'show_names'	=> true,
-			'fields'		=> array(
-				array(
-					'name' => __( 'Link URL', 'evans-mu' ),
-					'desc' => __( 'Enter the URL from the page you want to link to.', 'evans-mu' ),
-					'id'   => $this->prefix . 'url',
-					'type' => 'text',
-				),
-				array(
-					'name' => __( 'Image', 'evans-mu' ),
-					'id'   => $this->prefix . 'image',
-					'type' => 'file',
-					'allow' => array( 'attachment' )
-				),
-			),
-		);
+		// Setup the main CMB box
+		$cmb = parent::cmb_metaboxes();
 
-		return $meta_boxes;
+		$cmb->add_field( array(
+			'name' => __( 'Link URL', 'evans-mu' ),
+			'desc' => __( 'Enter the URL from the page you want to link to.', 'evans-mu' ),
+			'id'   => $this->prefix . 'url',
+			'type' => 'text'
+		) );
+
+		$cmb->add_field( array(
+			'name' => __( 'Image', 'evans-mu' ),
+			'id'   => $this->prefix . 'image',
+			'type' => 'file',
+			'allow' => array( 'attachment' )
+		) );
 
 	}
 

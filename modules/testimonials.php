@@ -72,25 +72,16 @@ final class Testimonials extends CPT{
 	 * @param array $meta_boxes Passed through with CMB2.
 	 * @return array Revised array of all metaboxes.
 	 */
-	public function cmb_metaboxes( array $meta_boxes ) {
+	public function cmb_metaboxes() {
 
-		$meta_boxes[] = array(
-			'id'			=> $this->cptslug.'_metabox',
-			'title'			=> sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
-			'object_types'	=> array( $this->cptslug, ),
-			'context'		=> 'normal',
-			'priority'		=> 'high',
-			'show_names'	=> true,
-			'fields'		=> array(
-				array(
-					'name'	=> __( 'Reviewer Name', 'evans-mu' ),
-					'id'	=> $this->prefix . 'reviewer',
-					'type'	=> 'text',
-				),
-			),
-		);
+		// Setup the main CMB box
+		$cmb = parent::cmb_metaboxes();
 
-		return $meta_boxes;
+		$cmb->add_field( array(
+			'name'	=> __( 'Reviewer Name', 'evans-mu' ),
+			'id'	=> $this->prefix . 'reviewer',
+			'type'	=> 'text',
+	    ) );
 
 	}
 

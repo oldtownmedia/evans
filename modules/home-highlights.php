@@ -83,50 +83,40 @@ final class Highlights extends CPT{
 
 	/**
 	 * Add in array of custom metabox fields for use with CMB2.
-	 *
-	 * @param array $meta_boxes Passed through with CMB2.
-	 * @return array Revised array of all metaboxes.
 	 */
-	public function cmb_metaboxes( array $meta_boxes ) {
+	public function cmb_metaboxes() {
 
-		$meta_boxes[] = array(
-			'id'			=> $this->cptslug.'_metabox',
-			'title'			=> sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
-			'object_types'	=> array( $this->cptslug, ),
-			'context'		=> 'normal',
-			'priority'		=> 'high',
-			'show_names'	=> true,
-			'fields'		=> array(
-				array(
-					'name' => __( 'Content', 'evans-mu' ),
-					'desc' => __( 'Enter any content that you would like to appear in the '.$this->singular, 'evans-mu' ),
-					'id'   => $this->prefix . 'content',
-					'type' => 'text',
-				),
-				array(
-					'name' => __( 'Link URL', 'evans-mu' ),
-					'desc' => __( 'Enter the URL from the page you want to link to.', 'evans-mu' ),
-					'id'   => $this->prefix . 'url',
-					'type' => 'text_url',
-				),
-				array(
-					'name' => __( 'Link Text', 'evans-mu' ),
-					'desc' => __( 'Enter text for the link.', 'evans-mu' ),
-					'id'   => $this->prefix . 'url_text',
-					'type' => 'text',
-					'default' => __( 'Read More', 'evans-mu' )
-				),
-				array(
-					'name' => __( 'Image', 'evans-mu' ),
-					'id'   => $this->prefix . 'image',
-					'type' => 'file',
-					'allow' => array( 'attachment' )
-				),
+		// Setup the main CMB box
+		$cmb = parent::cmb_metaboxes();
 
-			),
-		);
+		$cmb->add_field( array(
+			'name' => __( 'Content', 'evans-mu' ),
+			'desc' => __( 'Enter any content that you would like to appear in the '.$this->singular, 'evans-mu' ),
+			'id'   => $this->prefix . 'content',
+			'type' => 'text'
+	    ) );
 
-		return $meta_boxes;
+		$cmb->add_field( array(
+			'name' => __( 'Link URL', 'evans-mu' ),
+			'desc' => __( 'Enter the URL from the page you want to link to.', 'evans-mu' ),
+			'id'   => $this->prefix . 'url',
+			'type' => 'text_url'
+		) );
+
+		$cmb->add_field( array(
+			'name' => __( 'Link Text', 'evans-mu' ),
+			'desc' => __( 'Enter text for the link.', 'evans-mu' ),
+			'id'   => $this->prefix . 'url_text',
+			'type' => 'text',
+			'default' => __( 'Read More', 'evans-mu' )
+		) );
+
+		$cmb->add_field( array(
+			'name' => __( 'Image', 'evans-mu' ),
+			'id'   => $this->prefix . 'image',
+			'type' => 'file',
+			'allow' => array( 'attachment' )
+		) );
 
 	}
 
