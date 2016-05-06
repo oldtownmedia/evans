@@ -79,7 +79,7 @@ final class RecentNewsWidget extends Widget{
 		}
 
 		// If user specifies specific categories, declare. Otherwise use all cats
-		if ( isset( $instance['category'] ) ) {
+		if ( isset( $instance['category'] ) && !empty( $instance['category'] ) ) {
 			$cat = esc_attr( $instance['category'] );
 		} else {
 			$categories = get_categories();
