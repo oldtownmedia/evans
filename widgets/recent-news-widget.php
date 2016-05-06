@@ -34,26 +34,26 @@ final class RecentNewsWidget extends Widget{
 		return array(
 			array(
 				'id'		=> 'title',
-				'name'		=> 'Title',
+				'name'		=> __( 'Title', 'evans-mu' ),
 				'type'		=> 'text',
 				'default'	=> 'Recent News'
 			),
 			array(
 				'id'		=> 'category',
-				'name'		=> 'Category',
+				'name'		=> __( 'Category', 'evans-mu' ),
 				'desc'		=> 'optional',
 				'type'		=> 'select',
 				'options'	=> $cat_array
 			),
 			array(
 				'id'		=> 'num_posts',
-				'name'		=> 'Number of Posts',
+				'name'		=> __( 'Number of Posts', 'evans-mu' ),
 				'desc'		=> 'optional',
 				'type'		=> 'text',
 			),
 			array(
 				'id'		=> 'word_length',
-				'name'		=> 'Number of Words pre Post to Display',
+				'name'		=> __( 'Number of Words per Post to Display', 'evans-mu' ),
 				'desc'		=> 'optional',
 				'type'		=> 'text',
 			)
@@ -88,7 +88,7 @@ final class RecentNewsWidget extends Widget{
 			}
 		}
 
-		if ( isset( $instance['word_length'] ) ){
+		if ( isset( $instance['word_length'] ) && !empty( $instance['word_length'] ) ){
 			$word_length = $instance['word_length'];
 		} else {
 			$word_length = 50;
@@ -114,7 +114,7 @@ final class RecentNewsWidget extends Widget{
 
 				$html .= apply_filters( 'the_content', wp_trim_words( get_the_content(), $word_length ) );
 
-				$html .= "<a href='".esc_url( get_permalink() )."' class='button'>Read More</a>";
+				$html .= "<a href='".esc_url( get_permalink() )."' class='button' role='button'>".__( 'Read More', 'evans-mu' )."</a>";
 
 			endwhile;
 
@@ -129,5 +129,3 @@ final class RecentNewsWidget extends Widget{
 add_action( 'widgets_init', function(){
      register_widget( __NAMESPACE__ . '\RecentNewsWidget' );
 } );
-
-

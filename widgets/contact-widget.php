@@ -26,57 +26,57 @@ final class ContactWidget extends Widget{
 		return array(
 			array(
 				'id'		=> 'title',
-				'name'		=> 'Title',
+				'name'		=> __( 'Title', 'evans-mu' ),
 				'type'		=> 'text',
-				'default'	=> 'Contact Info'
+				'default'	=> __( 'Contact Info', 'evans-mu' )
 			),
 			array(
 				'id'		=> 'address',
-				'name'		=> 'Address',
-				'desc'		=> 'Street Address',
+				'name'		=> __( 'Address', 'evans-mu' ),
+				'desc'		=> __( 'Street Address', 'evans-mu' ),
 				'type'		=> 'text',
 			),
 			array(
 				'id'		=> 'city',
-				'name'		=> 'City',
+				'name'		=> __( 'City', 'evans-mu' ),
 				'type'		=> 'text',
-				'default'	=> 'Fort Collins'
+				'default'	=> __( 'Fort Collins', 'evans-mu' )
 			),
 			array(
 				'id'		=> 'state',
-				'name'		=> 'State',
+				'name'		=> __( 'State', 'evans-mu' ),
 				'type'		=> 'text',
-				'default'	=> 'CO'
+				'default'	=> __( 'CO', 'evans-mu' )
 			),
 			array(
 				'id'		=> 'zip',
-				'name'		=> 'ZIP',
+				'name'		=> __( 'ZIP', 'evans-mu' ),
 				'type'		=> 'text',
 				'default'	=> '80521'
 			),
 			array(
 				'id'		=> 'phone',
-				'name'		=> 'Phone',
+				'name'		=> __( 'Phone', 'evans-mu' ),
 				'type'		=> 'text',
 				'default'	=> '(970) 123-4567'
 			),
 			array(
 				'id'		=> 'fax',
-				'name'		=> 'Fax',
+				'name'		=> __( 'Fax', 'evans-mu' ),
 				'type'		=> 'text',
 				'default'	=> ''
 			),
 			array(
 				'id'		=> 'email',
-				'name'		=> 'Email',
+				'name'		=> __( 'Email', 'evans-mu' ),
 				'type'		=> 'text',
 				'sanitize'	=> 'sanitize_email',
 				'default'	=> 'me@thissite.com'
 			),
 			array(
 				'id'		=> 'map',
-				'name'		=> 'Map?',
-				'desc'		=> 'Choose whether to show a map underneath the info or not.',
+				'name'		=> __( 'Map?', 'evans-mu' ),
+				'desc'		=> __( 'Choose whether to show a map underneath the info or not.', 'evans-mu' ),
 				'type'		=> 'checkbox',
 				'default'	=> 'on'
 			)
@@ -122,11 +122,11 @@ final class ContactWidget extends Widget{
 			}
 
 			if ( !empty( $instance['phone'] ) ){
-				$html .= "<strong>Phone:</strong> ".esc_attr( $instance['phone'] )."<br>";
+				$html .= "<strong>".__( 'Phone:', 'evans-mu' )."</strong> ".esc_attr( $instance['phone'] )."<br>";
 			}
 
 			if ( !empty( $instance['fax'] ) ){
-				$html .= "<strong>Fax:</strong> ".esc_attr( $instance['fax'] )."<br>";
+				$html .= "<strong>".__( 'Fax:', 'evans-mu' )."</strong> ".esc_attr( $instance['fax'] )."<br>";
 			}
 
 			if ( !empty( $instance['email'] ) ){
