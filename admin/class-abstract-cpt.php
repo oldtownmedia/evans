@@ -136,14 +136,24 @@ abstract class CPT{
 
 
 	/**
+	 * Build our prefix variable in construct instead of hooks
+	 *
+	 * @see cmb_prefix
+	 */
+	public function __construct(){
+
+		// Define our prefix for metaboxes
+		$this->prefix = cmb_prefix( $this->cptslug );
+
+	}
+
+
+	/**
 	 * Hooks function to fire off the events we need.
 	 *
 	 * @see add_action, add_filter, add_shortcode
 	 */
 	public function hooks(){
-
-		// Define our prefix for metaboxes
-		$this->prefix = cmb_prefix( $this->cptslug );
 
 		add_action( 'init', array( $this, 'define_cpt' ) );
 		add_filter( 'cmb2_admin_init', array( $this, 'cmb_metaboxes' ) );
