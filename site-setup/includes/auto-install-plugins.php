@@ -71,6 +71,11 @@ function my_theme_register_required_plugins() {
 			'required' 	=> false,
 		),
 		array(
+			'name' 		=> 'Regenerate Thumbnails',
+			'slug' 		=> 'regenerate-thumbnails',
+			'required' 	=> true,
+		),
+		array(
 			'name' 		=> 'Simple 301 Redirects',
 			'slug' 		=> 'simple-301-redirects',
 			'required' 	=> false,
