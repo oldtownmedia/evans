@@ -145,6 +145,11 @@ class Site_Lockdown {
 	 */
 	public function lockdown_actions() {
 
+		// we're logged in and validated, return
+		if ( is_user_logged_in() || in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) ){
+			return;
+		}
+
 		$locked = get_option( 'evans_site_lockdown' );
 
 		if ( $locked == 'locked' && !is_admin() ){
