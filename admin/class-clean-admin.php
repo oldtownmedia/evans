@@ -69,7 +69,7 @@ class Clean_Admin {
 		register_setting( 'general', 'clean_admin_bar', 'esc_attr' );
 		add_settings_field(
 			'clean_admin_bar',
-			'<label for="favorite_color">' . __( 'Hide unnecessary menu items' , 'clean_admin_bar' ) . '</label>',
+			'<label for="favorite_color">' . esc_html__( 'Hide unnecessary menu items' , 'evans-mu' ) . '</label>',
 			array( $this, 'fields_html' ),
 			'general'
 		);
@@ -91,8 +91,8 @@ class Clean_Admin {
 			$off = 'checked="checked"';
 		}
 
-		echo '<label><input type="radio" id="clean_admin_bar" name="clean_admin_bar" value="on" '.$on.' /> Hide items</label><br>';
-		echo '<label><input type="radio" id="clean_admin_bar" name="clean_admin_bar" value="off" '.$off.' /> Show items</label>';
+		echo '<label><input type="radio" id="clean_admin_bar" name="clean_admin_bar" value="on" ' . $on . ' /> ' . esc_html__( 'Hide items', 'evans-mu' ) . '</label><br>';
+		echo '<label><input type="radio" id="clean_admin_bar" name="clean_admin_bar" value="off" ' . $off . ' /> ' . esc_html__( 'Show items', 'evans-mu' ) . '</label>';
 
 	}
 
@@ -398,7 +398,7 @@ class Clean_Admin {
 	        $msg = sprintf( __( '<a href="http://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> is available! Please notify the site administrator.' ), $cur->current );
 	    }
 
-	    echo "<div class='update-nag'>$msg</div>";
+	    echo "<div class='update-nag'>" . wp_kses_post( $msg ) . "</div>";
 
 	}
 
@@ -522,7 +522,7 @@ class Clean_Admin {
 				$text = _n( '%s '.$cpt['singular'], '%s '.$cpt['plural'], intval( $count->publish ), 'evans-mu' );
 				$text = sprintf( $text, number_format_i18n( $count->publish ) );
 
-				printf( "<li class='$cpt[slug]-count'><a href='edit.php?post_type=$cpt[slug]' class='$cpt[class]'>%s</a></li>", $text );
+				echo "<li class='" . esc_attr( $cpt['slug'] ) . "-count'><a href='edit.php?post_type=" . esc_attr( $cpt['slug'] ) . "' class='" . esc_attr( $cpt['class'] ) . "'> " . esc_html( $text ) . "</a></li>";
 
 			}
 		}

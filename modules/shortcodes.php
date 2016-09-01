@@ -25,10 +25,10 @@ function button_shortcode( $atts ){
 	}
 
 	$link = "<a class='button'";
-		$link .= "href='".esc_url( $atts['link'] )."'";
-		if ( !empty( $atts['target'] ) ){ $link .= " target='".esc_attr(  $atts['target'] )."'"; }
+		$link .= "href='" . esc_url( $atts['link'] ) . "'";
+		if ( ! empty( $atts['target'] ) ){ $link .= " target='" . esc_attr(  $atts['target'] ) . "'"; }
 	$link .= ">";
-		$link .= esc_attr( $atts['text'] );
+		$link .= esc_html( $atts['text'] );
 	$link .="</a>";
 
 	return $link;

@@ -60,18 +60,18 @@ final class Highlights extends CPT{
 		$img_id		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true);
 		$img		= wp_get_attachment_image_src( $img_id, get_post_type().'-thumb' );
 
-		$html .= "<li class='".$this->cptslug."'>";
+		$html .= "<li class='" . esc_attr( $this->cptslug ) . "'>";
 
 			$html .= $this->get_img( $img, $link );
 
-			$html .= "<h3><a href='".esc_url( $link )."'>".esc_attr( get_the_title() )."</a></h3>";
+			$html .= "<h3><a href='" . esc_url( $link ) . "'>" . esc_html( get_the_title() ) . "</a></h3>";
 
 			if ( !empty( $content ) ){
 				$html .=  apply_filters( 'the_content', $content );
 			}
 
 			if ( !empty( $link_text ) ){
-				$html .= "<a href='".esc_url( $link )."' class='button' role='button'>".esc_attr( $link_text )."</a>";
+				$html .= "<a href='" . esc_url( $link ) . "' class='button' role='button'>" . esc_html( $link_text ) . "</a>";
 			}
 
 		$html .= "</li>";

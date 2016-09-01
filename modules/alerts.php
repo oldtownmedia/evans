@@ -122,19 +122,19 @@ final class Alerts extends CPT{
 
 		$html = "";
 
-			$end = get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'end_date', true );
+		$end = get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'end_date', true );
 
-			if ( !$end || time() <= $end ){
+		if ( ! $end || time() <= $end ){
 
-				$html .= "<div class='".$this->cptslug."'>";
+			$html .= "<div class='" . esc_attr( $this->cptslug ) . "'>";
 
-					$html .= "<h4>" . esc_attr( get_the_title() ) . "</h4>";
+				$html .= "<h4>" . esc_html( get_the_title() ) . "</h4>";
 
-					$html .= apply_filters( 'the_content', get_the_content() );
+				$html .= apply_filters( 'the_content', get_the_content() );
 
-				$html .= "</div>";
+			$html .= "</div>";
 
-			}
+		}
 
 		return $html;
 

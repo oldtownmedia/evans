@@ -58,7 +58,7 @@ final class Partners extends CPT{
 		$img_id	= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true);
 		$img	= wp_get_attachment_image_src( $img_id, get_post_type().'-thumb' );
 
-		$html .= "<li class='".$this->cptslug."'>";
+		$html .= "<li class='" . esc_attr( $this->cptslug ) . "'>";
 
 			$html .= $this->get_img( $img, $link );
 

@@ -110,11 +110,11 @@ final class RecentNewsWidget extends Widget{
 
 			while ( $objects->have_posts() ) : $objects->the_post();
 
-				$html .= "<h3>".esc_attr( get_the_title() )."</h3>";
+				$html .= "<h3>" . esc_html( get_the_title() ) . "</h3>";
 
 				$html .= apply_filters( 'the_content', wp_trim_words( get_the_content(), $word_length ) );
 
-				$html .= "<a href='".esc_url( get_permalink() )."' class='button' role='button'>".__( 'Read More', 'evans-mu' )."</a>";
+				$html .= "<a href='" . esc_url( get_permalink() ) . "' class='button' role='button'>" . esc_html__( 'Read More', 'evans-mu' ) . "</a>";
 
 			endwhile;
 

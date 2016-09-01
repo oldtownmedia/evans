@@ -54,15 +54,17 @@ final class Staff extends CPT{
 		$img		= wp_get_attachment_image_src( $img_id, get_post_type().'-thumb' );
 		$title		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'position', true );
 
-		$html .= "<li class='".$this->cptslug."' itemscope itemtype ='http://schema.org/Person'>";
+		$html .= "<li class='" . esc_attr( $this->cptslug ) . "' itemscope itemtype ='http://schema.org/Person'>";
 
 			$html .= $this->get_img( $img );
 
-			$html .= "<h3 itemprop='name'>".esc_attr( get_the_title() )."</h3>";
+			$html .= "<h3 itemprop='name'>" . esc_html( get_the_title() ) . "</h3>";
 
 
 			if ( !empty( $title ) ){
-				$html .= "<p><strong>" . __( 'Position:', 'evans-mu' ) . "</strong> <span itemprop='jobTitle'>".esc_attr( $title )."</span></p>";
+				$html .= "<p>
+					<strong>" . esc_html__( 'Position:', 'evans-mu' ) . "</strong> <span itemprop='jobTitle'>" . esc_html( $title ) . "</span>
+				</p>";
 			}
 
 

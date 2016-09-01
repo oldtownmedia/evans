@@ -86,10 +86,10 @@ class Site_Lockdown {
 			$locked = get_option( 'evans_site_lockdown' );
 
 			if ( $locked == 'locked' ){
-				$title	= '<span style="color:green">'.__( 'Site is locked', 'evans-mu' ).'</span>';
+				$title	= '<span style="color:green">' . esc_html__( 'Site is locked', 'evans-mu' ) . '</span>';
 				$link	= $this->maybe_add_get_to_url() . 'unlock_site=' . wp_create_nonce( 'evans_unlock_site' );
 			} else {
-				$title	= '<span style="color:red">'.__( 'Site is unlocked', 'evans-mu' ).'</span>';
+				$title	= '<span style="color:red">' . esc_html__( 'Site is unlocked', 'evans-mu' ) . '</span>';
 				$link	= $this->maybe_add_get_to_url() . 'lock_site=' . wp_create_nonce( 'evans_lock_site' );
 			}
 

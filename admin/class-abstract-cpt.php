@@ -195,7 +195,7 @@ abstract class CPT{
 
 		if ( $objects->have_posts() ){
 
-			$html .= "<ul class='".$this->cptslug."-listing'>";
+			$html .= "<ul class='" . esc_attr( $this->cptslug ) . "-listing'>";
 
 			while ( $objects->have_posts() ) : $objects->the_post();
 
@@ -207,7 +207,7 @@ abstract class CPT{
 
 		} else {
 
-			$html = "<h3>".sprintf( __( "There are no %s to list. Check back soon!", 'evans-mu' ), $this->cptslug_plural )."</h3>";
+			$html = "<h3>" . sprintf( esc_html__( "There are no %s to list. Check back soon!", 'evans-mu' ), $this->cptslug_plural ) . "</h3>";
 
 		}
 
@@ -274,9 +274,9 @@ abstract class CPT{
 	public function display_single( $pid ){
 		$html = "";
 
-		$html .= "<li class='".$this->cptslug."'>";
+		$html .= "<li class='" . esc_attr( $this->cptslug ) . "'>";
 
-			$html .= "<h3>".esc_attr( get_the_title( $pid ) )."</h3>";
+			$html .= "<h3>" . esc_html( get_the_title( $pid ) ) . "</h3>";
 
 			$html .= apply_filters( 'the_content', get_the_content() );
 
@@ -302,10 +302,10 @@ abstract class CPT{
 		}
 
 		if ( !empty( $link ) ){
-			$html .= "<a href='$link'>";
+			$html .= "<a href=' " . esc_url( $link ) . "'>";
 		}
 
-			$html .= "<img src='".$img[0]."' alt='".esc_attr( get_the_title() )."' />";
+			$html .= "<img src='" . esc_url( $img[0] ) . "' alt='" . esc_attr( get_the_title() ) . "' />";
 
 		if ( !empty( $link ) ){
 			$html .= "</a>";
@@ -342,7 +342,7 @@ abstract class CPT{
 
 			foreach ( $terms as $term ) :
 
-				$html .= "<h2>".apply_filters( 'the_title', $term->name )."</h2>";
+				$html .= "<h2>" . esc_html( apply_filters( 'the_title', $term->name ) ) . "</h2>";
 
 				$description = term_description( $term->term_id, $this->tax_slug );
 

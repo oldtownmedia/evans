@@ -52,7 +52,7 @@ abstract class Widget extends \WP_Widget {
 			sprintf( __( '%s', 'evans-mu' ), $this->title ),
 			array(
 				'classname'  => $this->base.'-class',
-				'description' => sprintf( __( '%s', 'evans-mu' ), $this->description )
+				'description' => sprintf( __( '%s', 'evans-mu' ), esc_html( $this->description ) ),
 			)
 		);
 
@@ -291,7 +291,7 @@ abstract class Widget extends \WP_Widget {
 
 		// Display the widget title
 		if ( $instance['title'] ){
-			return $args['before_title'] . apply_filters('widget_title', $instance['title'] ) . $args['after_title'];
+			return $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 		}
 
 	}
@@ -379,9 +379,9 @@ abstract class Widget extends \WP_Widget {
 			return;
 		}
 
-		$html .= "<p class='".$field['type']."-box evans-field'>";
+		$html .= "<p class='" . esc_attr( $field['type'] ) . "-box evans-field'>";
 
-		$html .= "<label for='".$this->get_field_id( $field['id'] )."'><strong>".$field['name']."</strong></label>";
+		$html .= "<label for='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "'><strong>" . esc_attr( $field['name'] ) . "</strong></label>";
 
 		if ( $field['type'] != 'checkbox' ){
 			$html .= "<br>";
@@ -391,13 +391,13 @@ abstract class Widget extends \WP_Widget {
 
 			case 'text' :
 
-				$html .= "<input id='".$this->get_field_id( $field['id'] )."' name='".$this->get_field_name( $field['id'] )."' value='".$instance[ $field['id'] ]."' />";
+				$html .= "<input id='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "' name='" . esc_attr( $this->get_field_name( $field['id'] ) ) . "' value='" . esc_attr( $instance[ $field['id'] ] ) . "' />";
 
 			break;
 
 			case 'textarea' :
 
-				$html .= "<textarea id='".$this->get_field_id( $field['id'] )."' name='".$this->get_field_name( $field['id'] )."'>".$instance[ $field['id'] ]."</textarea>";
+				$html .= "<textarea id='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "' name='" . esc_attr( $this->get_field_name( $field['id'] ) ) . "'>" . esc_html( $instance[ $field['id'] ] ) . "</textarea>";
 
 			break;
 
@@ -405,7 +405,7 @@ abstract class Widget extends \WP_Widget {
 
 				if ( !empty( $field['options'] ) ){
 
-					$html .="<select id='".$this->get_field_id( $field['id'] )."' name='".$this->get_field_name( $field['id'] )."' >";
+					$html .="<select id='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "' name='" . esc_attr( $this->get_field_name( $field['id'] ) ) . "' >";
 
 						foreach ( $field['options'] as $key => $value ){
 							$selected = '';
@@ -414,8 +414,8 @@ abstract class Widget extends \WP_Widget {
 								$selected = 'selected';
 							}
 
-							$html .= "<option value='$key' $selected>";
-								$html .= $value;
+							$html .= "<option value=' " . esc_attr( $key ) . "' " . esc_attr( $selected ) . ">";
+								$html .= esc_html( $value );
 							$html .= "</option>";
 						}
 
@@ -436,7 +436,7 @@ abstract class Widget extends \WP_Widget {
 							$selected = ' checked"';
 						}
 
-						$html .= "<input type='radio' value='$key'$selected> <span>$value</span><br>";
+						$html .= "<input type='radio' value='" . esc_attr( $key ) . "' " . esc_attr( $selected ) . "> <span>" . esc_html( $value ) . "</span><br>";
 
 					}
 
@@ -451,14 +451,14 @@ abstract class Widget extends \WP_Widget {
 					$checked = ' checked';
 				}
 
-				$html .= "<input type='checkbox' id='".$this->get_field_id( $field['id'] )."' name='".$this->get_field_name( $field['id'] )."' $checked value='on' />";
+				$html .= "<input type='checkbox' id='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "' name='" . esc_attr( $this->get_field_name( $field['id'] ) ) . "' " . esc_attr( $checked ) . " value='on' />";
 
 			break;
 
 		}
 
 		if ( isset( $field['desc'] ) ){
-			$html .= "<br><span><i><small>".$field['desc']."</i></small></span>";
+			$html .= "<br><span><i><small>" . esc_html( $field['desc'] ) . "</i></small></span>";
 		}
 
 		$html .= "</p>";

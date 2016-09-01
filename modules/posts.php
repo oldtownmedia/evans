@@ -58,7 +58,7 @@ class Posts{
 	public function modified_date_column( $column, $post_id ) {
 
 		if ( $column == 'modified' ){
-			echo human_time_diff( get_post_modified_time( 'U', true, $post_id ), time() );
+			echo esc_html( human_time_diff( get_post_modified_time( 'U', true, $post_id ), time() ) );
 		}
 
 	}

@@ -100,43 +100,43 @@ final class ContactWidget extends Widget{
 		// Display the contact information
 		$html .= "<p>";
 
-			if ( !empty( $instance['address'] ) ){
-				$address_string .= esc_attr( $instance['address'] )."<br>";
+			if ( ! empty( $instance['address'] ) ){
+				$address_string .= esc_html( $instance['address'] ) . "<br>";
 			}
 
-			if ( !empty( $instance['city'] ) ){
-				$address_string .= esc_attr( $instance['city'] ).", ";
+			if ( ! empty( $instance['city'] ) ){
+				$address_string .= esc_html( $instance['city'] ) . ", ";
 			}
 
-			if ( !empty( $instance['state'] ) ){
-				$address_string .= esc_attr( $instance['state'] )." ";
+			if ( ! empty( $instance['state'] ) ){
+				$address_string .= esc_html( $instance['state'] ) . " ";
 			}
 
-			if ( !empty( $instance['zip'] ) ){
-				$address_string .= esc_attr( $instance['zip'] );
+			if ( ! empty( $instance['zip'] ) ){
+				$address_string .= esc_html( $instance['zip'] );
 			}
 
 			// echo the address string
-			if ( !empty( $address_string ) ){
-				$html .= $address_string."<br>";
+			if ( ! empty( $address_string ) ){
+				$html .= $address_string . "<br>";
 			}
 
-			if ( !empty( $instance['phone'] ) ){
-				$html .= "<strong>".__( 'Phone:', 'evans-mu' )."</strong> ".esc_attr( $instance['phone'] )."<br>";
+			if ( ! empty( $instance['phone'] ) ){
+				$html .= "<strong>" . esc_html__( 'Phone:', 'evans-mu' ) . "</strong> " . esc_html( $instance['phone'] ) . "<br>";
 			}
 
-			if ( !empty( $instance['fax'] ) ){
-				$html .= "<strong>".__( 'Fax:', 'evans-mu' )."</strong> ".esc_attr( $instance['fax'] )."<br>";
+			if ( ! empty( $instance['fax'] ) ){
+				$html .= "<strong>" . esc_html__( 'Fax:', 'evans-mu' )."</strong> " . esc_html( $instance['fax'] ) . "<br>";
 			}
 
-			if ( !empty( $instance['email'] ) ){
-				$html .= "<a href='mailto:".sanitize_email( $instance['email'] )."'>".sanitize_email( $instance['email'] )."</a><br>";
+			if ( ! empty( $instance['email'] ) ){
+				$html .= "<a href='mailto:" . sanitize_email( $instance['email'] ) . "'>" . sanitize_email( $instance['email'] ) . "</a><br>";
 			}
 
 		$html .= "</p>";
 
 		// If map is checked, display the map using Simple Google Maps Short Code
-		if ( $instance['map'] == 'on' && !empty( $address_string ) ){
+		if ( $instance['map'] == 'on' && ! empty( $address_string ) ){
 			$html .= do_shortcode('[pw_map address="'.$address_string.'"]');
 		}
 

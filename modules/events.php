@@ -80,18 +80,18 @@ final class Events extends CPT{
 		$img_id		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true);
 		$img		= wp_get_attachment_image_src( $img_id, get_post_type().'-thumb' );
 
-			$html .= "<li itemscope itemtype='http://data-vocabulary.org/Event' class='".$this->cptslug." group'>";
+			$html .= "<li itemscope itemtype='http://data-vocabulary.org/Event' class='" . esc_attr( $this->cptslug ) . " group'>";
 
 				$html .= $this->get_img( $img );
 
-				$html .= "<h3>" . esc_attr( get_the_title() ) . "</h3>";
+				$html .= "<h3>" . esc_html( get_the_title() ) . "</h3>";
 
 				$html .= "<p>";
 
-					$html .= date( 'm/d/Y', esc_attr( $date ) ) . " " . date( 'g:i A', esc_attr( $date ) )."<br>";
+					$html .= esc_html( date( 'm/d/Y', $date ) ) . " " . esc_html( date( 'g:i A', $date ) )."<br>";
 
-					if ( !empty( $cost ) ){
-						$html .= __( 'Cost:', 'evans-mu' ) . " ".esc_attr( $cost )."<br>";
+					if ( ! empty( $cost ) ){
+						$html .= esc_html__( 'Cost:', 'evans-mu' ) . " " . esc_html( $cost ) . "<br>";
 					}
 
 				$html .= "</p>";

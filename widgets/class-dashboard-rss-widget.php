@@ -73,9 +73,9 @@ final class CompanyRSSFeedWidget extends Dashboard_Widget{
 		foreach ( $rss->get_items( 0, $this->num_posts ) as $item ) {
 
 			echo "<li class='rss-widget'>";
-				echo "<a class='rsswidget' href='".esc_url( strip_tags( $item->get_link() ) )."'>".esc_html( $item->get_title() )."</a>";
-				echo "<span class='rss-date'> - ".$item->get_date( 'F jS, Y' )."</span>\n";
-				echo "<div class='rssSummary'>".wp_html_excerpt( $item->get_content(), 350 )."...</div>\n\r\n";
+				echo "<a class='rsswidget' href='" . esc_url( strip_tags( $item->get_link() ) ) . "'>" . esc_html( $item->get_title() ) . "</a>";
+				echo "<span class='rss-date'> - " . esc_html( $item->get_date( 'F jS, Y' ) ) . "</span>\n";
+				echo "<div class='rssSummary'>" . wp_kses_post( wp_html_excerpt( $item->get_content(), 350 ) ) . "...</div>\n\r\n";
 			echo "</li>";
 
 		}
@@ -105,7 +105,7 @@ final class CompanyRSSFeedWidget extends Dashboard_Widget{
 
 	        if ( is_admin() || current_user_can( 'manage_options' ) ) {
 	            $html .=  '<p>';
-		            $html .= sprintf( __( '<strong>RSS Error</strong>: %s', 'evans-mu' ), $rss->get_error_message() );
+		            $html .= "<strong>" . esc_html__( 'RSS Error: ', 'evans-mu' ) . "</strong>" . esc_html( $rss->get_error_message() );
 	            $html .=  '</p>';
 	        }
 
@@ -115,7 +115,7 @@ final class CompanyRSSFeedWidget extends Dashboard_Widget{
 
 		// If there are no posts to show
 		if ( !$rss->get_item_quantity() ) {
-		     $html .=  '<p>'.__( 'Apparently, there are no updates to show!', 'evans-mu' ).'</p>';
+		     $html .=  '<p>' . esc_html__( 'Apparently, there are no updates to show!', 'evans-mu' ) . '</p>';
 		     $rss->__destruct();
 		     unset( $rss );
 		}
