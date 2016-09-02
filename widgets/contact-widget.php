@@ -136,7 +136,7 @@ final class ContactWidget extends Widget{
 		$html .= "</p>";
 
 		// If map is checked, display the map using Simple Google Maps Short Code
-		if ( $instance['map'] == 'on' && ! empty( $address_string ) ){
+		if ( $instance['map'] == 'on' && ! empty( $address_string ) && function_exists( 'pw_map_shortcode' ) ){
 			$html .= do_shortcode('[pw_map address="'.$address_string.'"]');
 		}
 

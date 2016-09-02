@@ -376,7 +376,7 @@ class Clean_Admin {
 	 */
 	public function custom_update_nag() {
 
-	    if ( is_multisite() && !current_user_can('update_core') ){
+	    if ( is_multisite() && ! current_user_can( 'update_core' ) ){
 	        return false;
 	    }
 
@@ -493,7 +493,7 @@ class Clean_Admin {
 	 */
 	public function remove_seo_metabox() {
 
-	    if ( !current_user_can( 'edit_others_posts' ) ){
+	    if ( ! current_user_can( 'edit_others_posts' ) ){
 	        remove_meta_box( 'wpseo_meta', 'alert', 'normal' );
 	        remove_meta_box( 'wpseo_meta', 'document', 'normal' );
 	        remove_meta_box( 'wpseo_meta', 'highlight', 'normal' );
@@ -541,7 +541,7 @@ class Clean_Admin {
 	public function add_admin_toolbar_links( $wp_admin_bar ) {
 
 		// Abort if we're not in the back end
-		if( !is_admin() || !current_user_can( 'edit_users' ) ) {
+		if( ! is_admin() || ! current_user_can( 'edit_users' ) ) {
 			return;
 		}
 
@@ -587,7 +587,7 @@ class Clean_Admin {
 	public function add_toolbar_links( $wp_admin_bar ) {
 
 		// Abort if we're not on the front-end
-		if( is_admin() || !current_user_can( 'edit_users' ) ) {
+		if( is_admin() || ! current_user_can( 'edit_users' ) ) {
 			return;
 		}
 

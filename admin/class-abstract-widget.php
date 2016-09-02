@@ -52,7 +52,7 @@ abstract class Widget extends \WP_Widget {
 			sprintf( __( '%s', 'evans-mu' ), $this->title ),
 			array(
 				'classname'  => $this->base.'-class',
-				'description' => sprintf( __( '%s', 'evans-mu' ), esc_html( $this->description ) ),
+				'description' => esc_html( $this->description ) ),
 			)
 		);
 
