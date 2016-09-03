@@ -9,7 +9,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-abstract class Dashboard_Widget{
+abstract class Dashboard_Widget {
 
 	/**
 	 * ID
@@ -36,7 +36,7 @@ abstract class Dashboard_Widget{
 	 *
 	 * @see wp_dashboard_setup
 	 */
-	public function hooks(){
+	public function hooks() {
 
 		add_action( 'wp_dashboard_setup', array( $this, 'register_widget' ) );
 
@@ -63,7 +63,7 @@ abstract class Dashboard_Widget{
 	 * This is the function you need to override in your child class to create
 	 * your widget. Put all of the html output & logic in this function.
 	 */
-	public function build_the_widget(  ){
+	public function build_the_widget(  ) {
 		// Widget output here
 	}
 

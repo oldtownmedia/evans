@@ -29,8 +29,8 @@ if ( file_exists( WPMU_PLUGIN_DIR .'/site-setup' ) && is_dir( WPMU_PLUGIN_DIR . 
 /*
  * Loop through our directory array and require any PHP files without individual calls.
  */
-foreach ( $dirs as $dir ){
-	foreach ( glob( WPMU_PLUGIN_DIR . "/$dir/*.php", GLOB_NOSORT ) as $filename ){
+foreach ( $dirs as $dir ) {
+	foreach ( glob( WPMU_PLUGIN_DIR . "/$dir/*.php", GLOB_NOSORT ) as $filename ) {
 	    require_once $filename;
 	}
 }
