@@ -9,7 +9,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-abstract class CPT{
+abstract class CPT {
 
 	/**
 	 * cptslug
@@ -140,7 +140,7 @@ abstract class CPT{
 	 *
 	 * @see cmb_prefix
 	 */
-	public function __construct(){
+	public function __construct() {
 
 		// Define our prefix for metaboxes
 		$this->prefix = cmb_prefix( $this->cptslug );
@@ -153,7 +153,7 @@ abstract class CPT{
 	 *
 	 * @see add_action, add_filter, add_shortcode
 	 */
-	public function hooks(){
+	public function hooks() {
 
 		add_action( 'init', array( $this, 'define_cpt' ) );
 		add_filter( 'cmb2_admin_init', array( $this, 'cmb_metaboxes' ) );
@@ -161,17 +161,17 @@ abstract class CPT{
 		add_shortcode( $this->cptslug_plural, array( $this, 'shortcode' ) );
 
 		// If fed dimensions for a thumbnails
-		if ( !empty( $this->thumbnail_size ) ){
+		if ( !empty( $this->thumbnail_size ) ) {
 			add_image_size( $this->cptslug.'-thumb', $this->thumbnail_size['width'], $this->thumbnail_size['height'], true );
 		}
 
 		// If we want to use the taxonomy, hook in the taxonomy functions
-		if ( !empty( $this->taxonomy_name ) ){
+		if ( !empty( $this->taxonomy_name ) ) {
 			add_action( 'init', array( $this, 'define_taxonomy' ), 0 );
 		}
 
 		// If we don't want links to the single to appear in the admin section
-		if ( $this->hide_view === true ){
+		if ( $this->hide_view === true ) {
 			add_filter( 'post_row_actions', array( $this, 'remove_view_from_row' ), 10, 2 );
 			add_filter( 'page_row_actions', array( $this, 'remove_view_from_row' ), 10, 2 );	// In case post is hierarchical
 			add_filter( 'get_sample_permalink_html', array( $this, 'remove_permalink_option' ), '', 1 );
@@ -188,12 +188,12 @@ abstract class CPT{
 	 * @param array $args Query arguments.
 	 * @return string Combined HTML contents of the looped query.
 	 */
-	public function loop_cpt( $args = array() ){
+	public function loop_cpt( $args = array() ) {
 		$html = "";
 
 		$objects = new \WP_Query( $this->query_mods( array(), $args ) );
 
-		if ( $objects->have_posts() ){
+		if ( $objects->have_posts() ) {
 
 			$html .= "<ul class='" . esc_attr( $this->cptslug ) . "-listing'>";
 
@@ -225,7 +225,7 @@ abstract class CPT{
 	 * @param array $args Incoming arguments.
 	 * @return string Modified query arguments.
 	 */
-	public function query_mods( $original_query, $args ){
+	public function query_mods( $original_query, $args ) {
 
 		// Pull in the defaults we set in the variables
 		$defaults = $this->loop_args;
@@ -239,21 +239,21 @@ abstract class CPT{
 		$query = array_merge( $original_query, $query );
 
 		// If our shortcode passed in the random as true
-		if ( !empty( $args['random'] ) && $args['random'] == true ){
+		if ( !empty( $args['random'] ) && $args['random'] == true ) {
 			$query['no_found_rows']		= false;
 			$query['posts_per_page']	= 1;
 			$query['orderby']			= 'rand';
 		}
 
 		// If our shortcode passed in an id
-		if ( !empty( $args['pid'] ) ){
+		if ( !empty( $args['pid'] ) ) {
 			$query['no_found_rows']		= false;
 			$query['posts_per_page']	= 1;
 			$query['post__in']			= array( $args['pid'] );
 		}
 
 		// If our shortcode passed in a group id OR our taxonomy_loop passes in a group id
-		if ( !empty( $args['group'] ) ){
+		if ( !empty( $args['group'] ) ) {
 			$query[$this->tax_slug]		= array( $args['group'] );
 		}
 
@@ -271,7 +271,7 @@ abstract class CPT{
 	 * @param int $pid Post ID.
 	 * @return string HTML contents for the individual post.
 	 */
-	public function display_single( $pid ){
+	public function display_single( $pid ) {
 		$html = "";
 
 		$html .= "<li class='" . esc_attr( $this->cptslug ) . "'>";
@@ -294,20 +294,20 @@ abstract class CPT{
 	 * @param string $link Link to put around the img. Optional.
 	 * @return string HTML contents for the image and link.
 	 */
-	protected function get_img( $img, $link = '' ){
+	protected function get_img( $img, $link = '' ) {
 		$html = "";
 
-		if ( empty( $img ) ){
+		if ( empty( $img ) ) {
 			return;
 		}
 
-		if ( !empty( $link ) ){
+		if ( !empty( $link ) ) {
 			$html .= "<a href=' " . esc_url( $link ) . "'>";
 		}
 
 			$html .= "<img src='" . esc_url( $img[0] ) . "' alt='" . esc_attr( get_the_title() ) . "' />";
 
-		if ( !empty( $link ) ){
+		if ( !empty( $link ) ) {
 			$html .= "</a>";
 		}
 
@@ -327,7 +327,7 @@ abstract class CPT{
 	 * @param array $args Arguments to be passed to get_terms.
 	 * @return string HTML content of the looped taxonomy & posts.
 	 */
-	public function taxonomy_loop( $args = array() ){
+	public function taxonomy_loop( $args = array() ) {
 		$html = "";
 
 		$terms = get_terms(
@@ -338,7 +338,7 @@ abstract class CPT{
 			)
 		);
 
-		if ( !empty( $terms ) ){
+		if ( !empty( $terms ) ) {
 
 			foreach ( $terms as $term ) :
 
@@ -346,7 +346,7 @@ abstract class CPT{
 
 				$description = term_description( $term->term_id, $this->tax_slug );
 
-				if ( !empty( $description ) ){
+				if ( !empty( $description ) ) {
 					$html .= apply_filters( 'the_content', $description );
 				}
 
@@ -371,7 +371,7 @@ abstract class CPT{
 	 * @param array $atts arguments to be passed through to the loop.
 	 * @return string HTML content of the looped query and posts.
 	 */
-	public function shortcode( $atts ){
+	public function shortcode( $atts ) {
 
 		$atts = shortcode_atts(
 			array(
@@ -404,7 +404,7 @@ abstract class CPT{
 	 *
 	 * @see register_post_type
 	 */
-	public function define_cpt(){
+	public function define_cpt() {
 
 		$labels = array(
 			'name'               => sprintf( _x( '%s', 'post type general name', 'evans-mu' ), $this->plural ),
@@ -446,16 +446,16 @@ abstract class CPT{
 	 *
 	 * @return object Passthrough of all metaboxes.
 	 */
-	public function cmb_metaboxes(){
+	public function cmb_metaboxes() {
 
 		$cmb = new_cmb2_box( array(
-	        'id'            => $this->cptslug . '_metabox',
-	        'title'         => sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
-	        'object_types'  => array( $this->cptslug ),
-	        'context'       => 'normal',
-	        'priority'      => 'high',
-	        'show_names'    => true,
-	    ) );
+			'id'            => $this->cptslug . '_metabox',
+			'title'         => sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
+			'object_types'  => array( $this->cptslug ),
+			'context'       => 'normal',
+			'priority'      => 'high',
+			'show_names'    => true,
+		) );
 
 		return $cmb;
 
@@ -467,7 +467,7 @@ abstract class CPT{
 	 *
 	 * @see register_taxonomy
 	 */
-	public function define_taxonomy(){
+	public function define_taxonomy() {
 
 		$labels = array(
 			'name'              => sprintf( _x( '%s', 'taxonomy general name', 'evans-mu' ), $this->taxonomy_name ),
@@ -502,9 +502,9 @@ abstract class CPT{
 	 * @param object $post Post object of the post we're on.
 	 * @return array Passed through actions array.
 	 */
-	public function remove_view_from_row( $actions, $post ){
+	public function remove_view_from_row( $actions, $post ) {
 
-	    if( $post->post_type === $this->cptslug ){
+	    if( $post->post_type === $this->cptslug ) {
 	        unset( $actions['inline hide-if-no-js'] );
 	        unset( $actions['view'] );
 	    }
@@ -522,10 +522,10 @@ abstract class CPT{
 	 * @param string $return Return HTML objects with action buttons & revised link.
 	 * @return string $return Return HTML objects with action buttons & revised link.
 	 */
-	public function remove_permalink_option( $return ){
+	public function remove_permalink_option( $return ) {
 	    global $post;
 
-	    if( !empty( $post ) && $post->post_type === $this->cptslug ){
+	    if( !empty( $post ) && $post->post_type === $this->cptslug ) {
 	        return;
 	    }
 
@@ -539,7 +539,7 @@ abstract class CPT{
 	 * @param array $cpt_array Passthrough objects to add.
 	 * @return array $cpt_array Passthrough objects to add.
 	 */
-	public function dashboard_cpt_loop( $cpt_array ){
+	public function dashboard_cpt_loop( $cpt_array ) {
 
 		$cpt_array[] = array(
 			'slug'		=> $this->cptslug,

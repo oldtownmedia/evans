@@ -9,7 +9,7 @@ namespace evans;
  * @link      https://oldtownmediainc.com
  * @copyright 2015 Old Town Media
  */
-final class RecentNewsWidget extends Widget{
+final class RecentNewsWidget extends Widget {
 
 	protected $base			= 'recent-news';
 	protected $title		= 'Recent News';
@@ -21,13 +21,13 @@ final class RecentNewsWidget extends Widget{
 	 *
 	 * @return array list of fields
 	 */
-	public function widget_fields(){
+	public function widget_fields() {
 
 		// Get list of categories to choose from
 		$categories = get_categories();
 		$cat_array = array( '' => 'Select a Category' );
 
-		foreach ( $categories as $category ){
+		foreach ( $categories as $category ) {
 			$cat_array[ $category->slug ] = $category->cat_name;
 		}
 
@@ -69,10 +69,10 @@ final class RecentNewsWidget extends Widget{
 	 * @param arry $instance Widget data.
 	 * @return string Widget HTML.
 	 */
-	public function view( $args, $instance ){
+	public function view( $args, $instance ) {
 		$html  = $cat = '';
 
-		if( isset( $instance['num_posts'] ) && !empty( $instance['num_posts'] ) ){
+		if( isset( $instance['num_posts'] ) && !empty( $instance['num_posts'] ) ) {
 			$posts_per = absint( $instance['num_posts'] );
 		} else {
 			$posts_per = 1;
@@ -88,7 +88,7 @@ final class RecentNewsWidget extends Widget{
 			}
 		}
 
-		if ( isset( $instance['word_length'] ) && !empty( $instance['word_length'] ) ){
+		if ( isset( $instance['word_length'] ) && !empty( $instance['word_length'] ) ) {
 			$word_length = $instance['word_length'];
 		} else {
 			$word_length = 50;
@@ -126,6 +126,6 @@ final class RecentNewsWidget extends Widget{
 
 }
 
-add_action( 'widgets_init', function(){
+add_action( 'widgets_init', function() {
      register_widget( __NAMESPACE__ . '\RecentNewsWidget' );
 } );

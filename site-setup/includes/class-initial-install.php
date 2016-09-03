@@ -10,7 +10,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-class Initial_Settings{
+class Initial_Settings {
 
 	/**
 	  * Constructor function to
@@ -22,7 +22,7 @@ class Initial_Settings{
 	public function __construct() {
 
 		// Only run if we're in the admin section
-		if ( !is_admin() ){
+		if ( !is_admin() ) {
 			return;
 		}
 
@@ -39,11 +39,11 @@ class Initial_Settings{
 	  *
 	  * @see get_page_by_title, get_option, update_option
 	  */
-	public function set_home_page(){
+	public function set_home_page() {
 
 		$home = get_page_by_title( 'Sample Page' );
 
-		if ( get_option( 'page_on_front' ) != $home->ID ){
+		if ( get_option( 'page_on_front' ) != $home->ID ) {
 			update_option( 'show_on_front', 'page' );
 			update_option( 'page_on_front', $home->ID );
 		}
@@ -56,10 +56,10 @@ class Initial_Settings{
 	  * @see get_option, update_option
 	  * @global object $wp_rewrite Rewrite functionality
 	  */
-	public function modify_permalinks(){
+	public function modify_permalinks() {
 		global $wp_rewrite;
 
-		if ( get_option( 'permalink_structure' ) !== '/%postname%/' ){
+		if ( get_option( 'permalink_structure' ) !== '/%postname%/' ) {
 			update_option( 'permalink_structure', '/%postname%/' );
 			$wp_rewrite->init();
 			$wp_rewrite->flush_rules();
@@ -72,7 +72,7 @@ class Initial_Settings{
 	  *
 	  * @see has_nav_menu, set_theme_mod
 	  */
-	public function create_menus(){
+	public function create_menus() {
 
 		$evans_nav_theme_mod = false;
 
@@ -98,7 +98,7 @@ class Initial_Settings{
 	  *
 	  * @see get_option, add_option
 	  */
-	public function update_settings(){
+	public function update_settings() {
 
 		// All of our options
 		$option = array(
@@ -113,7 +113,7 @@ class Initial_Settings{
 
 		// Loop through each option and set it up.
 		foreach ( $option as $key => $value ) {
-		    if ( get_option( $key ) != $value ){
+		    if ( get_option( $key ) != $value ) {
 			    update_option( $key, $value );
 			}
 		}
@@ -134,7 +134,7 @@ class Initial_Settings{
 	  *
 	  * @see add_role
 	  */
-	public function add_customer_admin_role(){
+	public function add_customer_admin_role() {
 
 		$role_id 		= 'customer_admin';
 		$role_name 		= __( 'Customer Administrator', 'evans-mu' );

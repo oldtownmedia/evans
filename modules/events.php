@@ -10,7 +10,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-final class Events extends CPT{
+final class Events extends CPT {
 
 	protected $cptslug 			= 'event';
 	protected $cptslug_plural	= 'events';
@@ -45,17 +45,17 @@ final class Events extends CPT{
 	 * @param array $args Incoming arguments.
 	 * @return string Modified query arguments.
 	 */
-	public function query_mods( $query, $args ){
+	public function query_mods( $query, $args ) {
 
 		$query['meta_key']		= $this->prefix . 'date';
 		$query['meta_query'] 	= array(
-            array(
-                'key' 		=> $this->prefix . 'date',
-                'value' 	=> date( 'U', strtotime( '-1 day' ) ),
-                'compare' 	=> '>=',
-                'type'		=> 'char'
-            ),
-        );
+			array(
+				'key' 		=> $this->prefix . 'date',
+				'value' 	=> date( 'U', strtotime( '-1 day' ) ),
+				'compare' 	=> '>=',
+				'type'		=> 'char'
+			),
+		);
 
 		return parent::query_mods( $query, $args );
 
@@ -71,7 +71,7 @@ final class Events extends CPT{
 	 * @param int $ Post ID.
 	 * @return string HTML contents for the individual post.
 	 */
-	public function display_single( $pid ){
+	public function display_single( $pid ) {
 
 		$html = "";
 
@@ -90,7 +90,7 @@ final class Events extends CPT{
 
 					$html .= esc_html( date( 'm/d/Y', $date ) ) . " " . esc_html( date( 'g:i A', $date ) )."<br>";
 
-					if ( ! empty( $cost ) ){
+					if ( ! empty( $cost ) ) {
 						$html .= esc_html__( 'Cost:', 'evans-mu' ) . " " . esc_html( $cost ) . "<br>";
 					}
 
@@ -118,7 +118,7 @@ final class Events extends CPT{
 			'desc' => __( 'Enter a date for your '.$this->cptslug, 'evans-mu' ),
 			'id'   => $this->prefix . 'date',
 			'type' => 'text_datetime_timestamp'
-	    ) );
+		) );
 
 		$cmb->add_field( array(
 			'name' => __( 'Event Cost', 'evans-mu' ),

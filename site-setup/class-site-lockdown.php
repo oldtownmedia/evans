@@ -46,14 +46,14 @@ class Site_Lockdown {
 
 
 	 /**
-	 * Constructor function.
-	 *
-	 * @see add_action
-	 */
+	  * Constructor function.
+	  *
+	  * @see add_action
+	  */
 	public function __construct() {
 
 		// If we're not in the correct server, don't do anything.
-		if ( $_SERVER['SERVER_ADDR'] != $this->server_ip ){
+		if ( $_SERVER['SERVER_ADDR'] != $this->server_ip ) {
 			return;
 		}
 
@@ -76,16 +76,16 @@ class Site_Lockdown {
 	public function page_lockdown_display( $wp_admin_bar ) {
 
 		// Chck that the admin bar is showing and is admin user
-		if ( !is_super_admin() || !is_admin_bar_showing() ){
+		if ( !is_super_admin() || !is_admin_bar_showing() ) {
 			return;
 		}
 
 		$current_user = wp_get_current_user();
-		if ( $current_user->user_login == 'otm' ){
+		if ( $current_user->user_login == 'otm' ) {
 
 			$locked = get_option( 'evans_site_lockdown' );
 
-			if ( $locked == 'locked' ){
+			if ( $locked == 'locked' ) {
 				$title	= '<span style="color:green">' . esc_html__( 'Site is locked', 'evans-mu' ) . '</span>';
 				$link	= $this->maybe_add_get_to_url() . 'unlock_site=' . wp_create_nonce( 'evans_unlock_site' );
 			} else {
@@ -118,15 +118,15 @@ class Site_Lockdown {
 	public function lockdown_this_thing() {
 
 		// If there's no parameter, stop
-		if ( empty( $_GET ) ){
+		if ( empty( $_GET ) ) {
 			return;
 		}
 
-		if ( isset( $_GET['lock_site'] ) && wp_verify_nonce( $_GET['lock_site'], 'evans_lock_site' ) ){
+		if ( isset( $_GET['lock_site'] ) && wp_verify_nonce( $_GET['lock_site'], 'evans_lock_site' ) ) {
 
 			update_option( 'evans_site_lockdown', 'locked' );
 
-		} else if ( isset( $_GET['unlock_site'] ) && wp_verify_nonce( $_GET['unlock_site'], 'evans_unlock_site' ) ){
+		} else if ( isset( $_GET['unlock_site'] ) && wp_verify_nonce( $_GET['unlock_site'], 'evans_unlock_site' ) ) {
 
 			update_option( 'evans_site_lockdown', 'unlocked' );
 
@@ -146,16 +146,16 @@ class Site_Lockdown {
 	public function lockdown_actions() {
 
 		// we're logged in and validated, return
-		if ( is_user_logged_in() || in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) ){
+		if ( is_user_logged_in() || in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) ) {
 			return;
 		}
 
 		$locked = get_option( 'evans_site_lockdown' );
 
-		if ( $locked == 'locked' && !is_admin() ){
+		if ( $locked == 'locked' && !is_admin() ) {
 
 			// Check to see if the current user is allowed
-			if ( !in_array( $_SERVER['REMOTE_ADDR'], $this->acceptable_ips ) ){
+			if ( !in_array( $_SERVER['REMOTE_ADDR'], $this->acceptable_ips ) ) {
 
 				$response = wp_remote_get( $this->block_page );
 
@@ -173,15 +173,15 @@ class Site_Lockdown {
 
 
 	 /**
-	 * Initially create the option to ensure the site is NOT locked down.
-	 *
-	 * Option is autoloaded.
-	 *
-	 * @see get_option,add_option
-	 */
+	  * Initially create the option to ensure the site is NOT locked down.
+	  *
+	  * Option is autoloaded.
+	  *
+	  * @see get_option,add_option
+	  */
 	public function set_lockdown_option() {
 
-		if ( get_option( 'evans_site_lockdown' ) === false ){
+		if ( get_option( 'evans_site_lockdown' ) === false ) {
 			add_option( 'evans_site_lockdown', 'unlocked', '', 'yes' );
 		}
 
@@ -193,13 +193,13 @@ class Site_Lockdown {
 	 *
 	 * @return string reformatted URL with our parameter appended
 	 */
-	public function maybe_add_get_to_url(){
+	public function maybe_add_get_to_url() {
 
 		$url  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://'.$_SERVER["SERVER_NAME"] :  'https://'.$_SERVER["SERVER_NAME"];
 		$url .= ( $_SERVER["SERVER_PORT"] !== 80 ) ? ":".$_SERVER["SERVER_PORT"] : "";
 		$url .= $_SERVER["REQUEST_URI"];
 
-		if ( strpos( $url, '?' ) !== false ){
+		if ( strpos( $url, '?' ) !== false ) {
 			return $url . "&";
 		} else {
 			return $url . "?";
