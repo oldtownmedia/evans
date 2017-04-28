@@ -51,8 +51,8 @@ abstract class Widget extends \WP_Widget {
 			$this->base,
 			sprintf( __( '%s', 'evans-mu' ), $this->title ),
 			array(
-				'classname'  => $this->base.'-class',
-				'description' => esc_html( $this->description ) ),
+				'classname'   => $this->base.'-class',
+				'description' => esc_html( $this->description ),
 			)
 		);
 
