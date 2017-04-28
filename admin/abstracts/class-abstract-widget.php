@@ -1,5 +1,7 @@
 <?php
-namespace evans;
+namespace evans\Abstracts;
+
+// @todo:: eliminate extracts
 
 /**
  * Abstract lass to quickly and easily generate widgets.
@@ -39,14 +41,12 @@ abstract class Widget extends \WP_Widget {
 	 */
 	protected $description;
 
-
 	/**
 	 * Constructor function
 	 *
 	 * @see add_action, add_filter
 	 */
 	public function __construct() {
-
 		parent::__construct(
 			$this->base,
 			sprintf( __( '%s', 'evans-mu' ), $this->title ),
@@ -63,9 +63,7 @@ abstract class Widget extends \WP_Widget {
 		add_action( 'save_post',    array( $this, 'flush_widget_cache' ) );
 		add_action( 'deleted_post', array( $this, 'flush_widget_cache' ) );
 		add_action( 'switch_theme', array( $this, 'flush_widget_cache' ) );
-
-	} // end constructor
-
+	}
 
 	/**
 	 * Flushed the cache of the widget.
@@ -76,7 +74,6 @@ abstract class Widget extends \WP_Widget {
     	wp_cache_delete( $this->base, 'widget' );
 	}
 
-
 	/**
 	 * Check cache for the widget & display.
 	 *
@@ -86,7 +83,6 @@ abstract class Widget extends \WP_Widget {
 	 * @param type $instance The data from the widget editing.
 	 */
 	public function widget( $args, $instance ){
-
 		// Check if there is a cached output
 		$cache = wp_cache_get( $this->base, 'widget' );
 
@@ -117,9 +113,7 @@ abstract class Widget extends \WP_Widget {
 		}
 
 		print $widget_string;
-
 	}
-
 
 	/**
 	 * Handle the data from the updated widget and parse against the old data.
@@ -131,7 +125,6 @@ abstract class Widget extends \WP_Widget {
 	 * @return array New, parsed instance.
 	 */
 	public function update( $new_instance, $old_instance ){
-
 		$instance = $old_instance;
 
 		$fields = $this->widget_fields();
@@ -145,9 +138,7 @@ abstract class Widget extends \WP_Widget {
 		}
 
 		return $instance;
-
 	}
-
 
 	/**
 	 * Sanitize each field individually based on sanitization options.
@@ -166,9 +157,8 @@ abstract class Widget extends \WP_Widget {
 	 * @return variable Sanitized value.
 	 */
 	private function sanitize_field( $field, $value ){
-
 		if ( empty( $field ) ){
-			return;
+			return null;
 		}
 
 		// If the user has chose a custom sanitization
@@ -187,22 +177,16 @@ abstract class Widget extends \WP_Widget {
 
 			// Else if we're just dealing one sanitization option
 			} else {
-
 				$sanitized = $sanitize( $value );
-
 			}
 
 		// Else, run the default
 		} else {
-
 			$sanitized = strip_tags( $value );
-
 		}
 
 		return $sanitized;
-
 	}
-
 
 	/**
 	 * Build and print our admin form for editing the widget
@@ -212,7 +196,6 @@ abstract class Widget extends \WP_Widget {
 	 * @param array $instance Data for this instance
 	 */
 	public function form( $instance ) {
-
 		// Check against our defaults
 		$instance = wp_parse_args(
 			(array) $instance,
@@ -221,9 +204,7 @@ abstract class Widget extends \WP_Widget {
 
 		// Display the admin form
 		echo $this->admin_form( $instance );
-
 	}
-
 
 	/**
 	 * Placeholder function to overwrite when creating your own child widget.
@@ -234,32 +215,7 @@ abstract class Widget extends \WP_Widget {
 	 *
 	 * @return array list of fields
 	 */
-	public function widget_fields(){
-
-		return array();
-
-		/* Example set of fields
-			array(
-				'id'		=> 'title',
-				'name'		=> 'Title',
-				'desc'		=> 'Description',	// optional
-				'type'		=> 'text',
-				'default'	=> 'My Widget',		// optional
-				'sanitize'	=> 'esc_url'		// optional
-				'options'	=> array()			// If using radio or select
-			)
-		*/
-
-		/* Currently supported field types
-			text
-			select
-			radio
-			checkbox
-			textarea
-		*/
-
-	}
-
+	abstract public function widget_fields();
 
 	/**
 	 * Placeholder for the front-end view of your widget.
@@ -270,12 +226,7 @@ abstract class Widget extends \WP_Widget {
 	 * @param arry $instance Widget data.
 	 * @return string Widget HTML.
 	 */
-	public function view( $args, $instance ){
-
-		return;
-
-	}
-
+	abstract public function view( $args, $instance );
 
 	/**
 	 * Simple return for a title for widgets.
@@ -288,14 +239,11 @@ abstract class Widget extends \WP_Widget {
 	 * @return string title HTML.
 	 */
 	public function get_widget_title( $args, $instance ){
-
 		// Display the widget title
 		if ( $instance['title'] ){
 			return $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 		}
-
 	}
-
 
 	/**
 	 * Gets the default values for use in our form from each field.
@@ -307,12 +255,11 @@ abstract class Widget extends \WP_Widget {
 	 * @return array Default values to parse against.
 	 */
 	private function get_defaults(){
-
 		$fields = $this->widget_fields();
 		$defaults = array();
 
-		if ( !is_array( $fields ) || empty( $fields ) ){
-			return;
+		if ( ! is_array( $fields ) || empty( $fields ) ){
+			return null;
 		}
 
 		foreach ( $fields as $field ){
@@ -326,14 +273,10 @@ abstract class Widget extends \WP_Widget {
 		}
 
 		return $defaults;
-
 	}
-
 
 	/**
 	 * Build and compile our widget edit form for admin.
-	 *
-	 * @access $this->widget_fields, $this->build_form_field
 	 *
 	 * @param array $instance Description.
 	 * @return string compiled HTML.
@@ -344,7 +287,7 @@ abstract class Widget extends \WP_Widget {
 		$fields = $this->widget_fields();
 
 		if ( empty( $fields ) ){
-			return;
+			return null;
 		}
 
 		// Loop through the fields and build an HTML form field
@@ -353,9 +296,7 @@ abstract class Widget extends \WP_Widget {
 		}
 
 		return $html;
-
 	}
-
 
 	/**
 	 * Build each individual type of form field.
@@ -376,7 +317,7 @@ abstract class Widget extends \WP_Widget {
 		$html = '';
 
 		if ( empty( $field ) ){
-			return;
+			return null;
 		}
 
 		$html .= "<p class='" . esc_attr( $field['type'] ) . "-box evans-field'>";
@@ -464,9 +405,7 @@ abstract class Widget extends \WP_Widget {
 		$html .= "</p>";
 
 		return $html;
-
 	}
-
 
 	/**
 	 * Registering custom CSS for our form.
@@ -474,9 +413,6 @@ abstract class Widget extends \WP_Widget {
 	 * @see wp_enqueue_style
 	 */
 	public function register_admin_styles() {
-
 		wp_enqueue_style( $this->base . '-admin-styles', plugins_url( '../assets/widgets.css', __FILE__ ) );
-
 	}
-
 }

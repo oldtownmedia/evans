@@ -1,5 +1,7 @@
 <?php
-namespace evans;
+namespace evans\Widgets;
+
+use evans\Abstracts;
 
 /**
  * CompanySupportWidget
@@ -10,7 +12,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-final class CompanySupportWidget extends Dashboard_Widget{
+final class CompanySupportWidget extends Abstracts\Dashboard_Widget{
 
 	/**
 	 * ID

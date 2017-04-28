@@ -1,5 +1,7 @@
 <?php
-namespace evans;
+namespace evans\Widgets;
+
+use evans\Abstracts;
 
 /**
  * Display the Most Recent News in a widget.
@@ -9,7 +11,7 @@ namespace evans;
  * @link      https://oldtownmediainc.com
  * @copyright 2015 Old Town Media
  */
-final class RecentNewsWidget extends Widget{
+final class RecentNewsWidget extends Abstracts\Widget{
 
 	protected $base			= 'recent-news';
 	protected $title		= 'Recent News';

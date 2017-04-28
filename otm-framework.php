@@ -35,5 +35,9 @@ foreach ( $dirs as $dir ){
 	}
 }
 
-// Use an autoloader
-// Use PSR-4 file/classnames
+// @todo:: Use an autoloader
+// @todo:: Use PSR-4 file/classnames
+// @todo:: Add namespaces to everything
+// @todo:: Put abstracts into their own folder
+// @todo:: Put CMB in vendor folder
+// @todo:: Put all files in one folder?

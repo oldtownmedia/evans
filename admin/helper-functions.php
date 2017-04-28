@@ -1,44 +1,32 @@
 <?php
-namespace evans;
+namespace evans\Helpers;
 
-// @todo:: fix the autoloading/deferring
 // @todo:: break gform mod into its own file.
 
 /**
- * Add possibility to asynchroniously load javascript files
+ * Add attributes to various script tags.
  *
- * Filters all URL strings called in clean_url() for the  || #deferload value
- * and replaces said string with async='async' OR defer='defer'
- *
- * @param string $url The URL for the script resource.
- * @returns string Modified script string
+ * @param string $tag    The complete script tag.
+ * @param string $handle The script's handle.
+ * @param string $src    The scripts source URL.
+ * @return string        The updated script tag.
  */
-add_filter( 'clean_url', __NAMESPACE__ . '\add_loading_variables', 11, 1 );
-function add_loading_variables( $url ){
+add_filter( 'script_loader_tag', function( $tag, $handle, $src ) {
+	$async_scripts = [];
+	$defer_scripts = [];
 
-	// Catchall replace text in admin
-	if ( is_admin() ){
-		$url = str_replace( '#asyncload', '', $url );
-		$url = str_replace( '#deferload', '', $url );
+	// Asynchronous scripts
+	if ( in_array( $handle, $async_scripts, true ) ) {
+		$tag = str_replace( ' src', ' async="async" src', $tag );
 	}
 
-	if ( ! is_admin() ){
+	// Deferred scripts
+	if ( in_array( $handle, $async_scripts, true ) ) {
+		$tag = str_replace( ' src', ' defer="defer" src', $tag );
+	}
 
-		// Asyncload
-	    if ( strpos( $url, '#asyncload' ) !== false ){
-	        $url = trim( str_replace( '#asyncload', '', $url ) ) . "' async='async";
-	    }
-
-	    // Deferload
-	    if ( strpos( $url, '#deferload' ) !== false ){
-	        $url = trim( str_replace( '#deferload', '', $url ) ) . "' defer='defer";
-	    }
-
-    }
-
-    return $url;
-
-}
+	return $tag;
+}, 10, 3 );
 
 /**
  * Add the site url to the bottom of every Gravity Form notification.
@@ -46,10 +34,7 @@ function add_loading_variables( $url ){
  * @param array $notification Current notification information
  * @returns array Modified notification
  */
-add_filter( 'gform_notification', __NAMESPACE__ . '\add_siteurl_to_notifications', 10, 1 );
-function add_siteurl_to_notifications( $notification ) {
-
-    $notification['message'] .= "\n<small> Sent from " . esc_html( site_url() ) . "</small>";
+add_filter( 'gform_notification', function( $notification ) {
+	$notification['message'] .= "\n<small> Sent from " . esc_html( site_url() ) . "</small>";
     return $notification;
-
-}
+}, 10, 1 );

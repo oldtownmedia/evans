@@ -1,5 +1,7 @@
 <?php
-namespace evans;
+namespace evans\Widgets;
+
+use evans\Abstracts;
 
 /**
  * Display contact information in a widget.
@@ -9,7 +11,7 @@ namespace evans;
  * @link      https://oldtownmediainc.com
  * @copyright 2015 Old Town Media
  */
-final class ContactWidget extends Widget{
+final class ContactWidget extends Abstracts\Widget{
 
 	protected $base			= 'contact';
 	protected $title		= 'Contact Information';
