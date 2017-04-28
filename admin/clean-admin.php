@@ -99,7 +99,7 @@ function remove_menus() {
 	remove_menu_page( 'edit-comments.php' );					// Comments page
 	remove_menu_page( 'upload.php' );							// Media page
 	remove_submenu_page( 'themes.php', 'customize.php' );		// Remove Customizer page
-	remove_submenu_page( 'themes.php', 'theme-editor.php' );	// Theme Editor
+	//remove_submenu_page( 'themes.php', 'theme-editor.php' );	// Theme Editor
 	remove_submenu_page( 'plugins.php', 'plugin-editor.php' );	// Plugin Editor Settings
 
 	remove_submenu_page( 'wpseo_dashboard', 'wpseo_licenses' );	// WPSEO Extensions
