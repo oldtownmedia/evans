@@ -17,8 +17,11 @@ function setup() {
 		return;
 	}
 
+	if ( get_option( 'clean_admin_bar', 'on' ) === 'on' ) {
+		add_action( 'admin_menu', __NAMESPACE__ . '\\remove_menus', 105 );
+	}
+
 	add_filter( 'admin_init' , __NAMESPACE__ . '\\register_fields' );
-	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_menus', 105 );
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_dashboard_widgets' );
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_core_update_nag', 2 );
 	add_action( 'admin_notices', __NAMESPACE__ . '\\custom_update_nag', 99 );
@@ -51,29 +54,23 @@ function register_fields() {
 	register_setting( 'general', 'clean_admin_bar', 'esc_attr' );
 	add_settings_field(
 		'clean_admin_bar',
-		'<label for="favorite_color">' . esc_html__( 'Hide unnecessary menu items' , 'evans-mu' ) . '</label>',
-		__NAMESPACE__ . 'fields_html',
+		'<label for="clean_admin_bar">' . esc_html__( 'Hide unnecessary menu items' , 'evans-mu' ) . '</label>',
+		function() {
+			$value = get_option( 'clean_admin_bar', 'on' );
+			?>
+				<label>
+					<input type="radio" id="clean_admin_bar" name="clean_admin_bar" value="on" <?php checked( 'on', $value ); ?> />
+					<?php echo esc_html__( 'Hide items', 'evans-mu' ); ?>
+				</label><br>
+
+				<label>
+					<input type="radio" id="clean_admin_bar" name="clean_admin_bar" value="off" <?php checked( 'off', $value ); ?> />
+					 <?php echo esc_html__( 'Show items', 'evans-mu' ); ?>
+				</label>
+			<?php
+		},
 		'general'
 	);
-}
-
-// @todo:: make sure this works.
-/**
- * HTML for extra settings fields in the general settings page.
- */
-function fields_html() {
-	$value = get_option( 'clean_admin_bar', 'on' );
-	?>
-		<label>
-			<input type="radio" id="clean_admin_bar" name="clean_admin_bar" value="on" <?php checked( 'on', $value ); ?> />
-			<?php esc_html__( 'Hide items', 'evans-mu' ); ?>
-		</label><br>
-
-		<label>
-			<input type="radio" id="clean_admin_bar" name="clean_admin_bar" value="off" <?php checked( 'off', $value ); ?> />
-			 <?php esc_html__( 'Show items', 'evans-mu' ); ?>
-		</label>
-	<?php
 }
 
 /*************
@@ -87,14 +84,7 @@ function fields_html() {
  * @global array $submenu Array of submenu items.
  */
 function remove_menus() {
-
-	// Has the client opted out of cleaning the admin area?
-	$hide = get_option( 'clean_admin_bar' );
-
-	if ( $hide == 'off' ){
-		return null;
-	}
-
+	// Remove links.
 	remove_menu_page( 'link-manager.php' );						// Links page
 	remove_menu_page( 'edit-comments.php' );					// Comments page
 	remove_menu_page( 'upload.php' );							// Media page
@@ -112,19 +102,23 @@ function remove_menus() {
 	$menu[6] = $menu[5];	// Move posts from 5 to 6
 	$menu[5] = $menu[20];	// Move pages from 20 to 5
 	unset( $menu[20] );		// Remove spot that pages was in
+
+	// Remove customizer link.
 	unset( $submenu['themes.php'][6] );	// Alternative method of removing customizer
 
+	// Rename Widgets.
 	if ( isset( $submenu['themes.php'][7] ) ){
-		$submenu['themes.php'][7][0] = 'Sidebar Items';		// Rename Widgets
+		$submenu['themes.php'][7][0] = 'Sidebar Items';
 	}
 
-	$submenu['edit.php?post_type=page'][15] = array( 	// Move Media into Pages menu item
+	// Move Media into Pages menu item.
+	$submenu['edit.php?post_type=page'][15] = array(
 		'0' => 'Media',
 		'1'	=> 'edit_pages',
 		'2'	=> 'upload.php'
 	);
 
-	// Remove menu items only for non-admins
+	// Remove menu items only for non-admins.
 	$current_user = wp_get_current_user();
 	if ( $current_user->user_login != 'otm' && $current_user->user_login != 'Mike' && $current_user->user_login != 'Miles' ) {
 		remove_menu_page( 'activity_log_page' );				// Aryo Activity log
