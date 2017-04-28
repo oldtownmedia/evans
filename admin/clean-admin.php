@@ -285,6 +285,7 @@ function remove_dashboard_widgets() {
 	remove_meta_box( 'dashboard_recent_drafts', 'dashboard', 'core' );		// Recent Drafts
 	remove_meta_box( 'dashboard_primary', 'dashboard', 'core' );			// WordPress Blog
 	remove_meta_box( 'dashboard_activity', 'dashboard', 'core' );			// Dashboard Activity
+	remove_meta_box( 'wpseo-dashboard-overview', 'dashboard', 'core' );     // Yoast SEO dashboard
 }
 
 
