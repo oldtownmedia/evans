@@ -34,3 +34,6 @@ foreach ( $dirs as $dir ){
 	    require_once $filename;
 	}
 }
+
+// Use an autoloader
+// Use PSR-4 file/classnames

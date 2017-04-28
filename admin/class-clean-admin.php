@@ -1,6 +1,8 @@
 <?php
 namespace evans;
 
+// @todo:: make this functional, no need for it to be a class.
+
 /**
  * Clean Admin
  *
