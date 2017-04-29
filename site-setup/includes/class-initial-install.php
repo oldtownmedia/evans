@@ -1,6 +1,8 @@
 <?php
 namespace evans;
 
+// @todo:: this file should be functional - no need for a class.
+
 /**
  * Initial Settings
  *
@@ -22,7 +24,7 @@ class Initial_Settings {
 	public function __construct() {
 
 		// Only run if we're in the admin section
-		if ( !is_admin() ) {
+		if ( ! is_admin() ) {
 			return;
 		}
 
@@ -43,7 +45,7 @@ class Initial_Settings {
 
 		$home = get_page_by_title( 'Sample Page' );
 
-		if ( get_option( 'page_on_front' ) != $home->ID ) {
+		if ( $home->ID !== get_option( 'page_on_front' ) ) {
 			update_option( 'show_on_front', 'page' );
 			update_option( 'page_on_front', $home->ID );
 		}
@@ -76,11 +78,11 @@ class Initial_Settings {
 
 		$evans_nav_theme_mod = false;
 
-		if ( !has_nav_menu( 'header-menu' ) ) {
+		if ( ! has_nav_menu( 'header-menu' ) ) {
 			$primary_nav_id = wp_create_nav_menu(
 				__( 'Header Menu', 'evans-mu' ),
 				array(
-					'slug' => 'header-menu'
+					'slug' => 'header-menu',
 				)
 			);
 
@@ -108,13 +110,13 @@ class Initial_Settings {
 			'default_ping_status'		=> 'closed',
 			'default_comment_status'	=> 'closed',
 			'timezone_string'			=> 'America/Denver',
-			'use_smilies'				=> ''
+			'use_smilies'				=> '',
 		);
 
 		// Loop through each option and set it up.
 		foreach ( $option as $key => $value ) {
-		    if ( get_option( $key ) != $value ) {
-			    update_option( $key, $value );
+			if ( get_option( $key ) !== $value ) {
+				update_option( $key, $value );
 			}
 		}
 
@@ -198,12 +200,12 @@ class Initial_Settings {
 		);
 
 		// Actually create our new role if it doesn't already exist.
-		if( ! $GLOBALS['wp_roles']->is_role( $role_id ) ) {
+		if ( ! $GLOBALS['wp_roles']->is_role( $role_id ) ) {
 
 			add_role(
-			    $role_id,
-			    $role_name,
-			    $capabilities
+				$role_id,
+				$role_name,
+				$capabilities
 			);
 
 		}

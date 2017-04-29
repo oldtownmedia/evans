@@ -1,6 +1,8 @@
 <?php
 namespace evans;
 
+// @todo:: remove class.
+
 /**
  * Posts
  *
@@ -10,20 +12,17 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-class Posts{
+class Posts {
 
 	/**
 	 * Hooks function to fire off the events we need.
 	 *
 	 * @see add_action, add_filter, add_shortcode
 	 */
-	public function hooks(){
-
+	public function hooks() {
 		add_filter( 'manage_edit-post_columns', array( $this, 'post_columns' ) );
 		add_action( 'manage_post_posts_custom_column', array( $this, 'modified_date_column' ), 10, 2 );
-
 	}
-
 
 	/**
 	 * Remove unnecessary columns from posts & add in a modified date column.
@@ -32,7 +31,6 @@ class Posts{
 	 * @return array Modified list of columns.
 	 */
 	public function post_columns( $columns ) {
-
 		// Remove unnecessary columns
 		unset( $columns['tags'] );
 		unset( $columns['comments'] );
@@ -43,7 +41,6 @@ class Posts{
 		$columns['wpseo-score']	= 'SEO'; // Adding this back in, but at the very end
 
 		return $columns;
-
 	}
 
 
@@ -56,15 +53,11 @@ class Posts{
 	 * @param int $post_id Post ID of current row.
 	 */
 	public function modified_date_column( $column, $post_id ) {
-
-		if ( $column == 'modified' ){
+		if ( 'modified' === $column ) {
 			echo esc_html( human_time_diff( get_post_modified_time( 'U', true, $post_id ), time() ) );
 		}
-
 	}
-
 }
-
 
 /*
  * Instantiate the hooks method

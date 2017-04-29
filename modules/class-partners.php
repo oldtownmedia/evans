@@ -10,7 +10,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-final class Partners extends CPT{
+final class Partners extends CPT {
 
 	protected $cptslug 			= 'partner';
 	protected $cptslug_plural	= 'partners';
@@ -20,7 +20,7 @@ final class Partners extends CPT{
 	protected $hide_view 		= true;
 	protected $thumbnail_size	= array(
 		'width'		=> 200,
-		'height'	=> 200
+		'height'	=> 200,
 	);
 
 	// Arguments to define the CPT
@@ -36,8 +36,8 @@ final class Partners extends CPT{
 	protected $loop_args = array(
 		'orderby' 		=> 'menu_order',
 		'order' 		=> 'ASC',
-		'posts_per_page'=> 500,
-		'no_found_rows'	=> false
+		'posts_per_page' => 100,
+		'no_found_rows'	=> false,
 	);
 
 
@@ -50,19 +50,19 @@ final class Partners extends CPT{
 	 * @param int $ Post ID.
 	 * @return string HTML contents for the individual post.
 	 */
-	public function display_single( $pid ){
+	public function display_single( $pid ) {
 
-		$html = "";
+		$html = '';
 
 		$link	= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'url', true );
-		$img_id	= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true);
-		$img	= wp_get_attachment_image_src( $img_id, get_post_type().'-thumb' );
+		$img_id	= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true );
+		$img	= wp_get_attachment_image_src( $img_id, get_post_type() . '-thumb' );
 
 		$html .= "<li class='" . esc_attr( $this->cptslug ) . "'>";
 
 			$html .= $this->get_img( $img, $link );
 
-		$html .= "</li>";
+		$html .= '</li>';
 
 		return $html;
 
@@ -81,14 +81,14 @@ final class Partners extends CPT{
 			'name' => __( 'Link URL', 'evans-mu' ),
 			'desc' => __( 'Enter the URL from the page you want to link to.', 'evans-mu' ),
 			'id'   => $this->prefix . 'url',
-			'type' => 'text'
+			'type' => 'text',
 		) );
 
 		$cmb->add_field( array(
 			'name' => __( 'Image', 'evans-mu' ),
 			'id'   => $this->prefix . 'image',
 			'type' => 'file',
-			'allow' => array( 'attachment' )
+			'allow' => array( 'attachment' ),
 		) );
 
 	}

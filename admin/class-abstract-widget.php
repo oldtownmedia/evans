@@ -51,8 +51,8 @@ abstract class Widget extends \WP_Widget {
 			$this->base,
 			sprintf( __( '%s', 'evans-mu' ), $this->title ),
 			array(
-				'classname'  => $this->base.'-class',
-				'description' => esc_html( $this->description )
+				'classname'  => $this->base . '-class',
+				'description' => esc_html( $this->description ),
 			)
 		);
 
@@ -73,7 +73,7 @@ abstract class Widget extends \WP_Widget {
 	 * @see wp_cache_delete
 	 */
 	public function flush_widget_cache() {
-    	wp_cache_delete( $this->base, 'widget' );
+		wp_cache_delete( $this->base, 'widget' );
 	}
 
 
@@ -90,11 +90,11 @@ abstract class Widget extends \WP_Widget {
 		// Check if there is a cached output
 		$cache = wp_cache_get( $this->base, 'widget' );
 
-		if ( !is_array( $cache ) ) {
+		if ( ! is_array( $cache ) ) {
 			$cache = array();
 		}
 
-		if ( !isset( $args['widget_id'] ) ) {
+		if ( ! isset( $args['widget_id'] ) ) {
 			$args['widget_id'] = $this->id;
 		}
 
@@ -185,14 +185,12 @@ abstract class Widget extends \WP_Widget {
 
 				$sanitized = $new_value;
 
-			// Else if we're just dealing one sanitization option
+				// Else if we're just dealing one sanitization option
 			} else {
 
 				$sanitized = $sanitize( $value );
 
 			}
-
-		// Else, run the default
 		} else {
 
 			$sanitized = strip_tags( $value );
@@ -311,7 +309,7 @@ abstract class Widget extends \WP_Widget {
 		$fields = $this->widget_fields();
 		$defaults = array();
 
-		if ( !is_array( $fields ) || empty( $fields ) ) {
+		if ( ! is_array( $fields ) || empty( $fields ) ) {
 			return;
 		}
 
@@ -322,7 +320,6 @@ abstract class Widget extends \WP_Widget {
 			} else {
 				$defaults[ $field['id'] ] = '';
 			}
-
 		}
 
 		return $defaults;
@@ -381,10 +378,10 @@ abstract class Widget extends \WP_Widget {
 
 		$html .= "<p class='" . esc_attr( $field['type'] ) . "-box evans-field'>";
 
-		$html .= "<label for='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "'><strong>" . esc_attr( $field['name'] ) . "</strong></label>";
+		$html .= "<label for='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "'><strong>" . esc_attr( $field['name'] ) . '</strong></label>';
 
 		if ( $field['type'] != 'checkbox' ) {
-			$html .= "<br>";
+			$html .= '<br>';
 		}
 
 		switch ( $field['type'] ) {
@@ -397,29 +394,29 @@ abstract class Widget extends \WP_Widget {
 
 			case 'textarea' :
 
-				$html .= "<textarea id='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "' name='" . esc_attr( $this->get_field_name( $field['id'] ) ) . "'>" . esc_html( $instance[ $field['id'] ] ) . "</textarea>";
+				$html .= "<textarea id='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "' name='" . esc_attr( $this->get_field_name( $field['id'] ) ) . "'>" . esc_html( $instance[ $field['id'] ] ) . '</textarea>';
 
 			break;
 
 			case 'select' :
 
-				if ( !empty( $field['options'] ) ) {
+				if ( ! empty( $field['options'] ) ) {
 
-					$html .="<select id='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "' name='" . esc_attr( $this->get_field_name( $field['id'] ) ) . "' >";
+					$html .= "<select id='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "' name='" . esc_attr( $this->get_field_name( $field['id'] ) ) . "' >";
 
-						foreach ( $field['options'] as $key => $value ) {
-							$selected = '';
+					foreach ( $field['options'] as $key => $value ) {
+						$selected = '';
 
-							if ( $key == $instance[ $field['id'] ] ) {
-								$selected = 'selected';
-							}
-
-							$html .= "<option value=' " . esc_attr( $key ) . "' " . esc_attr( $selected ) . ">";
-								$html .= esc_html( $value );
-							$html .= "</option>";
+						if ( $key == $instance[ $field['id'] ] ) {
+							$selected = 'selected';
 						}
 
-					$html .= "</select>";
+						$html .= "<option value=' " . esc_attr( $key ) . "' " . esc_attr( $selected ) . '>';
+						$html .= esc_html( $value );
+						$html .= '</option>';
+					}
+
+					$html .= '</select>';
 
 				}
 
@@ -427,7 +424,7 @@ abstract class Widget extends \WP_Widget {
 
 			case 'radio' :
 
-				if ( !empty( $field['options'] ) ) {
+				if ( ! empty( $field['options'] ) ) {
 
 					foreach ( $field['options'] as $key => $value ) {
 						$selected = '';
@@ -436,10 +433,9 @@ abstract class Widget extends \WP_Widget {
 							$selected = ' checked"';
 						}
 
-						$html .= "<input type='radio' value='" . esc_attr( $key ) . "' " . esc_attr( $selected ) . "> <span>" . esc_html( $value ) . "</span><br>";
+						$html .= "<input type='radio' value='" . esc_attr( $key ) . "' " . esc_attr( $selected ) . '> <span>' . esc_html( $value ) . '</span><br>';
 
 					}
-
 				}
 
 			break;
@@ -455,13 +451,13 @@ abstract class Widget extends \WP_Widget {
 
 			break;
 
-		}
+		}// End switch().
 
 		if ( isset( $field['desc'] ) ) {
-			$html .= "<br><span><i><small>" . esc_html( $field['desc'] ) . "</i></small></span>";
+			$html .= '<br><span><i><small>' . esc_html( $field['desc'] ) . '</i></small></span>';
 		}
 
-		$html .= "</p>";
+		$html .= '</p>';
 
 		return $html;
 

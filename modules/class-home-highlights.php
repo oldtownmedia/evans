@@ -10,7 +10,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-final class Highlights extends CPT{
+final class Highlights extends CPT {
 
 	protected $cptslug 			= 'highlight';
 	protected $cptslug_plural	= 'highlights';
@@ -20,7 +20,7 @@ final class Highlights extends CPT{
 	protected $hide_view		= true;
 	protected $thumbnail_size	= array(
 		'width'		=> 400,
-		'height'	=> 400
+		'height'	=> 400,
 	);
 
 	// Arguments to define the CPT
@@ -37,7 +37,7 @@ final class Highlights extends CPT{
 		'no_found_rows'	=> true,
 		'orderby' 		=> 'menu_order',
 		'order' 		=> 'ASC',
-		'posts_per_page'=> 3,
+		'posts_per_page' => 3,
 	);
 
 
@@ -50,31 +50,31 @@ final class Highlights extends CPT{
 	 * @param int $ Post ID.
 	 * @return string HTML contents for the individual post.
 	 */
-	public function display_single( $pid ){
+	public function display_single( $pid ) {
 
-		$html = "";
+		$html = '';
 
 		$link		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'url', true );
 		$link_text	= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'url_text', true );
 		$content	= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'content', true );
-		$img_id		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true);
-		$img		= wp_get_attachment_image_src( $img_id, get_post_type().'-thumb' );
+		$img_id		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true );
+		$img		= wp_get_attachment_image_src( $img_id, get_post_type() . '-thumb' );
 
 		$html .= "<li class='" . esc_attr( $this->cptslug ) . "'>";
 
 			$html .= $this->get_img( $img, $link );
 
-			$html .= "<h3><a href='" . esc_url( $link ) . "'>" . esc_html( get_the_title() ) . "</a></h3>";
+			$html .= "<h3><a href='" . esc_url( $link ) . "'>" . esc_html( get_the_title() ) . '</a></h3>';
 
-			if ( !empty( $content ) ){
-				$html .=  apply_filters( 'the_content', $content );
-			}
+		if ( ! empty( $content ) ) {
+			$html .= apply_filters( 'the_content', $content );
+		}
 
-			if ( !empty( $link_text ) ){
-				$html .= "<a href='" . esc_url( $link ) . "' class='button' role='button'>" . esc_html( $link_text ) . "</a>";
-			}
+		if ( ! empty( $link_text ) ) {
+			$html .= "<a href='" . esc_url( $link ) . "' class='button' role='button'>" . esc_html( $link_text ) . '</a>';
+		}
 
-		$html .= "</li>";
+		$html .= '</li>';
 
 		return $html;
 
@@ -91,16 +91,16 @@ final class Highlights extends CPT{
 
 		$cmb->add_field( array(
 			'name' => __( 'Content', 'evans-mu' ),
-			'desc' => __( 'Enter any content that you would like to appear in the '.$this->singular, 'evans-mu' ),
+			'desc' => __( 'Enter any content that you would like to appear in the ' . $this->singular, 'evans-mu' ),
 			'id'   => $this->prefix . 'content',
-			'type' => 'text'
-	    ) );
+			'type' => 'text',
+		) );
 
 		$cmb->add_field( array(
 			'name' => __( 'Link URL', 'evans-mu' ),
 			'desc' => __( 'Enter the URL from the page you want to link to.', 'evans-mu' ),
 			'id'   => $this->prefix . 'url',
-			'type' => 'text_url'
+			'type' => 'text_url',
 		) );
 
 		$cmb->add_field( array(
@@ -108,14 +108,14 @@ final class Highlights extends CPT{
 			'desc' => __( 'Enter text for the link.', 'evans-mu' ),
 			'id'   => $this->prefix . 'url_text',
 			'type' => 'text',
-			'default' => __( 'Read More', 'evans-mu' )
+			'default' => __( 'Read More', 'evans-mu' ),
 		) );
 
 		$cmb->add_field( array(
 			'name' => __( 'Image', 'evans-mu' ),
 			'id'   => $this->prefix . 'image',
 			'type' => 'file',
-			'allow' => array( 'attachment' )
+			'allow' => array( 'attachment' ),
 		) );
 
 	}

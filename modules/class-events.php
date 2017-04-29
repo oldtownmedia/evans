@@ -20,12 +20,12 @@ final class Events extends CPT {
 	protected $hide_view 		= false;
 	protected $thumbnail_size	= array(
 		'width'		=> 300,
-		'height'	=> 200
+		'height'	=> 200,
 	);
 
 	// Arguments to define the CPT
 	protected $cpt_args			= array(
-		'show_in_nav_menus'	=> false
+		'show_in_nav_menus'	=> false,
 	);
 
 	// Arguments for the CPT loop
@@ -53,7 +53,7 @@ final class Events extends CPT {
 				'key' 		=> $this->prefix . 'date',
 				'value' 	=> date( 'U', strtotime( '-1 day' ) ),
 				'compare' 	=> '>=',
-				'type'		=> 'char'
+				'type'		=> 'char',
 			),
 		);
 
@@ -73,32 +73,32 @@ final class Events extends CPT {
 	 */
 	public function display_single( $pid ) {
 
-		$html = "";
+		$html = '';
 
-		$date		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'date', true);
-		$cost		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'cost', true);
-		$img_id		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true);
-		$img		= wp_get_attachment_image_src( $img_id, get_post_type().'-thumb' );
+		$date		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'date', true );
+		$cost		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'cost', true );
+		$img_id		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true );
+		$img		= wp_get_attachment_image_src( $img_id, get_post_type() . '-thumb' );
 
 			$html .= "<li itemscope itemtype='http://data-vocabulary.org/Event' class='" . esc_attr( $this->cptslug ) . " group'>";
 
 				$html .= $this->get_img( $img );
 
-				$html .= "<h3>" . esc_html( get_the_title() ) . "</h3>";
+				$html .= '<h3>' . esc_html( get_the_title() ) . '</h3>';
 
-				$html .= "<p>";
+				$html .= '<p>';
 
-					$html .= esc_html( date( 'm/d/Y', $date ) ) . " " . esc_html( date( 'g:i A', $date ) )."<br>";
+					$html .= esc_html( date( 'm/d/Y', $date ) ) . ' ' . esc_html( date( 'g:i A', $date ) ) . '<br>';
 
-					if ( ! empty( $cost ) ) {
-						$html .= esc_html__( 'Cost:', 'evans-mu' ) . " " . esc_html( $cost ) . "<br>";
-					}
+		if ( ! empty( $cost ) ) {
+			$html .= esc_html__( 'Cost:', 'evans-mu' ) . ' ' . esc_html( $cost ) . '<br>';
+		}
 
-				$html .= "</p>";
+				$html .= '</p>';
 
 				$html .= apply_filters( 'the_content', get_the_content() );
 
-			$html .= "</li>";
+			$html .= '</li>';
 
 		return $html;
 
@@ -115,23 +115,23 @@ final class Events extends CPT {
 
 		$cmb->add_field( array(
 			'name' => __( 'Start Date/Time', 'evans-mu' ),
-			'desc' => __( 'Enter a date for your '.$this->cptslug, 'evans-mu' ),
+			'desc' => __( 'Enter a date for your ' . $this->cptslug, 'evans-mu' ),
 			'id'   => $this->prefix . 'date',
-			'type' => 'text_datetime_timestamp'
+			'type' => 'text_datetime_timestamp',
 		) );
 
 		$cmb->add_field( array(
 			'name' => __( 'Event Cost', 'evans-mu' ),
-			'desc' => __( 'Enter the guest cost for your '.$this->cptslug.' (optional)', 'evans-mu' ),
+			'desc' => __( 'Enter the guest cost for your ' . $this->cptslug . ' (optional)', 'evans-mu' ),
 			'id'   => $this->prefix . 'cost',
-			'type' => 'text_money'
+			'type' => 'text_money',
 		) );
 
 		$cmb->add_field( array(
 			'name' => __( 'Image', 'evans-mu' ),
 			'id'   => $this->prefix . 'image',
 			'type' => 'file',
-			'allow' => array( 'attachment' )
+			'allow' => array( 'attachment' ),
 		) );
 
 	}

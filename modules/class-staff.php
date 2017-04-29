@@ -10,7 +10,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-final class Staff extends CPT{
+final class Staff extends CPT {
 
 	protected $cptslug 			= 'staff';
 	protected $cptslug_plural	= 'staff';
@@ -20,20 +20,20 @@ final class Staff extends CPT{
 	protected $hide_view 		= false;
 	protected $thumbnail_size	= array(
 		'width'		=> 300,
-		'height'	=> 300
+		'height'	=> 300,
 	);
 
 	// Arguments to define the CPT
 	protected $cpt_args			= array(
-		'rewrite'				=> true
+		'rewrite'				=> true,
 	);
 
 	// Arguments for the CPT loop
 	protected $loop_args = array(
 		'orderby' 		=> 'menu_order',
 		'order' 		=> 'ASC',
-		'posts_per_page'=> 500,
-		'no_found_rows'	=> false
+		'posts_per_page' => 100,
+		'no_found_rows'	=> false,
 	);
 
 
@@ -46,31 +46,29 @@ final class Staff extends CPT{
 	 * @param int $ Post ID.
 	 * @return string HTML contents for the individual post.
 	 */
-	public function display_single( $pid ){
+	public function display_single( $pid ) {
 
-		$html = "";
+		$html = '';
 
-		$img_id		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true);
-		$img		= wp_get_attachment_image_src( $img_id, get_post_type().'-thumb' );
+		$img_id		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true );
+		$img		= wp_get_attachment_image_src( $img_id, get_post_type() . '-thumb' );
 		$title		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'position', true );
 
 		$html .= "<li class='" . esc_attr( $this->cptslug ) . "' itemscope itemtype ='http://schema.org/Person'>";
 
 			$html .= $this->get_img( $img );
 
-			$html .= "<h3 itemprop='name'>" . esc_html( get_the_title() ) . "</h3>";
+			$html .= "<h3 itemprop='name'>" . esc_html( get_the_title() ) . '</h3>';
 
-
-			if ( !empty( $title ) ){
-				$html .= "<p>
-					<strong>" . esc_html__( 'Position:', 'evans-mu' ) . "</strong> <span itemprop='jobTitle'>" . esc_html( $title ) . "</span>
-				</p>";
-			}
-
+		if ( ! empty( $title ) ) {
+			$html .= '<p>
+                    <strong>' . esc_html__( 'Position:', 'evans-mu' ) . "</strong> <span itemprop='jobTitle'>" . esc_html( $title ) . '</span>
+                </p>';
+		}
 
 			$html .= apply_filters( 'the_content', get_the_content() );
 
-		$html .= "</li>";
+		$html .= '</li>';
 
 		return $html;
 
@@ -87,16 +85,16 @@ final class Staff extends CPT{
 
 		$cmb->add_field( array(
 			'name' => __( 'Position/Title', 'evans-mu' ),
-			'desc' => __( 'Enter the title for the '.$this->cptslug, 'evans-mu' ),
+			'desc' => sprintf( esc_html__( 'Enter the title for the ', 'evans-mu' ), $this->cptslug ),
 			'id'   => $this->prefix . 'position',
-			'type' => 'text'
-	    ) );
+			'type' => 'text',
+		) );
 
 		$cmb->add_field( array(
 			'name' => __( 'Image', 'evans-mu' ),
 			'id'   => $this->prefix . 'image',
 			'type' => 'file',
-			'allow' => array( 'attachment' )
+			'allow' => array( 'attachment' ),
 		) );
 
 	}

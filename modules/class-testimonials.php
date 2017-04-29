@@ -10,7 +10,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-final class Testimonials extends CPT{
+final class Testimonials extends CPT {
 
 	protected $cptslug 			= 'testimonial';
 	protected $cptslug_plural	= 'testimonials';
@@ -30,7 +30,7 @@ final class Testimonials extends CPT{
 		'no_found_rows'	=> true,
 		'orderby' 		=> 'menu_order',
 		'order' 		=> 'ASC',
-		'posts_per_page'=> 500,
+		'posts_per_page' => 100,
 	);
 
 
@@ -43,23 +43,23 @@ final class Testimonials extends CPT{
 	 * @param int $ Post ID.
 	 * @return string HTML contents for the individual post.
 	 */
-	public function display_single( $pid ){
+	public function display_single( $pid ) {
 
-		$html = "";
+		$html = '';
 
 		$reviewer = get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'reviewer', true );
 
 		$html .= "<li class='" . esc_attr( $this->cptslug ) . "'>";
 
-			$html .= "<h3>" . esc_html( get_the_title() ) . "</h3>";
+			$html .= '<h3>' . esc_html( get_the_title() ) . '</h3>';
 
 			$html .= apply_filters( 'the_content', get_the_content() );
 
-			if ( !empty( $reviewer ) ){
-				$html .= "<p class='cite'> - <span class='reviewer' itemprop='reviewer'>" . esc_html( $reviewer ) . "</span></p>";
-			}
+		if ( ! empty( $reviewer ) ) {
+			$html .= "<p class='cite'> - <span class='reviewer' itemprop='reviewer'>" . esc_html( $reviewer ) . '</span></p>';
+		}
 
-		$html .= "</li>";
+		$html .= '</li>';
 
 		return $html;
 
@@ -78,7 +78,7 @@ final class Testimonials extends CPT{
 			'name'	=> __( 'Reviewer Name', 'evans-mu' ),
 			'id'	=> $this->prefix . 'reviewer',
 			'type'	=> 'text',
-	    ) );
+		) );
 
 	}
 

@@ -10,7 +10,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-final class Alerts extends CPT{
+final class Alerts extends CPT {
 
 	protected $cptslug 			= 'alert';
 	protected $cptslug_plural	= 'alerts';
@@ -32,7 +32,7 @@ final class Alerts extends CPT{
 		'no_found_rows'	=> true,
 		'orderby' 		=> 'menu_order',
 		'order' 		=> 'ASC',
-		'posts_per_page'=> 1,
+		'posts_per_page' => 1,
 		'nopaging'		=> true,
 	);
 
@@ -45,12 +45,12 @@ final class Alerts extends CPT{
 	 * @param array $args Description.
 	 * @return string Combined HTML contents of the looped query.
 	 */
-	public function loop_cpt( $args = array() ){
-		$html = "";
+	public function loop_cpt( $args = array() ) {
+		$html = '';
 
 		$objects = new \WP_Query( $this->query_mods( array(), $args ) );
 
-		if ( $objects->have_posts() ){
+		if ( $objects->have_posts() ) {
 
 			while ( $objects->have_posts() ) : $objects->the_post();
 
@@ -74,35 +74,35 @@ final class Alerts extends CPT{
 	 * @param array $args Incoming arguments.
 	 * @return string Modified query arguments.
 	 */
-	public function query_mods( $query, $args ){
+	public function query_mods( $query, $args ) {
 
 		$query['meta_query'] 	= array(
 			'relation'	=> 'OR',
-            array(
-	            array(
-	                'key' 		=> $this->prefix . 'active',
-	                'value' 	=> 'active',
-	                'compare' 	=> '=',
-	            ),
-	            array(
-	                'key' 		=> $this->prefix . 'start_date',
-	                'compare' 	=> 'NOT EXISTS',
-	            ),
-            ),
-            array(
-	            array(
-	                'key' 		=> $this->prefix . 'active',
-	                'value' 	=> 'active',
-	                'compare' 	=> '=',
-	            ),
-	            array(
-	                'key' 		=> $this->prefix . 'start_date',
-	                'value' 	=> time(),
-	                'compare' 	=> '<=',
-	                'type'		=> 'char'
-	            ),
-            ),
-        );
+			array(
+				array(
+					'key' 		=> $this->prefix . 'active',
+					'value' 	=> 'active',
+					'compare' 	=> '=',
+				),
+				array(
+					'key' 		=> $this->prefix . 'start_date',
+					'compare' 	=> 'NOT EXISTS',
+				),
+			),
+			array(
+				array(
+					'key' 		=> $this->prefix . 'active',
+					'value' 	=> 'active',
+					'compare' 	=> '=',
+				),
+				array(
+					'key' 		=> $this->prefix . 'start_date',
+					'value' 	=> time(),
+					'compare' 	=> '<=',
+					'type'		=> 'char',
+				),
+			),
+		);
 
 		return parent::query_mods( $query, $args );
 
@@ -118,21 +118,21 @@ final class Alerts extends CPT{
 	 * @param int $ Post ID.
 	 * @return string HTML contents for the individual post.
 	 */
-	public function display_single( $pid ){
+	public function display_single( $pid ) {
 
-		$html = "";
+		$html = '';
 
 		$end = get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'end_date', true );
 
-		if ( ! $end || time() <= $end ){
+		if ( ! $end || time() <= $end ) {
 
 			$html .= "<div class='" . esc_attr( $this->cptslug ) . "'>";
 
-				$html .= "<h4>" . esc_html( get_the_title() ) . "</h4>";
+				$html .= '<h4>' . esc_html( get_the_title() ) . '</h4>';
 
 				$html .= apply_filters( 'the_content', get_the_content() );
 
-			$html .= "</div>";
+			$html .= '</div>';
 
 		}
 
@@ -151,26 +151,26 @@ final class Alerts extends CPT{
 
 		$cmb->add_field( array(
 			'name'    => __( 'Active?', 'evans-mu' ),
-			'desc'    => __( 'Choose whether this '.$this->cptslug.' should be active or not', 'evans-mu' ),
+			'desc'    => __( 'Choose whether this ' . $this->cptslug . ' should be active or not', 'evans-mu' ),
 			'id'      => $this->prefix . 'active',
 			'type'    => 'radio',
 			'options' => array(
 				'active'	=> __( 'Active', 'evans-mu' ),
-				'inactive'	=>  __( 'Inactive', 'evans-mu' )
+				'inactive'	=> __( 'Inactive', 'evans-mu' ),
 			),
-	    ) );
+		) );
 
 		$cmb->add_field( array(
 			'name' 		=> __( 'Start Date', 'evans-mu' ),
-			'desc' 		=> __( 'If you would like to schedule this '.$this->cptslug.', enter a start date.', 'evans-mu' ),
+			'desc' 		=> __( 'If you would like to schedule this ' . $this->cptslug . ', enter a start date.', 'evans-mu' ),
 			'id'   		=> $this->prefix . 'start_date',
 			'type' 		=> 'text_datetime_timestamp',
-			'default'	=> time()
+			'default'	=> time(),
 		) );
 
 		$cmb->add_field( array(
 			'name' => __( 'End Date', 'evans-mu' ),
-			'desc' => __( 'If you would like to schedule this '.$this->cptslug.', enter an end date.', 'evans-mu' ),
+			'desc' => __( 'If you would like to schedule this ' . $this->cptslug . ', enter an end date.', 'evans-mu' ),
 			'id'   => $this->prefix . 'end_date',
 			'type' => 'text_datetime_timestamp',
 		) );

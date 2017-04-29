@@ -161,12 +161,12 @@ abstract class CPT {
 		add_shortcode( $this->cptslug_plural, array( $this, 'shortcode' ) );
 
 		// If fed dimensions for a thumbnails
-		if ( !empty( $this->thumbnail_size ) ) {
-			add_image_size( $this->cptslug.'-thumb', $this->thumbnail_size['width'], $this->thumbnail_size['height'], true );
+		if ( ! empty( $this->thumbnail_size ) ) {
+			add_image_size( $this->cptslug . '-thumb', $this->thumbnail_size['width'], $this->thumbnail_size['height'], true );
 		}
 
 		// If we want to use the taxonomy, hook in the taxonomy functions
-		if ( !empty( $this->taxonomy_name ) ) {
+		if ( ! empty( $this->taxonomy_name ) ) {
 			add_action( 'init', array( $this, 'define_taxonomy' ), 0 );
 		}
 
@@ -189,7 +189,7 @@ abstract class CPT {
 	 * @return string Combined HTML contents of the looped query.
 	 */
 	public function loop_cpt( $args = array() ) {
-		$html = "";
+		$html = '';
 
 		$objects = new \WP_Query( $this->query_mods( array(), $args ) );
 
@@ -203,11 +203,11 @@ abstract class CPT {
 
 			endwhile;
 
-			$html .= "</ul>";
+			$html .= '</ul>';
 
 		} else {
 
-			$html = "<h3>" . sprintf( esc_html__( "There are no %s to list. Check back soon!", 'evans-mu' ), $this->cptslug_plural ) . "</h3>";
+			$html = '<h3>' . sprintf( esc_html__( 'There are no %s to list. Check back soon!', 'evans-mu' ), $this->cptslug_plural ) . '</h3>';
 
 		}
 
@@ -239,22 +239,22 @@ abstract class CPT {
 		$query = array_merge( $original_query, $query );
 
 		// If our shortcode passed in the random as true
-		if ( !empty( $args['random'] ) && $args['random'] == true ) {
+		if ( ! empty( $args['random'] ) && $args['random'] == true ) {
 			$query['no_found_rows']		= false;
 			$query['posts_per_page']	= 1;
 			$query['orderby']			= 'rand';
 		}
 
 		// If our shortcode passed in an id
-		if ( !empty( $args['pid'] ) ) {
+		if ( ! empty( $args['pid'] ) ) {
 			$query['no_found_rows']		= false;
 			$query['posts_per_page']	= 1;
 			$query['post__in']			= array( $args['pid'] );
 		}
 
 		// If our shortcode passed in a group id OR our taxonomy_loop passes in a group id
-		if ( !empty( $args['group'] ) ) {
-			$query[$this->tax_slug]		= array( $args['group'] );
+		if ( ! empty( $args['group'] ) ) {
+			$query[ $this->tax_slug ]		= array( $args['group'] );
 		}
 
 		return $query;
@@ -272,15 +272,15 @@ abstract class CPT {
 	 * @return string HTML contents for the individual post.
 	 */
 	public function display_single( $pid ) {
-		$html = "";
+		$html = '';
 
 		$html .= "<li class='" . esc_attr( $this->cptslug ) . "'>";
 
-			$html .= "<h3>" . esc_html( get_the_title( $pid ) ) . "</h3>";
+			$html .= '<h3>' . esc_html( get_the_title( $pid ) ) . '</h3>';
 
 			$html .= apply_filters( 'the_content', get_the_content() );
 
-		$html .= "</li>";
+		$html .= '</li>';
 
 		return $html;
 
@@ -295,20 +295,20 @@ abstract class CPT {
 	 * @return string HTML contents for the image and link.
 	 */
 	protected function get_img( $img, $link = '' ) {
-		$html = "";
+		$html = '';
 
 		if ( empty( $img ) ) {
 			return;
 		}
 
-		if ( !empty( $link ) ) {
+		if ( ! empty( $link ) ) {
 			$html .= "<a href=' " . esc_url( $link ) . "'>";
 		}
 
 			$html .= "<img src='" . esc_url( $img[0] ) . "' alt='" . esc_attr( get_the_title() ) . "' />";
 
-		if ( !empty( $link ) ) {
-			$html .= "</a>";
+		if ( ! empty( $link ) ) {
+			$html .= '</a>';
 		}
 
 		return $html;
@@ -328,25 +328,25 @@ abstract class CPT {
 	 * @return string HTML content of the looped taxonomy & posts.
 	 */
 	public function taxonomy_loop( $args = array() ) {
-		$html = "";
+		$html = '';
 
 		$terms = get_terms(
 			$this->tax_slug,
 			array(
 				'hide_empty'	=> true,
-				'number'		=> 500
+				'number'		=> 500,
 			)
 		);
 
-		if ( !empty( $terms ) ) {
+		if ( ! empty( $terms ) ) {
 
 			foreach ( $terms as $term ) :
 
-				$html .= "<h2>" . esc_html( apply_filters( 'the_title', $term->name ) ) . "</h2>";
+				$html .= '<h2>' . esc_html( apply_filters( 'the_title', $term->name ) ) . '</h2>';
 
 				$description = term_description( $term->term_id, $this->tax_slug );
 
-				if ( !empty( $description ) ) {
+				if ( ! empty( $description ) ) {
 					$html .= apply_filters( 'the_content', $description );
 				}
 
@@ -378,7 +378,7 @@ abstract class CPT {
 				'quantity' 	=> '',
 				'group'		=> '',
 				'id'		=> '',
-				'random'	=> false
+				'random'	=> false,
 			),
 			$atts
 		);
@@ -419,7 +419,7 @@ abstract class CPT {
 			'not_found'          => sprintf( __( 'No %s found', 'evans-mu' ), $this->plural ),
 			'not_found_in_trash' => sprintf( __( 'No %s found in the Trash', 'evans-mu' ), $this->plural ),
 			'parent_item_colon'  => sprintf( __( 'Parent %s', 'evans-mu' ), $this->singular ),
-			'menu_name'          => sprintf( __( '%s', 'evans-mu' ), $this->plural )
+			'menu_name'          => sprintf( __( '%s', 'evans-mu' ), $this->plural ),
 		);
 
 		$defaults = array(
@@ -487,7 +487,7 @@ abstract class CPT {
 			'labels' 			=> $labels,
 			'show_tagcloud'		=> false,
 			'show_admin_column' => true,
-			'hierarchical'		=> true
+			'hierarchical'		=> true,
 		);
 
 		register_taxonomy( $this->tax_slug, $this->cptslug, $args );
@@ -504,12 +504,12 @@ abstract class CPT {
 	 */
 	public function remove_view_from_row( $actions, $post ) {
 
-	    if( $post->post_type === $this->cptslug ) {
-	        unset( $actions['inline hide-if-no-js'] );
-	        unset( $actions['view'] );
-	    }
+		if ( $post->post_type === $this->cptslug ) {
+			unset( $actions['inline hide-if-no-js'] );
+			unset( $actions['view'] );
+		}
 
-	    return $actions;
+		return $actions;
 	}
 
 
@@ -523,13 +523,13 @@ abstract class CPT {
 	 * @return string $return Return HTML objects with action buttons & revised link.
 	 */
 	public function remove_permalink_option( $return ) {
-	    global $post;
+		global $post;
 
-	    if( !empty( $post ) && $post->post_type === $this->cptslug ) {
-	        return;
-	    }
+		if ( ! empty( $post ) && $post->post_type === $this->cptslug ) {
+			return;
+		}
 
-	    return $return;
+		return $return;
 	}
 
 
@@ -545,7 +545,7 @@ abstract class CPT {
 			'slug'		=> $this->cptslug,
 			'singular'	=> $this->singular,
 			'plural'	=> $this->plural,
-			'class'		=> $this->icon
+			'class'		=> $this->icon,
 		);
 
 		return $cpt_array;

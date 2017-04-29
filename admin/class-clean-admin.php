@@ -24,11 +24,11 @@ class Clean_Admin {
 		add_action( 'admin_bar_menu', array( $this, 'add_toolbar_links' ), 999 );
 
 		// Only keep going if we're in the admin section
-		if ( !is_admin() ){
+		if ( ! is_admin() ) {
 			return;
 		}
 
-		add_filter( 'admin_init' , array( $this , 'register_fields' ) );
+		add_filter( 'admin_init' , array( $this, 'register_fields' ) );
 		add_action( 'admin_menu', array( $this, 'remove_menus' ), 105 );
 		add_action( 'admin_menu', array( $this, 'remove_dashboard_widgets' ) );
 		add_action( 'admin_notices', array( $this, 'custom_update_nag' ), 99 );
@@ -37,12 +37,12 @@ class Clean_Admin {
 		add_filter( 'menu_order', array( $this, 'menu_order' ), 9999 );
 		add_filter( 'custom_menu_order', '__return_true' );
 		add_filter( 'gettext', array( $this, 'tgm_soliloquy_envira_whitelabel' ), 10, 3 );
-        add_filter( 'envira_gallery_skipped_posttypes', array( $this, 'envira_skip_custom_post_type' ) );
-        add_filter( 'manage_posts_columns', array( $this, 'remove_columns' ) );
-        add_action( 'admin_menu', array( $this, 'remove_post_meta_boxes' ) );
-        add_filter( 'manage_pages_columns', array( $this, 'clean_post_columns' ) );
-        add_action( 'wp_before_admin_bar_render', array( $this, 'remove_admin_bar_links' ) );
-        add_filter( 'mce_buttons', array( $this, 'extended_editor_mce_buttons' ), 0 );
+		add_filter( 'envira_gallery_skipped_posttypes', array( $this, 'envira_skip_custom_post_type' ) );
+		add_filter( 'manage_posts_columns', array( $this, 'remove_columns' ) );
+		add_action( 'admin_menu', array( $this, 'remove_post_meta_boxes' ) );
+		add_filter( 'manage_pages_columns', array( $this, 'clean_post_columns' ) );
+		add_action( 'wp_before_admin_bar_render', array( $this, 'remove_admin_bar_links' ) );
+		add_filter( 'mce_buttons', array( $this, 'extended_editor_mce_buttons' ), 0 );
 		add_filter( 'mce_buttons_2', array( $this, 'extended_editor_mce_buttons_2' ), 0 );
 		add_action( 'add_meta_boxes', array( $this, 'remove_seo_metabox' ), 11 );
 		add_action( 'dashboard_glance_items', array( $this, 'right_now_cpt_count' ) );
@@ -62,7 +62,7 @@ class Clean_Admin {
 	public function register_fields() {
 
 		// If our user isn't an admin, don't show the new option
-		if ( !current_user_can( 'manage_options' ) ){
+		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
@@ -85,7 +85,7 @@ class Clean_Admin {
 		$value = get_option( 'clean_admin_bar', 'on' );
 		$on = $off = '';
 
-		if ( $value == 'on' ){
+		if ( $value == 'on' ) {
 			$on = 'checked="checked"';
 		} else {
 			$off = 'checked="checked"';
@@ -113,7 +113,7 @@ class Clean_Admin {
 		// Has the client opted out of cleaning the admin area?
 		$hide = get_option( 'clean_admin_bar' );
 
-		if ( $hide == 'off' ){
+		if ( $hide == 'off' ) {
 			return '';
 		}
 
@@ -136,19 +136,19 @@ class Clean_Admin {
 		unset( $menu[20] );		// Remove spot that pages was in
 		unset( $submenu['themes.php'][6] );	// Alternative method of removing customizer
 
-		if ( isset( $submenu['themes.php'][7] ) ){
+		if ( isset( $submenu['themes.php'][7] ) ) {
 			$submenu['themes.php'][7][0] = 'Sidebar Items';		// Rename Widgets
 		}
 
 		$submenu['edit.php?post_type=page'][15] = array( 	// Move Media into Pages menu item
 			'0' => 'Media',
 			'1'	=> 'edit_pages',
-			'2'	=> 'upload.php'
+			'2'	=> 'upload.php',
 		);
 
 		// Remove menu items only for non-admins
 		$current_user = wp_get_current_user();
-		if ( $current_user->user_login != 'otm' && $current_user->user_login != 'Mike' && $current_user->user_login != 'Miles' ){
+		if ( $current_user->user_login != 'otm' && $current_user->user_login != 'Mike' && $current_user->user_login != 'Miles' ) {
 
 			remove_menu_page( 'activity_log_page' );				// Aryo Activity log
 			remove_submenu_page( 'themes.php', 'themes.php' );		// Remove Theme page
@@ -193,12 +193,11 @@ class Clean_Admin {
 
 			if ( 'separator1' == $item ) {
 				break;
-			} elseif ( 'index.php' !== $item && !$this->is_gracious_menu_item( $item ) ) {
+			} elseif ( 'index.php' !== $item && ! $this->is_gracious_menu_item( $item ) ) {
 				// Yank it out and put it in the penalty box.
 				$penalty_box[] = $item;
-				unset( $menu[$key] );
+				unset( $menu[ $key ] );
 			}
-
 		}
 
 		// Shove the penalty box items onto the end
@@ -220,36 +219,36 @@ class Clean_Admin {
 	 */
 	public function tgm_soliloquy_envira_whitelabel( $translated_text, $source_text ) {
 
-	    // If not in the admin, return the default string.
-	    if ( ! is_admin() ) {
-	        return $translated_text;
-	    }
+		// If not in the admin, return the default string.
+		if ( ! is_admin() ) {
+			return $translated_text;
+		}
 
-	    if ( strpos( $source_text, 'Soliloquy Slider' ) !== false ) {
-	        return str_replace( 'Soliloquy Slider', 'Slider', $translated_text );
-	    }
+		if ( strpos( $source_text, 'Soliloquy Slider' ) !== false ) {
+			return str_replace( 'Soliloquy Slider', 'Slider', $translated_text );
+		}
 
-	    if ( strpos( $source_text, 'Soliloquy Sliders' ) !== false ) {
-	        return str_replace( 'Soliloquy Sliders', 'Sliders', $translated_text );
-	    }
+		if ( strpos( $source_text, 'Soliloquy Sliders' ) !== false ) {
+			return str_replace( 'Soliloquy Sliders', 'Sliders', $translated_text );
+		}
 
-	    if ( strpos( $source_text, 'Soliloquy slider' ) !== false ) {
-	        return str_replace( 'Soliloquy slider', 'slider', $translated_text );
-	    }
+		if ( strpos( $source_text, 'Soliloquy slider' ) !== false ) {
+			return str_replace( 'Soliloquy slider', 'slider', $translated_text );
+		}
 
-	    if ( strpos( $source_text, 'Soliloquy' ) !== false ) {
-	        return str_replace( 'Soliloquy', 'Slider', $translated_text );
-	    }
+		if ( strpos( $source_text, 'Soliloquy' ) !== false ) {
+			return str_replace( 'Soliloquy', 'Slider', $translated_text );
+		}
 
-	    if ( strpos( $source_text, 'an Envira' ) !== false ) {
-	        return str_replace( 'a Gallery', '', $translated_text );
-	    }
+		if ( strpos( $source_text, 'an Envira' ) !== false ) {
+			return str_replace( 'a Gallery', '', $translated_text );
+		}
 
-	    if ( strpos( $source_text, 'Envira' ) !== false ) {
-	        return str_replace( 'Gallery', '', $translated_text );
-	    }
+		if ( strpos( $source_text, 'Envira' ) !== false ) {
+			return str_replace( 'Gallery', '', $translated_text );
+		}
 
-	    return $translated_text;
+		return $translated_text;
 
 	}
 
@@ -262,20 +261,20 @@ class Clean_Admin {
 	 */
 	public function envira_skip_custom_post_type( $post_types ) {
 
-	    // Add your custom post type here.
-	    $post_types[] = 'post';
-	    $post_types[] = 'page';
-	    $post_types[] = 'product';
-	    $post_types[] = 'alert';
-	    $post_types[] = 'document';
-	    $post_types[] = 'highlight';
-	    $post_types[] = 'event';
-	    $post_types[] = 'partner';
-	    $post_types[] = 'portfolio';
-	    $post_types[] = 'staff';
-	    $post_types[] = 'testimonial';
+		// Add your custom post type here.
+		$post_types[] = 'post';
+		$post_types[] = 'page';
+		$post_types[] = 'product';
+		$post_types[] = 'alert';
+		$post_types[] = 'document';
+		$post_types[] = 'highlight';
+		$post_types[] = 'event';
+		$post_types[] = 'partner';
+		$post_types[] = 'portfolio';
+		$post_types[] = 'staff';
+		$post_types[] = 'testimonial';
 
-	    return $post_types;
+		return $post_types;
 
 	}
 
@@ -293,7 +292,7 @@ class Clean_Admin {
 	 * @param array $columns columns for the post type
 	 * @return array $columns Modified columns array
 	 */
-	public function clean_post_columns( $columns ){
+	public function clean_post_columns( $columns ) {
 
 		unset(
 			$columns['author'],
@@ -310,15 +309,15 @@ class Clean_Admin {
 	 * @global array $wp_admin_bar Full admin bar object.
 	 */
 	public function remove_admin_bar_links() {
-	    global $wp_admin_bar;
+		global $wp_admin_bar;
 
-	    $wp_admin_bar->remove_menu( 'wp-logo' );          // Remove the WordPress logo
-	    $wp_admin_bar->remove_menu( 'about' );            // Remove the about WordPress link
-	    $wp_admin_bar->remove_menu( 'wporg' );            // Remove the WordPress.org link
-	    $wp_admin_bar->remove_menu( 'documentation' );    // Remove the WordPress documentation link
-	    $wp_admin_bar->remove_menu( 'support-forums' );   // Remove the support forums link
-	    $wp_admin_bar->remove_menu( 'feedback' );         // Remove the feedback link
-	    $wp_admin_bar->remove_menu( 'comments' );         // Remove the comments link
+		$wp_admin_bar->remove_menu( 'wp-logo' );          // Remove the WordPress logo
+		$wp_admin_bar->remove_menu( 'about' );            // Remove the about WordPress link
+		$wp_admin_bar->remove_menu( 'wporg' );            // Remove the WordPress.org link
+		$wp_admin_bar->remove_menu( 'documentation' );    // Remove the WordPress documentation link
+		$wp_admin_bar->remove_menu( 'support-forums' );   // Remove the support forums link
+		$wp_admin_bar->remove_menu( 'feedback' );         // Remove the feedback link
+		$wp_admin_bar->remove_menu( 'comments' );         // Remove the comments link
 
 	}
 
@@ -362,8 +361,8 @@ class Clean_Admin {
 	 */
 	public function remove_core_update_nag() {
 
-	    remove_action( 'admin_notices', 'update_nag', 3 );
-	    remove_action( 'network_admin_notices', 'update_nag', 3 );
+		remove_action( 'admin_notices', 'update_nag', 3 );
+		remove_action( 'network_admin_notices', 'update_nag', 3 );
 
 	}
 
@@ -376,29 +375,29 @@ class Clean_Admin {
 	 */
 	public function custom_update_nag() {
 
-	    if ( is_multisite() && ! current_user_can( 'update_core' ) ){
-	        return false;
-	    }
+		if ( is_multisite() && ! current_user_can( 'update_core' ) ) {
+			return false;
+		}
 
-	    global $pagenow;
+		global $pagenow;
 
-	    if ( 'update-core.php' == $pagenow ){
-	        return;
-	    }
+		if ( 'update-core.php' == $pagenow ) {
+			return;
+		}
 
-	    $cur = get_preferred_from_update_core();
+		$cur = get_preferred_from_update_core();
 
-	    if ( ! isset( $cur->response ) || $cur->response != 'upgrade' ){
-	        return false;
-	    }
+		if ( ! isset( $cur->response ) || $cur->response != 'upgrade' ) {
+			return false;
+		}
 
-	    if ( current_user_can( 'update_core' ) ) {
-	        $msg = sprintf( __( '<a href="http://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> is available! Please contact OTM at (970) 568 5250 or <a href="mailto:support@oldtownmediainc.com">support@oldtownmediainc.com</a> to schedule your update.' ), $cur->current, 'your_custom_url' );
-	    } else {
-	        $msg = sprintf( __( '<a href="http://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> is available! Please notify the site administrator.' ), $cur->current );
-	    }
+		if ( current_user_can( 'update_core' ) ) {
+			$msg = sprintf( __( '<a href="http://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> is available! Please contact OTM at (970) 568 5250 or <a href="mailto:support@oldtownmediainc.com">support@oldtownmediainc.com</a> to schedule your update.' ), $cur->current, 'your_custom_url' );
+		} else {
+			$msg = sprintf( __( '<a href="http://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> is available! Please notify the site administrator.' ), $cur->current );
+		}
 
-	    echo "<div class='update-nag'>" . wp_kses_post( $msg ) . "</div>";
+		echo "<div class='update-nag'>" . wp_kses_post( $msg ) . '</div>';
 
 	}
 
@@ -447,7 +446,7 @@ class Clean_Admin {
 			'removeformat',
 			'spellchecker',
 			'fullscreen',
-			'wp_help'
+			'wp_help',
 		);
 
 	}
@@ -493,14 +492,14 @@ class Clean_Admin {
 	 */
 	public function remove_seo_metabox() {
 
-	    if ( ! current_user_can( 'edit_others_posts' ) ){
-	        remove_meta_box( 'wpseo_meta', 'alert', 'normal' );
-	        remove_meta_box( 'wpseo_meta', 'document', 'normal' );
-	        remove_meta_box( 'wpseo_meta', 'highlight', 'normal' );
-	        remove_meta_box( 'wpseo_meta', 'partner', 'normal' );
-	        remove_meta_box( 'wpseo_meta', 'testimonial', 'normal' );
-	        remove_meta_box( 'wpseo_meta', 'video', 'normal' );
-	    }
+		if ( ! current_user_can( 'edit_others_posts' ) ) {
+			remove_meta_box( 'wpseo_meta', 'alert', 'normal' );
+			remove_meta_box( 'wpseo_meta', 'document', 'normal' );
+			remove_meta_box( 'wpseo_meta', 'highlight', 'normal' );
+			remove_meta_box( 'wpseo_meta', 'partner', 'normal' );
+			remove_meta_box( 'wpseo_meta', 'testimonial', 'normal' );
+			remove_meta_box( 'wpseo_meta', 'video', 'normal' );
+		}
 	}
 
 
@@ -513,16 +512,16 @@ class Clean_Admin {
 
 		if ( current_user_can( 'edit_posts' ) && is_admin() ) {
 
-		$cpt_array = apply_filters( 'cpt_array_filter', array() );
+			$cpt_array = apply_filters( 'cpt_array_filter', array() );
 
-			foreach( $cpt_array as $cpt ){
+			foreach ( $cpt_array as $cpt ) {
 
 				$count = wp_count_posts( $cpt['slug'] );
 
-				$text = _n( '%s '.$cpt['singular'], '%s '.$cpt['plural'], intval( $count->publish ), 'evans-mu' );
+				$text = _n( '%s ' . $cpt['singular'], '%s ' . $cpt['plural'], intval( $count->publish ), 'evans-mu' );
 				$text = sprintf( $text, number_format_i18n( $count->publish ) );
 
-				echo "<li class='" . esc_attr( $cpt['slug'] ) . "-count'><a href='edit.php?post_type=" . esc_attr( $cpt['slug'] ) . "' class='" . esc_attr( $cpt['class'] ) . "'> " . esc_html( $text ) . "</a></li>";
+				echo "<li class='" . esc_attr( $cpt['slug'] ) . "-count'><a href='edit.php?post_type=" . esc_attr( $cpt['slug'] ) . "' class='" . esc_attr( $cpt['class'] ) . "'> " . esc_html( $text ) . '</a></li>';
 
 			}
 		}
@@ -541,30 +540,30 @@ class Clean_Admin {
 	public function add_admin_toolbar_links( $wp_admin_bar ) {
 
 		// Abort if we're not in the back end
-		if( ! is_admin() || ! current_user_can( 'edit_users' ) ) {
+		if ( ! is_admin() || ! current_user_can( 'edit_users' ) ) {
 			return;
 		}
 
 		// Define the WP menu we want to pull from
 		$menu_id = 'header-menu';
 
-	    if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $menu_id ] ) ) {
+		if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $menu_id ] ) ) {
 			$menu = wp_get_nav_menu_object( $locations[ $menu_id ] );
 
-			if ( !empty( $menu ) ) :
+			if ( ! empty( $menu ) ) :
 
 				$menu_items = wp_get_nav_menu_items( $menu->term_id );
 
 				foreach ( (array) $menu_items as $key => $menu_item ) :
 
-				    $page = array(
+					$page = array(
 						'parent' => 'site-name',
-						'id'     => 'front_end_page_'.$menu_item->db_id,
+						'id'     => 'front_end_page_' . $menu_item->db_id,
 						'title'  => $menu_item->title,
-						'href'   => $menu_item->url
+						'href'   => $menu_item->url,
 					);
 
-					if ( $menu_item->menu_item_parent == 0 ){
+					if ( $menu_item->menu_item_parent == 0 ) {
 						$wp_admin_bar->add_node( $page );
 					}
 
@@ -587,7 +586,7 @@ class Clean_Admin {
 	public function add_toolbar_links( $wp_admin_bar ) {
 
 		// Abort if we're not on the front-end
-		if( is_admin() || ! current_user_can( 'edit_users' ) ) {
+		if ( is_admin() || ! current_user_can( 'edit_users' ) ) {
 			return;
 		}
 
@@ -595,23 +594,22 @@ class Clean_Admin {
 			'parent' => 'site-name',
 			'id'     => 'plugins',
 			'title'  => __( 'Plugins', 'evans-mu' ),
-			'href'   => admin_url( 'plugins.php' )
+			'href'   => admin_url( 'plugins.php' ),
 		);
 
 		$pages = array(
 			'parent' => 'site-name',
 			'id'     => 'pages',
 			'title'  => __( 'Pages', 'evans-mu' ),
-			'href'   => admin_url( 'edit.php?post_type=page' )
+			'href'   => admin_url( 'edit.php?post_type=page' ),
 		);
 
 		$posts = array(
 			'parent' => 'site-name',
 			'id'     => 'posts',
 			'title'  => __( 'Posts', 'evans-mu' ),
-			'href'   => admin_url( 'edit.php?post_type=post' )
+			'href'   => admin_url( 'edit.php?post_type=post' ),
 		);
-
 
 		// Add our nodes
 		$wp_admin_bar->add_node( $plugins );

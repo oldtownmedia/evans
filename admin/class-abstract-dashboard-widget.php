@@ -49,11 +49,11 @@ abstract class Dashboard_Widget {
 	 */
 	public function register_widget() {
 
-	    wp_add_dashboard_widget(
-	    	$this->id,							// Widget slug.
-	    	$this->title,						// Title
-	    	array( $this, 'build_the_widget' )	// Callback function
-	    );
+		wp_add_dashboard_widget(
+			$this->id,							// Widget slug.
+			$this->title,						// Title
+			array( $this, 'build_the_widget' )	// Callback function
+		);
 
 	}
 
@@ -63,7 +63,7 @@ abstract class Dashboard_Widget {
 	 * This is the function you need to override in your child class to create
 	 * your widget. Put all of the html output & logic in this function.
 	 */
-	public function build_the_widget(  ) {
+	public function build_the_widget() {
 		// Widget output here
 	}
 

@@ -8,8 +8,8 @@
  * @subpackage Evans
  * @author     Old Town Media
  */
-if ( ! class_exists( 'Evans' ) ){
-	class Evans{
+if ( ! class_exists( 'Evans' ) ) {
+	class Evans {
 
 
 		/**
@@ -18,9 +18,9 @@ if ( ! class_exists( 'Evans' ) ){
 		 * @param string $class Classname for a custom post type.
 		 * @return object Class object.
 		 */
-		public static function cpt( $class ){
+		public static function cpt( $class ) {
 
-			if ( empty( $class ) ){
+			if ( empty( $class ) ) {
 				return;
 			}
 
@@ -40,17 +40,17 @@ if ( ! class_exists( 'Evans' ) ){
 		 * @param string $post_type Optional. Post Type identifier.
 		 * @return mixed Description.
 		 */
-		public static function cmb( $slug, $pid = '', $post_type = '' ){
+		public static function cmb( $slug, $pid = '', $post_type = '' ) {
 
-			if ( empty( $slug ) ){
+			if ( empty( $slug ) ) {
 				return;
 			}
 
-			if ( empty( $pid ) ){
+			if ( empty( $pid ) ) {
 				$pid = get_the_id();
 			}
 
-			if ( empty( $post_type ) ){
+			if ( empty( $post_type ) ) {
 				$post_type = get_post_type();
 			}
 
@@ -69,22 +69,22 @@ if ( ! class_exists( 'Evans' ) ){
 		 * @param string $post_type Optional. Post Type identifier.
 		 * @return string Image URL.
 		 */
-		public static function thumbnail( $slug = 'image_id', $pid = '', $post_type = '' ){
+		public static function thumbnail( $slug = 'image_id', $pid = '', $post_type = '' ) {
 
-			if ( empty( $pid ) ){
+			if ( empty( $pid ) ) {
 				$pid = get_the_id();
 			}
 
-			if ( empty( $post_type ) ){
+			if ( empty( $post_type ) ) {
 				$post_type = get_post_type();
 			}
 
-			$img_id		= get_post_meta( $pid, cmb_prefix( $post_type ) . $slug, true);
-			$img		= wp_get_attachment_image_src( $img_id, $post_type.'-thumb' );
+			$img_id		= get_post_meta( $pid, cmb_prefix( $post_type ) . $slug, true );
+			$img		= wp_get_attachment_image_src( $img_id, $post_type . '-thumb' );
 
 			return $img[0];
 
 		}
 
 	}
-}
+}// End if().

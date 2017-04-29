@@ -21,7 +21,7 @@ $dirs = array(
 /*
  * Add site-setup folder to our smart loading ONLY if this folder exists.
  * This allows you to completely remove this folder with no repurcussions in production.
- */
+ 2*/
 if ( file_exists( WPMU_PLUGIN_DIR .'/site-setup' ) && is_dir( WPMU_PLUGIN_DIR . '/site-setup' ) ) {
 	$dirs[] = 'site-setup';
 }
@@ -34,3 +34,5 @@ foreach ( $dirs as $dir ) {
 	    require_once $filename;
 	}
 }
+
+// @todo:: rename modules to post-types
