@@ -35,6 +35,6 @@ add_filter( 'script_loader_tag', function( $tag, $handle, $src ) {
  * @returns array Modified notification
  */
 add_filter( 'gform_notification', function( $notification ) {
-	$notification['message'] .= "\n<small> Sent from " . esc_html( site_url() ) . "</small>";
-    return $notification;
+	$notification['message'] .= "\n<small> Sent from " . esc_html( site_url() ) . '</small>';
+	return $notification;
 }, 10, 1 );

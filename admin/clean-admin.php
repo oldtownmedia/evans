@@ -1,8 +1,6 @@
 <?php
 namespace evans\CleanAdmin;
 
-// @todo:: make this functional, no need for it to be a class.
-
 /**
  * Hooks function to fire off the events we need.
  *
@@ -13,7 +11,7 @@ function setup() {
 	add_action( 'admin_bar_menu', __NAMESPACE__ . '\\add_toolbar_links', 999 );
 
 	// Only keep going if we're in the admin section
-	if ( !is_admin() ){
+	if ( ! is_admin() ) {
 		return;
 	}
 
@@ -29,12 +27,12 @@ function setup() {
 	add_filter( 'menu_order', __NAMESPACE__ . '\\menu_order', 9999 );
 	add_filter( 'custom_menu_order', '__return_true' );
 	//add_filter( 'gettext', __NAMESPACE__ . '\\soliloquy_whitelabel', 10, 3 );
-    add_filter( 'envira_gallery_skipped_posttypes', __NAMESPACE__ . '\\envira_skip_cpts' );
-    add_filter( 'manage_posts_columns', __NAMESPACE__ . '\\remove_columns' );
-    add_action( 'admin_menu', __NAMESPACE__ . '\\remove_post_meta_boxes' );
-    add_filter( 'manage_pages_columns', __NAMESPACE__ . '\\clean_post_columns' );
-    add_action( 'wp_before_admin_bar_render', __NAMESPACE__ . '\\remove_admin_bar_links' );
-    add_filter( 'mce_buttons', __NAMESPACE__ . '\\extended_editor_mce_buttons', 0 );
+	add_filter( 'envira_gallery_skipped_posttypes', __NAMESPACE__ . '\\envira_skip_cpts' );
+	add_filter( 'manage_posts_columns', __NAMESPACE__ . '\\remove_columns' );
+	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_post_meta_boxes' );
+	add_filter( 'manage_pages_columns', __NAMESPACE__ . '\\clean_post_columns' );
+	add_action( 'wp_before_admin_bar_render', __NAMESPACE__ . '\\remove_admin_bar_links' );
+	add_filter( 'mce_buttons', __NAMESPACE__ . '\\extended_editor_mce_buttons', 0 );
 	add_filter( 'mce_buttons_2', __NAMESPACE__ . '\\extended_editor_mce_buttons_2', 0 );
 	add_action( 'admin_bar_menu', __NAMESPACE__ . '\\add_admin_toolbar_links', 999 );
 }
@@ -47,7 +45,7 @@ function setup() {
  */
 function register_fields() {
 	// If our user isn't an admin, don't show the new option.
-	if ( ! current_user_can( 'manage_options' ) ){
+	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
 	}
 
@@ -65,7 +63,7 @@ function register_fields() {
 
 				<label>
 					<input type="radio" id="clean_admin_bar" name="clean_admin_bar" value="off" <?php checked( 'off', $value ); ?> />
-					 <?php echo esc_html__( 'Show items', 'evans-mu' ); ?>
+						<?php echo esc_html__( 'Show items', 'evans-mu' ); ?>
 				</label>
 			<?php
 		},
@@ -89,7 +87,7 @@ function remove_menus() {
 	remove_menu_page( 'edit-comments.php' );					// Comments page
 	remove_menu_page( 'upload.php' );							// Media page
 	remove_submenu_page( 'themes.php', 'customize.php' );		// Remove Customizer page
-	//remove_submenu_page( 'themes.php', 'theme-editor.php' );	// Theme Editor
+	remove_submenu_page( 'themes.php', 'theme-editor.php' );	// Theme Editor
 	remove_submenu_page( 'plugins.php', 'plugin-editor.php' );	// Plugin Editor Settings
 
 	remove_submenu_page( 'wpseo_dashboard', 'wpseo_licenses' );	// WPSEO Extensions
@@ -107,7 +105,7 @@ function remove_menus() {
 	unset( $submenu['themes.php'][6] );	// Alternative method of removing customizer
 
 	// Rename Widgets.
-	if ( isset( $submenu['themes.php'][7] ) ){
+	if ( isset( $submenu['themes.php'][7] ) ) {
 		$submenu['themes.php'][7][0] = 'Sidebar Items';
 	}
 
@@ -115,13 +113,12 @@ function remove_menus() {
 	$submenu['edit.php?post_type=page'][15] = array(
 		'0' => 'Media',
 		'1'	=> 'edit_pages',
-		'2'	=> 'upload.php'
+		'2'	=> 'upload.php',
 	);
 
 	// Remove menu items only for non-admins.
 	$current_user = wp_get_current_user();
-	if ( $current_user->user_login != 'otm' && $current_user->user_login != 'Mike' && $current_user->user_login != 'Miles' ) {
-		remove_menu_page( 'activity_log_page' );				// Aryo Activity log
+	if ( 'otm' !== $current_user->user_login ) {
 		remove_submenu_page( 'themes.php', 'themes.php' );		// Remove Theme page
 		remove_submenu_page( 'gf_edit_forms', 'gf_export' );	// GF Export/Import
 		remove_submenu_page( 'gf_edit_forms', 'gf_addons' );	// GF Export/Import
@@ -136,9 +133,7 @@ function remove_menus() {
  * @return array list of whitelisted items.
  */
 function is_gracious_menu_item( $item ) {
-	return in_array( $item, array(
-		'wp-help-documents',
-	) );
+	return in_array( $item, array( 'wp-help-documents' ), true );
 }
 
 
@@ -154,14 +149,13 @@ function menu_order( $menu ) {
 
 	foreach ( $menu as $key => $item ) {
 
-		if ( 'separator1' == $item ) {
+		if ( 'separator1' === $item ) {
 			break;
-		} elseif ( 'index.php' !== $item && !$this->is_gracious_menu_item( $item ) ) {
+		} elseif ( 'index.php' !== $item && ! $this->is_gracious_menu_item( $item ) ) {
 			// Yank it out and put it in the penalty box.
 			$penalty_box[] = $item;
 			unset( $menu[ $key ] );
 		}
-
 	}
 
 	// Shove the penalty box items onto the end
@@ -182,10 +176,10 @@ function menu_order( $menu ) {
  * @return string modified text.
  */
 function soliloquy_whitelabel( $translated_text, $source_text ) {
-    // If not in the admin, return the default string.
-    if ( ! is_admin() ) {
-        return $translated_text;
-    }
+	// If not in the admin, return the default string.
+	if ( ! is_admin() ) {
+		return $translated_text;
+	}
 
 	$strings = [
 		'Soliloquy Slider' => 'Slider',
@@ -198,11 +192,11 @@ function soliloquy_whitelabel( $translated_text, $source_text ) {
 	// @todo:: make sure this works.
 	array_map( function( $item, $key ) use ( $translated_text, $source_text ) {
 		if ( strpos( $source_text, $key ) !== false ) {
-	        return str_replace( $key, $item, $translated_text );
-	    }
+			return str_replace( $key, $item, $translated_text );
+		}
 	}, $strings );
 
-    return $translated_text;
+	return $translated_text;
 }
 
 /**
@@ -212,19 +206,19 @@ function soliloquy_whitelabel( $translated_text, $source_text ) {
  * @return array $post_types Modified post types to skip.
  */
 function envira_skip_cpts( $post_types ) {
-    $post_types[] = 'post';
-    $post_types[] = 'page';
-    $post_types[] = 'product';
-    $post_types[] = 'alert';
-    $post_types[] = 'document';
-    $post_types[] = 'highlight';
-    $post_types[] = 'event';
-    $post_types[] = 'partner';
-    $post_types[] = 'portfolio';
-    $post_types[] = 'staff';
-    $post_types[] = 'testimonial';
+	$post_types[] = 'post';
+	$post_types[] = 'page';
+	$post_types[] = 'product';
+	$post_types[] = 'alert';
+	$post_types[] = 'document';
+	$post_types[] = 'highlight';
+	$post_types[] = 'event';
+	$post_types[] = 'partner';
+	$post_types[] = 'portfolio';
+	$post_types[] = 'staff';
+	$post_types[] = 'testimonial';
 
-    return $post_types;
+	return $post_types;
 }
 
 /****************
@@ -239,7 +233,7 @@ function envira_skip_cpts( $post_types ) {
  * @param array $columns columns for the post type
  * @return array $columns Modified columns array
  */
-function clean_post_columns( $columns ){
+function clean_post_columns( $columns ) {
 	unset(
 		$columns['author'],
 		$columns['comments']
@@ -254,15 +248,15 @@ function clean_post_columns( $columns ){
  * @global array $wp_admin_bar Full admin bar object.
  */
 function remove_admin_bar_links() {
-    global $wp_admin_bar;
+	global $wp_admin_bar;
 
-    $wp_admin_bar->remove_menu( 'wp-logo' );          // Remove the WordPress logo
-    $wp_admin_bar->remove_menu( 'about' );            // Remove the about WordPress link
-    $wp_admin_bar->remove_menu( 'wporg' );            // Remove the WordPress.org link
-    $wp_admin_bar->remove_menu( 'documentation' );    // Remove the WordPress documentation link
-    $wp_admin_bar->remove_menu( 'support-forums' );   // Remove the support forums link
-    $wp_admin_bar->remove_menu( 'feedback' );         // Remove the feedback link
-    $wp_admin_bar->remove_menu( 'comments' );         // Remove the comments link
+	$wp_admin_bar->remove_menu( 'wp-logo' );          // Remove the WordPress logo
+	$wp_admin_bar->remove_menu( 'about' );            // Remove the about WordPress link
+	$wp_admin_bar->remove_menu( 'wporg' );            // Remove the WordPress.org link
+	$wp_admin_bar->remove_menu( 'documentation' );    // Remove the WordPress documentation link
+	$wp_admin_bar->remove_menu( 'support-forums' );   // Remove the support forums link
+	$wp_admin_bar->remove_menu( 'feedback' );         // Remove the feedback link
+	$wp_admin_bar->remove_menu( 'comments' );         // Remove the comments link
 }
 
 /**
@@ -293,8 +287,8 @@ function remove_dashboard_widgets() {
  * Remove default nag
  */
 function remove_core_update_nag() {
-    remove_action( 'admin_notices', 'update_nag', 3 );
-    remove_action( 'network_admin_notices', 'update_nag', 3 );
+	remove_action( 'admin_notices', 'update_nag', 3 );
+	remove_action( 'network_admin_notices', 'update_nag', 3 );
 }
 
 /**
@@ -302,27 +296,31 @@ function remove_core_update_nag() {
  *
  * @global string $pagenow Current page in the admin dashboard.
  */
- function custom_update_nag() {
-     if ( is_multisite() && ! current_user_can( 'update_core' ) ){
-         return false;
-     }
+function custom_update_nag() {
+	if ( is_multisite() && ! current_user_can( 'update_core' ) ) {
+		return false;
+	}
 
-     global $pagenow;
+	global $pagenow;
 
-     if ( 'update-core.php' == $pagenow ){
-         return;
-     }
+	if ( 'update-core.php' === $pagenow ) {
+		return;
+	}
 
-     $cur = get_preferred_from_update_core();
+	$cur = get_preferred_from_update_core();
 
-     if ( ! isset( $cur->response ) || $cur->response != 'upgrade' ){
-         return false;
-     }
+	if ( ! isset( $cur->response ) || $cur->response !== 'upgrade' ) {
+		return false;
+	}
 
-     $msg = sprintf( __( '<a href="http://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> is available! Please contact OTM at (970) 568 5250 or <a href="mailto:support@oldtownmediainc.com">support@oldtownmediainc.com</a> to schedule your update.' ), $cur->current, 'your_custom_url' );
+	$msg = sprintf(
+		esc_html__( 'WordPress %1$s is available! Please contact OTM at (970) 568 5250 or %2$s to schedule your update.' ),
+		$cur->current,
+		'<a href="mailto:support@oldtownmediainc.com">support@oldtownmediainc.com</a>'
+	);
 
-     echo "<div class='update-nag'>" . wp_kses_post( $msg ) . "</div>";
- }
+	echo "<div class='update-nag'>" . wp_kses_post( $msg ) . '</div>';
+}
 
 /**
  * Remove author column from post listing.
@@ -363,7 +361,7 @@ function extended_editor_mce_buttons( $buttons ) {
 		'removeformat',
 		'spellchecker',
 		'fullscreen',
-		'wp_help'
+		'wp_help',
 	);
 }
 
@@ -407,23 +405,23 @@ function add_admin_toolbar_links( $wp_admin_bar ) {
 	// Define the WP menu we want to pull from
 	$menu_id = 'header-menu';
 
-    if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $menu_id ] ) ) {
+	if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $menu_id ] ) ) {
 		$menu = wp_get_nav_menu_object( $locations[ $menu_id ] );
 
-		if ( !empty( $menu ) ) :
+		if ( ! empty( $menu ) ) :
 
 			$menu_items = wp_get_nav_menu_items( $menu->term_id );
 
 			foreach ( (array) $menu_items as $key => $menu_item ) :
 
-			    $page = array(
+				$page = array(
 					'parent' => 'site-name',
 					'id'     => 'front_end_page_' . $menu_item->db_id,
 					'title'  => $menu_item->title,
-					'href'   => $menu_item->url
+					'href'   => $menu_item->url,
 				);
 
-				if ( $menu_item->menu_item_parent == 0 ){
+				if ( $menu_item->menu_item_parent === 0 ) {
 					$wp_admin_bar->add_node( $page );
 				}
 
@@ -454,23 +452,22 @@ function add_toolbar_links( $wp_admin_bar ) {
 		'parent' => 'site-name',
 		'id'     => 'plugins',
 		'title'  => __( 'Plugins', 'evans-mu' ),
-		'href'   => admin_url( 'plugins.php' )
+		'href'   => admin_url( 'plugins.php' ),
 	);
 
 	$pages = array(
 		'parent' => 'site-name',
 		'id'     => 'pages',
 		'title'  => __( 'Pages', 'evans-mu' ),
-		'href'   => admin_url( 'edit.php?post_type=page' )
+		'href'   => admin_url( 'edit.php?post_type=page' ),
 	);
 
 	$posts = array(
 		'parent' => 'site-name',
 		'id'     => 'posts',
 		'title'  => __( 'Posts', 'evans-mu' ),
-		'href'   => admin_url( 'edit.php?post_type=post' )
+		'href'   => admin_url( 'edit.php?post_type=post' ),
 	);
-
 
 	// Add our nodes.
 	$wp_admin_bar->add_node( $plugins );

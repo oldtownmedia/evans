@@ -9,7 +9,7 @@ namespace evans\Abstracts;
  * @subpackage Evans
  * @author     Old Town Media
  */
-abstract class Dashboard_Widget{
+abstract class Dashboard_Widget {
 
 	/**
 	 * ID
@@ -36,7 +36,7 @@ abstract class Dashboard_Widget{
 	 *
 	 * @see wp_dashboard_setup
 	 */
-	public function hooks(){
+	public function hooks() {
 		add_action( 'wp_dashboard_setup', array( $this, 'register_widget' ) );
 	}
 
@@ -46,11 +46,11 @@ abstract class Dashboard_Widget{
 	 * @see wp_add_dashboard_widget
 	 */
 	public function register_widget() {
-	    wp_add_dashboard_widget(
-	    	$this->id,							// Widget slug.
-	    	$this->title,						// Title
-	    	array( $this, 'build_the_widget' ) // Callback function
-	    );
+		wp_add_dashboard_widget(
+			$this->id,							// Widget slug.
+			$this->title,						// Title
+			array( $this, 'build_the_widget' ) // Callback function
+		);
 	}
 
 	/**

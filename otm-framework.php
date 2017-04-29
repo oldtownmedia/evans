@@ -20,9 +20,9 @@ $dirs = array(
 /*
  * Loop through our directory array and require any PHP files without individual calls.
  */
-foreach ( $dirs as $dir ){
-	foreach ( glob( WPMU_PLUGIN_DIR . "/$dir/*.php", GLOB_NOSORT ) as $filename ){
-	    require_once $filename;
+foreach ( $dirs as $dir ) {
+	foreach ( glob( WPMU_PLUGIN_DIR . "/$dir/*.php", GLOB_NOSORT ) as $filename ) {
+		require_once $filename;
 	}
 }
 

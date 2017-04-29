@@ -1,23 +1,22 @@
 /* Widget CSS */
 
 /* Labels */
-.evans-field.text-box label{
+.evans-field.text-box label {
 	display: block;
 }
 
-.evans-field.checkbox-box label{
+.evans-field.checkbox-box label {
 	margin-right: 7px;
 }
 
 /* Fields */
-
 .evans-field.text-box input,
 .evans-field.select-box select,
-.evans-field.textarea-box textarea{
+.evans-field.textarea-box textarea {
 	width: 97%;
 	margin: 3px 0;
 }
 
-.evans-field.textarea-box textarea{
+.evans-field.textarea-box textarea {
 	height: 150px;
 }

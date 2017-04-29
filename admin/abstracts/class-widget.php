@@ -49,9 +49,9 @@ abstract class Widget extends \WP_Widget {
 	public function __construct() {
 		parent::__construct(
 			$this->base,
-			sprintf( __( '%s', 'evans-mu' ), $this->title ),
+			$this->title,
 			array(
-				'classname'   => $this->base.'-class',
+				'classname'   => $this->base . '-class',
 				'description' => esc_html( $this->description ),
 			)
 		);
@@ -70,8 +70,8 @@ abstract class Widget extends \WP_Widget {
 	 *
 	 * @see wp_cache_delete
 	 */
-	public function flush_widget_cache(){
-    	wp_cache_delete( $this->base, 'widget' );
+	public function flush_widget_cache() {
+		wp_cache_delete( $this->base, 'widget' );
 	}
 
 	/**
@@ -82,30 +82,28 @@ abstract class Widget extends \WP_Widget {
 	 * @param type $args Base widget arguments.
 	 * @param type $instance The data from the widget editing.
 	 */
-	public function widget( $args, $instance ){
+	public function widget( $args, $instance ) {
 		// Check if there is a cached output
 		$cache = wp_cache_get( $this->base, 'widget' );
 
-		if ( !is_array( $cache ) ){
+		if ( ! is_array( $cache ) ) {
 			$cache = array();
 		}
 
-		if ( !isset( $args['widget_id'] ) ){
+		if ( ! isset( $args['widget_id'] ) ) {
 			$args['widget_id'] = $this->id;
 		}
 
-		if ( isset( $cache[ $args['widget_id'] ] ) ){
-			return print $cache[ $args['widget_id'] ];
+		if ( isset( $cache[ $args['widget_id'] ] ) ) {
+			return $cache[ $args['widget_id'] ];
 		}
-
-		extract( $args, EXTR_SKIP );
 
 		$widget_string = $before_widget;
 
 		$widget_string .= $this->view( $args, $instance );
 		$widget_string .= $after_widget;
 
-		if ( isset( $args['widget_id'] ) ){
+		if ( isset( $args['widget_id'] ) ) {
 
 			$cache[ $args['widget_id'] ] = $widget_string;
 			wp_cache_set( $this->base, $cache, 'widget' );
@@ -124,16 +122,16 @@ abstract class Widget extends \WP_Widget {
 	 * @param array $old_instance Old data.
 	 * @return array New, parsed instance.
 	 */
-	public function update( $new_instance, $old_instance ){
+	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
 		$fields = $this->widget_fields();
 
-		if ( empty( $fields ) ){
+		if ( empty( $fields ) ) {
 			return $instance;
 		}
 
-		foreach ( $fields as $field ){
+		foreach ( $fields as $field ) {
 			$instance[ $field['id'] ] = $this->sanitize_field( $field, $new_instance[ $field['id'] ] );
 		}
 
@@ -156,31 +154,29 @@ abstract class Widget extends \WP_Widget {
 	 * @param variable $value Input value.
 	 * @return variable Sanitized value.
 	 */
-	private function sanitize_field( $field, $value ){
-		if ( empty( $field ) ){
+	private function sanitize_field( $field, $value ) {
+		if ( empty( $field ) ) {
 			return null;
 		}
 
 		// If the user has chose a custom sanitization
-		if ( isset( $field['sanitize'] ) ){
+		if ( isset( $field['sanitize'] ) ) {
 			$sanitize = $field['sanitize'];
 
 			// If the user has chosen an array
-			if ( is_array( $sanitize ) ){
+			if ( is_array( $sanitize ) ) {
 				$new_value = '';
 
-				foreach ( $sanitize as $filter ){
+				foreach ( $sanitize as $filter ) {
 					$new_value = $filter( $value );
 				}
 
 				$sanitized = $new_value;
 
-			// Else if we're just dealing one sanitization option
+				// Else if we're just dealing one sanitization option
 			} else {
 				$sanitized = $sanitize( $value );
 			}
-
-		// Else, run the default
 		} else {
 			$sanitized = strip_tags( $value );
 		}
@@ -238,9 +234,9 @@ abstract class Widget extends \WP_Widget {
 	 * @param arry $instance Widget data.
 	 * @return string title HTML.
 	 */
-	public function get_widget_title( $args, $instance ){
+	public function get_widget_title( $args, $instance ) {
 		// Display the widget title
-		if ( $instance['title'] ){
+		if ( $instance['title'] ) {
 			return $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 		}
 	}
@@ -254,22 +250,21 @@ abstract class Widget extends \WP_Widget {
 	 *
 	 * @return array Default values to parse against.
 	 */
-	private function get_defaults(){
+	private function get_defaults() {
 		$fields = $this->widget_fields();
 		$defaults = array();
 
-		if ( ! is_array( $fields ) || empty( $fields ) ){
+		if ( ! is_array( $fields ) || empty( $fields ) ) {
 			return null;
 		}
 
-		foreach ( $fields as $field ){
+		foreach ( $fields as $field ) {
 
-			if ( isset( $field['default'] ) ){
+			if ( isset( $field['default'] ) ) {
 				$defaults[ $field['id'] ]	= $field['default'];
 			} else {
 				$defaults[ $field['id'] ] = '';
 			}
-
 		}
 
 		return $defaults;
@@ -281,17 +276,17 @@ abstract class Widget extends \WP_Widget {
 	 * @param array $instance Description.
 	 * @return string compiled HTML.
 	 */
-	public function admin_form( $instance ){
+	public function admin_form( $instance ) {
 		$html = '';
 
 		$fields = $this->widget_fields();
 
-		if ( empty( $fields ) ){
+		if ( empty( $fields ) ) {
 			return null;
 		}
 
 		// Loop through the fields and build an HTML form field
-		foreach ( $fields as $field ){
+		foreach ( $fields as $field ) {
 			$html .= $this->build_form_field( $field, $instance );
 		}
 
@@ -313,22 +308,22 @@ abstract class Widget extends \WP_Widget {
 	 * @param array $instance Data from the widget.
 	 * @return string Compiled field.
 	 */
-	private function build_form_field( $field, $instance ){
+	private function build_form_field( $field, $instance ) {
 		$html = '';
 
-		if ( empty( $field ) ){
+		if ( empty( $field ) ) {
 			return null;
 		}
 
 		$html .= "<p class='" . esc_attr( $field['type'] ) . "-box evans-field'>";
 
-		$html .= "<label for='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "'><strong>" . esc_attr( $field['name'] ) . "</strong></label>";
+		$html .= "<label for='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "'><strong>" . esc_attr( $field['name'] ) . '</strong></label>';
 
-		if ( $field['type'] != 'checkbox' ){
-			$html .= "<br>";
+		if ( 'checkbox' !== $field['type'] ) {
+			$html .= '<br>';
 		}
 
-		switch ( $field['type'] ){
+		switch ( $field['type'] ) {
 
 			case 'text' :
 
@@ -338,29 +333,29 @@ abstract class Widget extends \WP_Widget {
 
 			case 'textarea' :
 
-				$html .= "<textarea id='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "' name='" . esc_attr( $this->get_field_name( $field['id'] ) ) . "'>" . esc_html( $instance[ $field['id'] ] ) . "</textarea>";
+				$html .= "<textarea id='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "' name='" . esc_attr( $this->get_field_name( $field['id'] ) ) . "'>" . esc_html( $instance[ $field['id'] ] ) . '</textarea>';
 
 			break;
 
 			case 'select' :
 
-				if ( !empty( $field['options'] ) ){
+				if ( ! empty( $field['options'] ) ) {
 
-					$html .="<select id='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "' name='" . esc_attr( $this->get_field_name( $field['id'] ) ) . "' >";
+					$html .= "<select id='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "' name='" . esc_attr( $this->get_field_name( $field['id'] ) ) . "' >";
 
-						foreach ( $field['options'] as $key => $value ){
-							$selected = '';
+					foreach ( $field['options'] as $key => $value ) {
+						$selected = '';
 
-							if ( $key == $instance[ $field['id'] ] ){
-								$selected = 'selected';
-							}
-
-							$html .= "<option value=' " . esc_attr( $key ) . "' " . esc_attr( $selected ) . ">";
-								$html .= esc_html( $value );
-							$html .= "</option>";
+						if ( $key === $instance[ $field['id'] ] ) {
+							$selected = 'selected';
 						}
 
-					$html .= "</select>";
+						$html .= "<option value=' " . esc_attr( $key ) . "' " . esc_attr( $selected ) . '>';
+						$html .= esc_html( $value );
+						$html .= '</option>';
+					}
+
+					$html .= '</select>';
 
 				}
 
@@ -368,19 +363,18 @@ abstract class Widget extends \WP_Widget {
 
 			case 'radio' :
 
-				if ( !empty( $field['options'] ) ){
+				if ( ! empty( $field['options'] ) ) {
 
-					foreach ( $field['options'] as $key => $value ){
+					foreach ( $field['options'] as $key => $value ) {
 						$selected = '';
 
-						if ( $key === $instance[ $field['id'] ] ){
+						if ( $key === $instance[ $field['id'] ] ) {
 							$selected = ' checked"';
 						}
 
-						$html .= "<input type='radio' value='" . esc_attr( $key ) . "' " . esc_attr( $selected ) . "> <span>" . esc_html( $value ) . "</span><br>";
+						$html .= "<input type='radio' value='" . esc_attr( $key ) . "' " . esc_attr( $selected ) . '> <span>' . esc_html( $value ) . '</span><br>';
 
 					}
-
 				}
 
 			break;
@@ -388,7 +382,7 @@ abstract class Widget extends \WP_Widget {
 			case 'checkbox' :
 				$checked = '';
 
-				if ( $instance[ $field['id'] ] == 'on' ){
+				if ( 'on' === $instance[ $field['id'] ] ) {
 					$checked = ' checked';
 				}
 
@@ -396,13 +390,13 @@ abstract class Widget extends \WP_Widget {
 
 			break;
 
+		}// End switch().
+
+		if ( isset( $field['desc'] ) ) {
+			$html .= '<br><span><i><small>' . esc_html( $field['desc'] ) . '</i></small></span>';
 		}
 
-		if ( isset( $field['desc'] ) ){
-			$html .= "<br><span><i><small>" . esc_html( $field['desc'] ) . "</i></small></span>";
-		}
-
-		$html .= "</p>";
+		$html .= '</p>';
 
 		return $html;
 	}
