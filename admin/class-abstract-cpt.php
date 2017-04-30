@@ -12,149 +12,115 @@ namespace evans;
 abstract class CPT {
 
 	/**
-	 * cptslug
 	 * Slug ID for the cpt.
 	 *
 	 * @var string
-	 * @access protected
 	 */
 	protected $cptslug;
 
 	/**
-	 * cptslug_plural
 	 * Plural slug ID for the cpt.
 	 *
 	 * @var string
-	 * @access protected
 	 */
 	protected $cptslug_plural;
 
 	/**
-	 * singular
 	 * Singular string used for messages/labels.
 	 *
 	 * @var string
-	 * @access protected
 	 */
 	protected $singular;
 
 	/**
-	 * plural
 	 * Plural string used for messages/labels.
 	 *
 	 * @var mixed
-	 * @access protected
 	 */
 	protected $plural;
 
 	/**
-	 * cpt_args
 	 * Array of arguments used in register_custom_post_type.
 	 * Generally [ exclude_from_search, show_in_nav_menus, publicly_queryable, supports, has_archive ]
 	 *
 	 * @var array
-	 * @access protected
 	 */
 	protected $cpt_args;
 
 	/**
-	 * icon
 	 * Icon ID from Dashicons for the cpt icon in the admin nav menu.
 	 * https://developer.wordpress.org/resource/dashicons/
 	 *
 	 * @var string
-	 * @access protected
 	 */
 	protected $icon;
 
 	/**
-	 * hide_view
 	 * Choose whether or not you want to hide the "View {cptslug}" on the admin side.
 	 * Used in cases where the cpt doesn't have a single on the front end.
 	 *
 	 * @var boolean
-	 * @access protected
 	 */
 	protected $hide_view;
 
 	/**
-	 * loop_args
 	 * Array of arguments used in the WP_Query loop.
 	 * Generally [ orderby, order, quantity ]
 	 *
 	 * @var array
-	 * @access protected
 	 */
 	protected $loop_args;
 
 	/**
-	 * thumbnail_size
 	 * Array of arguments used if you'd like to create a custom thumbnail size
 	 * for images used on the front end by the cpt.
 	 * Accepted args: [ width, height ]
 	 *
 	 * @var array
-	 * @access protected
 	 */
 	protected $thumbnail_size;
 
 	/**
-	 * tax_slug
 	 * Slug ID used by a taxonomy if you want one.
 	 *
 	 * @var string
-	 * @access protected
 	 */
 	protected $tax_slug;
 
 	/**
-	 * taxonomy_name
 	 * Singular pretty name used by messages/labels
 	 *
 	 * @var mixed
-	 * @access protected
 	 */
 	protected $taxonomy_name;
 
 	/**
-	 * taxonomy_plural
 	 * Plural pretty name used by messages/labels
 	 *
 	 * @var mixed
-	 * @access protected
 	 */
 	protected $taxonomy_plural;
 
 	/**
-	 * prefix
 	 * Prefix string used by all metaboxes
 	 *
 	 * @var string
-	 * @access protected
 	 */
 	protected $prefix;
 
 
 	/**
 	 * Build our prefix variable in construct instead of hooks
-	 *
-	 * @see cmb_prefix
 	 */
 	public function __construct() {
-
 		// Define our prefix for metaboxes
 		$this->prefix = cmb_prefix( $this->cptslug );
-
 	}
-
 
 	/**
 	 * Hooks function to fire off the events we need.
-	 *
-	 * @see add_action, add_filter, add_shortcode
 	 */
 	public function hooks() {
-
 		add_action( 'init', array( $this, 'define_cpt' ) );
 		add_filter( 'cmb2_admin_init', array( $this, 'cmb_metaboxes' ) );
 		add_filter( 'cpt_array_filter', array( $this, 'dashboard_cpt_loop' ), 10 );
@@ -176,14 +142,10 @@ abstract class CPT {
 			add_filter( 'page_row_actions', array( $this, 'remove_view_from_row' ), 10, 2 );	// In case post is hierarchical
 			add_filter( 'get_sample_permalink_html', array( $this, 'remove_permalink_option' ), '', 1 );
 		}
-
 	}
-
 
 	/**
 	 * Loop through custom post type and return combined HTML from posts.
-	 *
-	 * @see WP_Query, $this->display_single
 	 *
 	 * @param array $args Query arguments.
 	 * @return string Combined HTML contents of the looped query.
@@ -214,9 +176,7 @@ abstract class CPT {
 		wp_reset_postdata();
 
 		return $html;
-
 	}
-
 
 	/**
 	 * Perform query modifications without touching our loop function.
@@ -226,7 +186,6 @@ abstract class CPT {
 	 * @return string Modified query arguments.
 	 */
 	public function query_mods( $original_query, $args ) {
-
 		// Pull in the defaults we set in the variables
 		$defaults = $this->loop_args;
 
@@ -258,9 +217,7 @@ abstract class CPT {
 		}
 
 		return $query;
-
 	}
-
 
 	/**
 	 * Display a single item from the queried posts.
@@ -283,9 +240,7 @@ abstract class CPT {
 		$html .= '</li>';
 
 		return $html;
-
 	}
-
 
 	/**
 	 * Assemble the HTML for an img tag to display within a loop.
@@ -312,17 +267,13 @@ abstract class CPT {
 		}
 
 		return $html;
-
 	}
-
 
 	/**
 	 * Loop through a taxonomy.
 	 *
 	 * This function will loop through all items in a taxonomy and call loop_cpt
 	 * on each and every one.
-	 *
-	 * @see $this->loop_cpt, get_terms
 	 *
 	 * @param array $args Arguments to be passed to get_terms.
 	 * @return string HTML content of the looped taxonomy & posts.
@@ -359,20 +310,15 @@ abstract class CPT {
 		}
 
 		return $html;
-
 	}
-
 
 	/**
 	 * Shortcode definition to call a loop of the cpt within the content.
-	 *
-	 * @see shortcode_args, $this->loop_cpt
 	 *
 	 * @param array $atts arguments to be passed through to the loop.
 	 * @return string HTML content of the looped query and posts.
 	 */
 	public function shortcode( $atts ) {
-
 		$atts = shortcode_atts(
 			array(
 				'quantity' 	=> '',
@@ -391,9 +337,7 @@ abstract class CPT {
 		);
 
 		return $this->loop_cpt( $args );
-
 	}
-
 
 	/**
 	 * Custom Post Type definition.
@@ -401,11 +345,8 @@ abstract class CPT {
 	 * We're actually creating out custom post type here and passing in custom
 	 * arguments if we have any. Several defaults include supports of title & editor,
 	 * public, menu position, etc.
-	 *
-	 * @see register_post_type
 	 */
 	public function define_cpt() {
-
 		$labels = array(
 			'name'               => sprintf( _x( '%s', 'post type general name', 'evans-mu' ), $this->plural ),
 			'singular_name'      => sprintf( _x( '%s', 'post type singular name', 'evans-mu' ), $this->singular ),
@@ -435,19 +376,14 @@ abstract class CPT {
 		$args = wp_parse_args( $this->cpt_args, $defaults );
 
 		register_post_type( $this->cptslug, $args );
-
 	}
-
 
 	/**
 	 * Placeholder for setting metaboxes using the CMB2 library.
 	 *
-	 * Optional.
-	 *
 	 * @return object Passthrough of all metaboxes.
 	 */
 	public function cmb_metaboxes() {
-
 		$cmb = new_cmb2_box( array(
 			'id'            => $this->cptslug . '_metabox',
 			'title'         => sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
@@ -458,17 +394,12 @@ abstract class CPT {
 		) );
 
 		return $cmb;
-
 	}
-
 
 	/**
 	 * Taxonomy definition if we have set the proper variables at the beginning.
-	 *
-	 * @see register_taxonomy
 	 */
 	public function define_taxonomy() {
-
 		$labels = array(
 			'name'              => sprintf( _x( '%s', 'taxonomy general name', 'evans-mu' ), $this->taxonomy_name ),
 			'singular_name'     => sprintf( _x( '%s', 'taxonomy singular name', 'evans-mu' ), $this->taxonomy_name ),
@@ -491,9 +422,7 @@ abstract class CPT {
 		);
 
 		register_taxonomy( $this->tax_slug, $this->cptslug, $args );
-
 	}
-
 
 	/**
 	 * Remove the view link from the cpt if we have set hide_view to true.
@@ -512,11 +441,9 @@ abstract class CPT {
 		return $actions;
 	}
 
-
 	/**
 	 * Remove the permalink box from the cpt if we have set hide_view to true.
 	 *
-	 * @see get_sample_permalink_html
 	 * @global object $post Post object.
 	 *
 	 * @param string $return Return HTML objects with action buttons & revised link.
@@ -532,7 +459,6 @@ abstract class CPT {
 		return $return;
 	}
 
-
 	/**
 	 * Adds the cpt to our custom count seciont in the Right Now dashboard widget.
 	 *
@@ -540,7 +466,6 @@ abstract class CPT {
 	 * @return array $cpt_array Passthrough objects to add.
 	 */
 	public function dashboard_cpt_loop( $cpt_array ) {
-
 		$cpt_array[] = array(
 			'slug'		=> $this->cptslug,
 			'singular'	=> $this->singular,
@@ -549,7 +474,5 @@ abstract class CPT {
 		);
 
 		return $cpt_array;
-
 	}
-
 }

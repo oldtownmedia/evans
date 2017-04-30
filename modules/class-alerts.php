@@ -40,8 +40,6 @@ final class Alerts extends CPT {
 	/**
 	 * Loop through custom post type and return combined HTML from posts.
 	 *
-	 * @see WP_Query, $this->display_single
-	 *
 	 * @param array $args Description.
 	 * @return string Combined HTML contents of the looped query.
 	 */

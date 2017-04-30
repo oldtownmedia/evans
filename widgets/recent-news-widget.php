@@ -22,7 +22,6 @@ final class RecentNewsWidget extends Widget {
 	 * @return array list of fields
 	 */
 	public function widget_fields() {
-
 		// Get list of categories to choose from
 		$categories = get_categories();
 		$cat_array = array(
@@ -123,9 +122,7 @@ final class RecentNewsWidget extends Widget {
 		endif;
 
 		return $html;
-
 	}
-
 }
 
 add_action( 'widgets_init', function() {

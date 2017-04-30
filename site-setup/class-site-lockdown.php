@@ -14,27 +14,21 @@ namespace evans;
 class Site_Lockdown {
 
 	/**
-	 * server_ip
 	 * IP Address of the server for this script to run on.
 	 *
 	 * @var string
-	 * @access private
 	 */
 	private $server_ip 		= '104.131.16.207';
 
 	/**
-	 * block_page
 	 * URL to pull the block page from.
 	 *
 	 * @var string
-	 * @access private
 	 */
 	private $block_page		= 'http://dev.otmoffice.com/resources/index.html';
 
 	 /**
 	  * Constructor function.
-	  *
-	  * @see add_action
 	  */
 	public function __construct() {
 		// If we're not in the correct server, don't do anything.
@@ -51,8 +45,6 @@ class Site_Lockdown {
 
 	/**
 	 * Create our admin menu main node for turning lockdown on or off.
-	 *
-	 * @see get_option, wp_get_current_user, is_super_admin, is_admin_bar_showing
 	 *
 	 * @param type $wp_admin_bar Global wp_admin_bar object.
 	 */
@@ -93,8 +85,6 @@ class Site_Lockdown {
 	 *
 	 * If the site lock option was clicked, lock or unlock the sites from
 	 * outsiders.
-	 *
-	 * @see wp_verify_nonce, update_option
 	 */
 	public function lockdown_this_thing() {
 		// If there's no parameter, stop.
@@ -114,8 +104,6 @@ class Site_Lockdown {
 	 *
 	 * If we get the wrong IP back and the site is locked, we display
 	 * a page served from the dev server resources folder.
-	 *
-	 * @see wp_remote_get
 	 */
 	public function lockdown_actions() {
 		// We're logged in and validated, return.
@@ -144,8 +132,6 @@ class Site_Lockdown {
 	 * Initially create the option to ensure the site is NOT locked down.
 	 *
 	 * Option is autoloaded.
-	 *
-	 * @see get_option,add_option
 	 */
 	public function set_lockdown_option() {
 		if ( get_option( 'evans_site_lockdown' ) === false ) {

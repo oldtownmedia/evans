@@ -16,8 +16,6 @@ class Posts {
 
 	/**
 	 * Hooks function to fire off the events we need.
-	 *
-	 * @see add_action, add_filter, add_shortcode
 	 */
 	public function hooks() {
 		add_filter( 'manage_edit-post_columns', array( $this, 'post_columns' ) );
@@ -46,8 +44,6 @@ class Posts {
 
 	/**
 	 * Print out the modified date in the appropriate column.
-	 *
-	 * @see human_time_diff, get_post_modified_time
 	 *
 	 * @param string $column ID of current column being parsed.
 	 * @param int $post_id Post ID of current row.

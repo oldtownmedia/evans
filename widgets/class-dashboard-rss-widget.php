@@ -14,41 +14,32 @@ namespace evans;
 final class CompanyRSSFeedWidget extends Dashboard_Widget {
 
 	/**
-	 * ID
 	 * ID used in the class and as a slug.
 	 *
 	 * @var string
-	 * @access protected
 	 */
 	protected $id 		= 'rss_widget';
 
 	/**
-	 * title
 	 * Title for the dashboard widget.
 	 *
 	 * @var string
-	 * @access protected
 	 */
 	protected $title 	= 'Latest News';
 
 	/**
-	 * feed_url
 	 * URL of the feed you want to hook into.
 	 *
 	 * @var string
-	 * @access protected
 	 */
 	protected $feed_url		= 'https://oldtownmediainc.com/feed/';
 
 	/**
-	 * num_posts
 	 * The number of posts to show.
 	 *
 	 * @var int
-	 * @access protected
 	 */
 	protected $num_posts	= 5;
-
 
 	/**
 	 * Build our widget and output the posts.
@@ -84,15 +75,12 @@ final class CompanyRSSFeedWidget extends Dashboard_Widget {
 
 		$rss->__destruct();
 		unset( $rss );
-
 	}
 
 	/**
 	 * Parse our RSS feed for errors and return them if there are any.
 	 *
 	 * @access private
-	 *
-	 * @see is_wp_error, is_admin, current_user_can
 	 *
 	 * @param object $rss RSS object to parse for errors
 	 * @return string Error if there is one.
@@ -121,9 +109,7 @@ final class CompanyRSSFeedWidget extends Dashboard_Widget {
 		}
 
 		return $html;
-
 	}
-
 }
 
 $widget = new CompanyRSSFeedWidget();

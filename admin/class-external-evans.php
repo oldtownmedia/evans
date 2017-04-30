@@ -11,7 +11,6 @@
 if ( ! class_exists( 'Evans' ) ) {
 	class Evans {
 
-
 		/**
 		 * Call the custom post type class as a function.
 		 *
@@ -32,8 +31,6 @@ if ( ! class_exists( 'Evans' ) ) {
 
 		/**
 		 * Retrive a custom metabox using our inbuilt naming function.
-		 *
-		 * @see cmb_prefix, get_post_meta
 		 *
 		 * @param string $slug CMB tail ID.
 		 * @param int $pid Optional. Post ID.
@@ -62,8 +59,6 @@ if ( ! class_exists( 'Evans' ) ) {
 		/**
 		 * Retrieve image URL with the properly-sized thumbnail.
 		 *
-		 * @see get_post_meta, wp_get_attachment_image_src
-		 *
 		 * @param string $slug Optional. CMB tail ID.
 		 * @param int $pid Optional. Post ID.
 		 * @param string $post_type Optional. Post Type identifier.
@@ -87,4 +82,4 @@ if ( ! class_exists( 'Evans' ) ) {
 		}
 
 	}
-}// End if().
+}

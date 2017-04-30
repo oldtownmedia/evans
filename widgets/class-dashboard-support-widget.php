@@ -13,56 +13,44 @@ namespace evans;
 final class CompanySupportWidget extends Dashboard_Widget {
 
 	/**
-	 * ID
 	 * ID used in the class and as a slug.
 	 *
 	 * @var string
-	 * @access protected
 	 */
 	protected $id 		= 'evans_support_dashboard_widget';
 
 	/**
-	 * title
 	 * Title for the dashboard widget.
 	 *
 	 * @var string
-	 * @access protected
 	 */
 	protected $title 	= 'Welcome to Your Dashboard';
 
 	/**
-	 * phone
 	 * Phone # of your company.
 	 *
 	 * @var string
-	 * @access protected
 	 */
 	protected $phone = '(970) 568 5250';
 
 	/**
-	 * email
 	 * Email address of your company.
 	 *
 	 * @var string
-	 * @access protected
 	 */
 	protected $email = 'support@oldtownmediainc.com';
 
 	/**
-	 * phone
 	 * Hours of your company.
 	 *
 	 * @var string
-	 * @access protected
 	 */
 	protected $hours = '8:00 am - 5:00 pm';
-
 
 	/*
 	 * Output the contents of the dashboard widget.
 	 */
 	public function build_the_widget() {
-
 		echo "<img src='" . esc_url( plugins_url( '../assets/images/widget-logo.png', __FILE__ ) ) . "' style='float:right;'>";
 
 		echo '<h2>' . esc_html__( 'Hello!', 'evans-mu' ) . '</h2>';
@@ -76,9 +64,7 @@ final class CompanySupportWidget extends Dashboard_Widget {
 			echo '<strong>' . esc_html__( 'Hours:', 'evans-mu' ) . '</strong> ' . esc_html( $this->hours );
 
 		echo '</p>';
-
 	}
-
 }
 
 $widget = new CompanySupportWidget();

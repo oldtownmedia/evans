@@ -9,7 +9,6 @@ namespace evans;
  * @return string The full CMB key
  */
 function cmb_prefix( $slug = '' ) {
-
 	$base = '_cmb2_';
 	if ( $slug ) {
 		$base .= $slug . '_';
@@ -17,7 +16,6 @@ function cmb_prefix( $slug = '' ) {
 
 	return $base;
 }
-
 
 /**
  * Add possibility to asynchroniously load javascript files
@@ -30,7 +28,6 @@ function cmb_prefix( $slug = '' ) {
  */
 add_filter( 'clean_url', __NAMESPACE__ . '\add_loading_variables', 11, 1 );
 function add_loading_variables( $url ) {
-
 	// Catchall replace text in admin
 	if ( is_admin() ) {
 		$url = str_replace( '#asyncload', '', $url );
@@ -51,28 +48,7 @@ function add_loading_variables( $url ) {
 	}
 
 	return $url;
-
 }
-
-
-/**
- * Add possibility to Defer load javascript files
- *
- * Filters all URL strings called in clean_url() for the #deferload value
- * and replaces said string with defer='defer'
- *
- * @param string $src The URL for the script resource.
- * @returns string Modified script string
- */
-add_filter( 'script_loader_src', __NAMESPACE__ . '\remove_script_version', 15, 1 );
-add_filter( 'style_loader_src', __NAMESPACE__ . '\remove_script_version', 15, 1 );
-function remove_script_version( $src ) {
-
-	$parts = explode( '?ver', $src );
-	return $parts[0];
-
-}
-
 
 /**
  * Automatically creates custom messages for all post types
@@ -84,7 +60,6 @@ function remove_script_version( $src ) {
  */
 add_filter( 'post_updated_messages', __NAMESPACE__ . '\set_messages' );
 function set_messages( $messages ) {
-
 	global $post, $post_ID;
 	$post_type = get_post_type( $post_ID );
 
@@ -106,9 +81,7 @@ function set_messages( $messages ) {
 	);
 
 	return $messages;
-
 }
-
 
 /**
  * Add the site url to the bottom of every Gravity Form notification.
@@ -118,8 +91,6 @@ function set_messages( $messages ) {
  */
 add_filter( 'gform_notification', __NAMESPACE__ . '\add_siteurl_to_notifications', 10, 1 );
 function add_siteurl_to_notifications( $notification ) {
-
 	$notification['message'] .= "\n<small> Sent from " . esc_html( site_url() ) . '</small>';
 	return $notification;
-
 }

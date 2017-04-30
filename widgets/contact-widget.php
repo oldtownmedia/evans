@@ -15,14 +15,12 @@ final class ContactWidget extends Widget {
 	protected $title		= 'Contact Information';
 	protected $description	= 'Display Your Contact Information';
 
-
 	/**
 	 * Array of fields for the admin editing of the widget.
 	 *
 	 * @return array list of fields
 	 */
 	public function widget_fields() {
-
 		return array(
 			array(
 				'id'		=> 'title',
@@ -81,9 +79,7 @@ final class ContactWidget extends Widget {
 				'default'	=> 'on',
 			),
 		);
-
 	}
-
 
 	/**
 	 * The front-end view of the widget
@@ -141,9 +137,7 @@ final class ContactWidget extends Widget {
 		}
 
 		return $html;
-
 	}
-
 }
 
 add_action( 'widgets_init', function() {
