@@ -39,7 +39,7 @@ abstract class Widget extends \WP_Widget {
 	public function __construct() {
 		parent::__construct(
 			$this->base,
-			sprintf( __( '%s', 'evans-mu' ), $this->title ),
+			$this->title,
 			array(
 				'classname'  => $this->base . '-class',
 				'description' => esc_html( $this->description ),
@@ -81,10 +81,8 @@ abstract class Widget extends \WP_Widget {
 		}
 
 		if ( isset( $cache[ $args['widget_id'] ] ) ) {
-			return print $cache[ $args['widget_id'] ];
+			print $cache[ $args['widget_id'] ];
 		}
-
-		extract( $args, EXTR_SKIP );
 
 		$widget_string = $before_widget;
 
@@ -301,7 +299,7 @@ abstract class Widget extends \WP_Widget {
 
 		$html .= "<label for='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "'><strong>" . esc_attr( $field['name'] ) . '</strong></label>';
 
-		if ( $field['type'] != 'checkbox' ) {
+		if ( 'checkbox' !== $field['type'] ) {
 			$html .= '<br>';
 		}
 
@@ -328,7 +326,7 @@ abstract class Widget extends \WP_Widget {
 					foreach ( $field['options'] as $key => $value ) {
 						$selected = '';
 
-						if ( $key == $instance[ $field['id'] ] ) {
+						if ( $key === $instance[ $field['id'] ] ) {
 							$selected = 'selected';
 						}
 
@@ -364,7 +362,7 @@ abstract class Widget extends \WP_Widget {
 			case 'checkbox' :
 				$checked = '';
 
-				if ( $instance[ $field['id'] ] == 'on' ) {
+				if ( 'on' === $instance[ $field['id'] ] ) {
 					$checked = ' checked';
 				}
 

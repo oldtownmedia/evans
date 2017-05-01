@@ -137,7 +137,7 @@ abstract class CPT {
 		}
 
 		// If we don't want links to the single to appear in the admin section
-		if ( $this->hide_view === true ) {
+		if ( true === $this->hide_view ) {
 			add_filter( 'post_row_actions', array( $this, 'remove_view_from_row' ), 10, 2 );
 			add_filter( 'page_row_actions', array( $this, 'remove_view_from_row' ), 10, 2 );	// In case post is hierarchical
 			add_filter( 'get_sample_permalink_html', array( $this, 'remove_permalink_option' ), '', 1 );
@@ -156,7 +156,6 @@ abstract class CPT {
 		$objects = new \WP_Query( $this->query_mods( array(), $args ) );
 
 		if ( $objects->have_posts() ) {
-
 			$html .= "<ul class='" . esc_attr( $this->cptslug ) . "-listing'>";
 
 			while ( $objects->have_posts() ) : $objects->the_post();
@@ -166,11 +165,8 @@ abstract class CPT {
 			endwhile;
 
 			$html .= '</ul>';
-
 		} else {
-
 			$html = '<h3>' . sprintf( esc_html__( 'There are no %s to list. Check back soon!', 'evans-mu' ), $this->cptslug_plural ) . '</h3>';
-
 		}
 
 		wp_reset_postdata();
