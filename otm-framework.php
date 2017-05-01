@@ -11,11 +11,11 @@
   */
 
 // Define a list of subfolders to poke through for files
-$dirs = array(
+$dirs = [
 	'admin',
 	'admin/abstracts',
 	'admin/widgets',
-);
+];
 
 /*
  * Loop through our directory array and require any PHP files without individual calls.

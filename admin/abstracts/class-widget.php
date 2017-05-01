@@ -50,19 +50,19 @@ abstract class Widget extends \WP_Widget {
 		parent::__construct(
 			$this->base,
 			$this->title,
-			array(
+			[
 				'classname'   => $this->base . '-class',
 				'description' => esc_html( $this->description ),
-			)
+			]
 		);
 
 		// Admin Styles
-		add_action( 'admin_print_styles', array( $this, 'register_admin_styles' ) );
+		add_action( 'admin_print_styles', [ $this, 'register_admin_styles' ] );
 
 		// Refreshing the widget's cached output with each new post
-		add_action( 'save_post',    array( $this, 'flush_widget_cache' ) );
-		add_action( 'deleted_post', array( $this, 'flush_widget_cache' ) );
-		add_action( 'switch_theme', array( $this, 'flush_widget_cache' ) );
+		add_action( 'save_post',    [ $this, 'flush_widget_cache' ] );
+		add_action( 'deleted_post', [ $this, 'flush_widget_cache' ] );
+		add_action( 'switch_theme', [ $this, 'flush_widget_cache' ] );
 	}
 
 	/**
@@ -87,7 +87,7 @@ abstract class Widget extends \WP_Widget {
 		$cache = wp_cache_get( $this->base, 'widget' );
 
 		if ( ! is_array( $cache ) ) {
-			$cache = array();
+			$cache = [];
 		}
 
 		if ( ! isset( $args['widget_id'] ) ) {
@@ -252,7 +252,7 @@ abstract class Widget extends \WP_Widget {
 	 */
 	private function get_defaults() {
 		$fields = $this->widget_fields();
-		$defaults = array();
+		$defaults = [];
 
 		if ( ! is_array( $fields ) || empty( $fields ) ) {
 			return null;

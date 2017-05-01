@@ -29,8 +29,8 @@ function setup() {
  */
 function disable_emojis_tinymce( $plugins ) {
 	if ( is_array( $plugins ) ) {
-		return array_diff( $plugins, array( 'wpemoji' ) );
+		return array_diff( $plugins, [ 'wpemoji' ] );
 	} else {
-		return array();
+		return [];
 	}
 }
