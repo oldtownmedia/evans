@@ -4,7 +4,7 @@ namespace evans\Posts;
 /**
  * Hooks function to fire off the events we need.
  */
-public function hooks() {
+function hooks() {
 	add_filter( 'manage_edit-post_columns', __NAMESPACE__ . '\\post_columns' );
 	add_action( 'manage_post_posts_custom_column', __NAMESPACE__ . '\\modified_date_column', 10, 2 );
 }
@@ -15,7 +15,7 @@ public function hooks() {
  * @param array $columns Original list of columns and names.
  * @return array Modified list of columns.
  */
-public function post_columns( $columns ) {
+function post_columns( $columns ) {
 	// Remove unnecessary columns
 	unset( $columns['tags'] );
 	unset( $columns['comments'] );
@@ -34,7 +34,7 @@ public function post_columns( $columns ) {
  * @param string $column ID of current column being parsed.
  * @param int $post_id Post ID of current row.
  */
-public function modified_date_column( $column, $post_id ) {
+function modified_date_column( $column, $post_id ) {
 	if ( 'modified' === $column ) {
 		echo esc_html( human_time_diff( get_post_modified_time( 'U', true, $post_id ), time() ) );
 	}

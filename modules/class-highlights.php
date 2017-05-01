@@ -84,7 +84,7 @@ final class Highlights extends CPT {
 
 		$cmb->add_field( [
 			'name' => __( 'Content', 'evans-mu' ),
-			'desc' => sprintf( __( 'Enter any content that you would like to appear in the %s', 'evans-mu' ). $this->singular ),
+			'desc' => sprintf( __( 'Enter any content that you would like to appear in the %s', 'evans-mu' ), $this->singular ),
 			'id'   => $this->prefix . 'content',
 			'type' => 'text',
 		] );

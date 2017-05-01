@@ -4,7 +4,7 @@ namespace evans\CleanAdmin;
 /**
  * Hooks function to fire off the events we need.
  */
-public function hooks() {
+function setup() {
 	// Couple of public functions
 	add_action( 'admin_bar_menu', __NAMESPACE__ . '\\add_toolbar_links', 999 );
 
@@ -23,7 +23,7 @@ public function hooks() {
 	add_action( 'admin_notices', __NAMESPACE__ . '\\custom_update_nag', 99 );
 	add_filter( 'menu_order', __NAMESPACE__ . '\\menu_order', 9999 );
 	add_filter( 'custom_menu_order', '__return_true' );
-	add_filter( 'gettext', __NAMESPACE__ . '\\tgm_soliloquy_envira_whitelabel', 10, 3 );
+	add_filter( 'gettext', __NAMESPACE__ . '\\relabel_soliloquy_envira', 10, 3 );
 	add_filter( 'envira_gallery_skipped_posttypes', __NAMESPACE__ . '\\envira_skip_cpts' );
 	add_filter( 'manage_posts_columns', __NAMESPACE__ . '\\remove_columns' );
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_post_meta_boxes' );
@@ -80,7 +80,7 @@ function register_fields() {
  * @global array $menu Array of main menu items.
  * @global array $submenu Array of submenu items.
  */
-public function remove_menus() {
+function remove_menus() {
 	// Remove links.
 	remove_menu_page( 'link-manager.php' );						// Links page
 	remove_menu_page( 'edit-comments.php' );					// Comments page
@@ -128,12 +128,10 @@ public function remove_menus() {
 /**
  * Identify OK items to stay in the top of the admin section
  *
- * @access private
- *
  * @param string $item Name of a menu item.
  * @return array list of whitelisted items.
  */
-private function is_gracious_menu_item( $item ) {
+function is_gracious_menu_item( $item ) {
 	return 'wp-help-documents' ===  $item;
 }
 
@@ -144,7 +142,7 @@ private function is_gracious_menu_item( $item ) {
  * @param array $menu Original menu array.
  * @return array $menu Modified menu array.
  */
-public function menu_order( $menu ) {
+function menu_order( $menu ) {
 	$penalty_box = [];
 
 	foreach ( $menu as $key => $item ) {
@@ -173,7 +171,7 @@ public function menu_order( $menu ) {
  * @param string $source_text original text.
  * @return string modified text.
  */
-public function envira_skip_cpts( $translated_text, $source_text ) {
+function relabel_soliloquy_envira( $translated_text, $source_text ) {
 	// If not in the admin, return the default string.
 	if ( ! is_admin() ) {
 		return $translated_text;
@@ -188,11 +186,11 @@ public function envira_skip_cpts( $translated_text, $source_text ) {
 	];
 
 	// @todo:: make sure this works.
-	array_walk( function( $item, $key ) use ( $translated_text, $source_text ) {
+	array_walk( $strings, function( $item, $key ) use ( $translated_text, $source_text ) {
 		if ( strpos( $source_text, $key ) !== false ) {
 			return str_replace( $key, $item, $translated_text );
 		}
-	}, $strings );
+	} );
 
 	return $translated_text;
 }
@@ -203,7 +201,7 @@ public function envira_skip_cpts( $translated_text, $source_text ) {
  * @param array $post_types  Default post types to skip.
  * @return array $post_types Modified post types to skip.
  */
-public function envira_skip_custom_post_type( $post_types ) {
+function envira_skip_cpts( $post_types ) {
 	// Add your custom post type here.
 	$post_types[] = 'post';
 	$post_types[] = 'page';
@@ -232,7 +230,7 @@ public function envira_skip_custom_post_type( $post_types ) {
  * @param array $columns columns for the post type
  * @return array $columns Modified columns array
  */
-public function clean_post_columns( $columns ) {
+function clean_post_columns( $columns ) {
 	unset(
 		$columns['author'],
 		$columns['comments']
@@ -246,7 +244,7 @@ public function clean_post_columns( $columns ) {
  *
  * @global array $wp_admin_bar Full admin bar object.
  */
-public function remove_admin_bar_links() {
+function remove_admin_bar_links() {
 	global $wp_admin_bar;
 
 	$wp_admin_bar->remove_menu( 'wp-logo' );          // Remove the WordPress logo
@@ -261,7 +259,7 @@ public function remove_admin_bar_links() {
 /**
  * Remove author & tags boxes from the post edit box.
  */
-public function remove_post_meta_boxes() {
+function remove_post_meta_boxes() {
 	remove_meta_box( 'authordiv', 'post', 'normal' );
 	remove_meta_box( 'tagsdiv-post_tag', 'post', 'normal' );
 }
@@ -269,7 +267,7 @@ public function remove_post_meta_boxes() {
 /**
  * Remove unnecesary dashboard widgets from the admin dashboard.
  */
-public function remove_dashboard_widgets() {
+function remove_dashboard_widgets() {
 	remove_meta_box( 'dashboard_incoming_links', 'dashboard', 'core' );		// Incoming Links
 	remove_meta_box( 'dashboard_plugins', 'dashboard', 'core' );			// Plugins
 	remove_meta_box( 'dashboard_secondary', 'dashboard', 'core' );			// the WordPress Blog
@@ -284,7 +282,7 @@ public function remove_dashboard_widgets() {
 /**
  * Remove default nag
  */
-public function remove_core_update_nag() {
+function remove_core_update_nag() {
 	remove_action( 'admin_notices', 'update_nag', 3 );
 	remove_action( 'network_admin_notices', 'update_nag', 3 );
 }
@@ -326,7 +324,7 @@ function custom_update_nag() {
  * @param array $defaults Default column listin.
  * @return array $defaults Modified column listing.
  */
-public function remove_columns( $defaults ) {
+function remove_columns( $defaults ) {
 	unset( $defaults['author'] );
 	return $defaults;
 }
@@ -337,7 +335,7 @@ public function remove_columns( $defaults ) {
  * @param array $buttons Default mce buttons row 1.
  * @return array Modified array of buttons for row 1.
  */
-public function extended_editor_mce_buttons( $buttons ) {
+function extended_editor_mce_buttons( $buttons ) {
 	return [
 		'formatselect',
 		'bold',
@@ -369,7 +367,7 @@ public function extended_editor_mce_buttons( $buttons ) {
  * @param array $buttons Default mce buttons row 2.
  * @return array empty array.
  */
-public function extended_editor_mce_buttons_2( $buttons ) {
+function extended_editor_mce_buttons_2( $buttons ) {
 	return [];
 }
 
@@ -379,7 +377,7 @@ public function extended_editor_mce_buttons_2( $buttons ) {
  * @param type $columns Default column array.
  * @return array $columns Modified array of columns.
  */
-public function seo_remove_columns( $columns ) {
+function seo_remove_columns( $columns ) {
 	// Remove the Yoast SEO columns.
 	unset( $columns['wpseo-score'] );
 	unset( $columns['wpseo-title'] );
@@ -392,7 +390,7 @@ public function seo_remove_columns( $columns ) {
 /**
  * Remove Yoast SEO custom metaboxes from CPTs that don't have their own single.
  */
-public function remove_seo_metabox() {
+function remove_seo_metabox() {
 	if ( ! current_user_can( 'edit_others_posts' ) ) {
 		remove_meta_box( 'wpseo_meta', 'alert', 'normal' );
 		remove_meta_box( 'wpseo_meta', 'document', 'normal' );
@@ -406,7 +404,7 @@ public function remove_seo_metabox() {
 /**
  * Remove Yoast SEO custom metaboxes from CPTs that don't have their own single.
  */
-public function right_now_cpt_count() {
+function right_now_cpt_count() {
 	if ( current_user_can( 'edit_posts' ) && is_admin() ) {
 
 		$cpt_array = apply_filters( 'cpt_array_filter', [] );
@@ -430,7 +428,7 @@ public function right_now_cpt_count() {
  *
  * @param object $wp_admin_bar admin bar main object.
  */
-public function add_admin_toolbar_links( $wp_admin_bar ) {
+function add_admin_toolbar_links( $wp_admin_bar ) {
 	// Abort if we're not in the back end
 	if ( ! is_admin() || ! current_user_can( 'edit_users' ) ) {
 		return;
@@ -469,7 +467,7 @@ public function add_admin_toolbar_links( $wp_admin_bar ) {
  *
  * @param object $wp_admin_bar admin bar main object.
  */
-public function add_toolbar_links( $wp_admin_bar ) {
+function add_toolbar_links( $wp_admin_bar ) {
 	// Abort if we're not on the front-end
 	if ( is_admin() || ! current_user_can( 'edit_users' ) ) {
 		return;
@@ -506,3 +504,6 @@ public function add_toolbar_links( $wp_admin_bar ) {
 	$wp_admin_bar->remove_node( 'widgets' );
 	$wp_admin_bar->remove_node( 'themes' );
 }
+
+// @todo:: this has got to go
+setup();
