@@ -1,8 +1,6 @@
 <?php
 namespace evans\Abstracts;
 
-// @todo:: eliminate extracts
-
 /**
  * Abstract lass to quickly and easily generate widgets.
  *

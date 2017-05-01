@@ -31,6 +31,7 @@ evans\DisableEmojis\setup();
 evans\Security\setup();
 
 // @todo:: Use an autoloader
+// @todo:: setup namespaces function
 // @todo:: Use PSR-4 file/classnames
 // @todo:: Add namespaces to everything
 // @todo:: Put abstracts into their own folder
