@@ -26,7 +26,7 @@ function setup() {
 	add_action( 'admin_notices', __NAMESPACE__ . '\\custom_update_nag', 99 );
 	add_filter( 'menu_order', __NAMESPACE__ . '\\menu_order', 9999 );
 	add_filter( 'custom_menu_order', '__return_true' );
-	//add_filter( 'gettext', __NAMESPACE__ . '\\soliloquy_whitelabel', 10, 3 );
+	add_filter( 'gettext', __NAMESPACE__ . '\\soliloquy_whitelabel', 10, 3 );
 	add_filter( 'envira_gallery_skipped_posttypes', __NAMESPACE__ . '\\envira_skip_cpts' );
 	add_filter( 'manage_posts_columns', __NAMESPACE__ . '\\remove_columns' );
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_post_meta_boxes' );
@@ -190,11 +190,11 @@ function soliloquy_whitelabel( $translated_text, $source_text ) {
 	];
 
 	// @todo:: make sure this works.
-	array_map( function( $item, $key ) use ( $translated_text, $source_text ) {
+	array_walk( $strings, function( $item, $key ) use ( $translated_text, $source_text ) {
 		if ( strpos( $source_text, $key ) !== false ) {
 			return str_replace( $key, $item, $translated_text );
 		}
-	}, $strings );
+	} );
 
 	return $translated_text;
 }
