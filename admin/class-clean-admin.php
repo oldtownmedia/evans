@@ -109,11 +109,11 @@ public function remove_menus() {
 	}
 
 	// Move Media into Pages menu item.
-	$submenu['edit.php?post_type=page'][15] = array(
+	$submenu['edit.php?post_type=page'][15] = [
 		'0' => 'Media',
 		'1'	=> 'edit_pages',
 		'2'	=> 'upload.php',
-	);
+	];
 
 	// Remove menu items only for non-admins.
 	$current_user = wp_get_current_user();
@@ -134,7 +134,7 @@ public function remove_menus() {
  * @return array list of whitelisted items.
  */
 private function is_gracious_menu_item( $item ) {
-	return in_array( $item, array( 'wp-help-documents' ), true );
+	return 'wp-help-documents' ===  $item;
 }
 
 /**
@@ -145,7 +145,7 @@ private function is_gracious_menu_item( $item ) {
  * @return array $menu Modified menu array.
  */
 public function menu_order( $menu ) {
-	$penalty_box = array();
+	$penalty_box = [];
 
 	foreach ( $menu as $key => $item ) {
 
@@ -338,7 +338,7 @@ public function remove_columns( $defaults ) {
  * @return array Modified array of buttons for row 1.
  */
 public function extended_editor_mce_buttons( $buttons ) {
-	return array(
+	return [
 		'formatselect',
 		'bold',
 		'italic',
@@ -360,7 +360,7 @@ public function extended_editor_mce_buttons( $buttons ) {
 		'spellchecker',
 		'fullscreen',
 		'wp_help',
-	);
+	];
 }
 
 /**
@@ -370,7 +370,7 @@ public function extended_editor_mce_buttons( $buttons ) {
  * @return array empty array.
  */
 public function extended_editor_mce_buttons_2( $buttons ) {
-	return array();
+	return [];
 }
 
 /**
@@ -409,7 +409,7 @@ public function remove_seo_metabox() {
 public function right_now_cpt_count() {
 	if ( current_user_can( 'edit_posts' ) && is_admin() ) {
 
-		$cpt_array = apply_filters( 'cpt_array_filter', array() );
+		$cpt_array = apply_filters( 'cpt_array_filter', [] );
 
 		foreach ( $cpt_array as $cpt ) {
 
@@ -447,12 +447,12 @@ public function add_admin_toolbar_links( $wp_admin_bar ) {
 
 			foreach ( (array) $menu_items as $key => $menu_item ) :
 
-				$page = array(
+				$page = [
 					'parent' => 'site-name',
 					'id'     => 'front_end_page_' . $menu_item->db_id,
 					'title'  => $menu_item->title,
 					'href'   => $menu_item->url,
-				);
+				];
 
 				if ( 0 === $menu_item->menu_item_parent ) {
 					$wp_admin_bar->add_node( $page );
@@ -475,26 +475,26 @@ public function add_toolbar_links( $wp_admin_bar ) {
 		return;
 	}
 
-	$plugins = array(
+	$plugins = [
 		'parent' => 'site-name',
 		'id'     => 'plugins',
 		'title'  => __( 'Plugins', 'evans-mu' ),
 		'href'   => admin_url( 'plugins.php' ),
-	);
+	];
 
-	$pages = array(
+	$pages = [
 		'parent' => 'site-name',
 		'id'     => 'pages',
 		'title'  => __( 'Pages', 'evans-mu' ),
 		'href'   => admin_url( 'edit.php?post_type=page' ),
-	);
+	];
 
-	$posts = array(
+	$posts = [
 		'parent' => 'site-name',
 		'id'     => 'posts',
 		'title'  => __( 'Posts', 'evans-mu' ),
 		'href'   => admin_url( 'edit.php?post_type=post' ),
-	);
+	];
 
 	// Add our nodes
 	$wp_admin_bar->add_node( $plugins );

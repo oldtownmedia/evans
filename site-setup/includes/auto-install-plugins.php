@@ -43,116 +43,115 @@ function my_theme_register_required_plugins() {
 	 * Array of plugin arrays. Required keys are name and slug.
 	 * If the source is NOT from the .org repo, then source is also required.
 	 */
-	$plugins = array(
-
-		array(
+	$plugins = [
+		[
 			'name' 		=> 'Crop Thumbnails',
 			'slug' 		=> 'crop-thumbnails',
 			'required' 	=> true,
-		),
-		array(
+		],
+		[
 			'name' 		=> 'Custom sidebars',
 			'slug' 		=> 'custom-sidebars',
 			'required' 	=> true,
-		),
-		array(
+		],
+		[
 			'name' 		=> 'Google Analytics for WordPress',
 			'slug' 		=> 'google-analytics-for-wordpress',
 			'required' 	=> false,
-		),
-		array(
+		],
+		[
 			'name' 		=> 'imsanity',
 			'slug' 		=> 'imsanity',
 			'required' 	=> true,
-		),
-		array(
+		],
+		[
 			'name' 		=> 'iThemes Security',
 			'slug' 		=> 'better-wp-security',
 			'required' 	=> false,
-		),
-		array(
+		],
+		[
 			'name' 		=> 'Regenerate Thumbnails',
 			'slug' 		=> 'regenerate-thumbnails',
 			'required' 	=> true,
-		),
-		array(
+		],
+		[
 			'name' 		=> 'Simple 301 Redirects',
 			'slug' 		=> 'simple-301-redirects',
 			'required' 	=> false,
-		),
-		array(
+		],
+		[
 			'name' 		=> 'Simple Frontend Template Display',
 			'slug' 		=> 'simple-frontend-template-display',
 			'required' 	=> true,
-		),
-		array(
+		],
+		[
 			'name' 		=> 'Simple Image Widget',
 			'slug' 		=> 'simple-image-widget',
 			'required' 	=> true,
-		),
-		array(
+		],
+		[
 			'name' 		=> 'Simple Google Maps Short Code',
 			'slug' 		=> 'simple-google-maps-short-code',
 			'required' 	=> true,
-		),
-		array(
+		],
+		[
 			'name' 		=> 'Simple Page Ordering',
 			'slug' 		=> 'simple-page-ordering',
 			'required' 	=> true,
-		),
-		array(
+		],
+		[
 			'name' 		=> 'Stream',
 			'slug' 		=> 'stream',
 			'required' 	=> true,
-		),
-		array(
+		],
+		[
 			'name' 		=> 'WordPress SEO by Yoast',
 			'slug' 		=> 'wordpress-seo',
 			'required' 	=> true,
-		),
-		array(
+		],
+		[
 			'name' 		=> 'The WP Remote WordPress Plugin',
 			'slug' 		=> 'wpremote',
 			'required' 	=> true,
-		),
-		array(
+		],
+		[
 			'name' 		=> 'Test Content Generator',
 			'slug' 		=> 'test-content-suite',
 			'source' 	=> 'https://github.com/oldtownmedia/test-content-suite/archive/master.zip',
 			'required' 	=> true,
-		),
-	);
+		],
+	];
 
 	// If we have a path for premium plugins - include here
 	if ( function_exists( 'premium_plugins_path' ) ) {
 
-		$premium_plugins = array(
+		$premium_plugins = [
 			// Premium Plugins
-			array(
+			[
 				'name' 		=> 'Backup Buddy',
 				'slug' 		=> 'backupbuddy',
 				'source'	=> premium_plugins_path() . '/backupbuddy.zip',
 				'required' 	=> true,
-			),
-			array(
+			],
+			[
 				'name' 		=> 'Gravity Forms',
 				'slug' 		=> 'gravityforms',
 				'source'	=> premium_plugins_path() . '/gravityforms.zip',
 				'required' 	=> true,
-			),
-			array(
+			],
+			[
 				'name' 		=> 'Soliloquy',
 				'slug' 		=> 'soliloquy',
 				'source'	=> premium_plugins_path() . '/soliloquy.zip',
 				'required' 	=> true,
-			),
-			array(
+			],
+			[
 				'name' 		=> 'Wp Rocket',
 				'slug' 		=> 'wp-rocket',
 				'source'	=> premium_plugins_path() . '/wp-rocket.zip',
 				'required' 	=> false,
-			),
-		);
+			],
+		];
 
 		$plugins = array_merge( $plugins, $premium_plugins );
 
@@ -167,7 +166,7 @@ function my_theme_register_required_plugins() {
 	 *
 	 * Only uncomment the strings in the config array if you want to customize the strings.
 	 */
-	$config = array(
+	$config = [
 		'id'           => 'tgmpa',                 // Unique ID for hashing notices for multiple instances of TGMPA.
 		'default_path' => '',                      // Default absolute path to bundled plugins.
 		'menu'         => 'tgmpa-install-plugins', // Menu slug.
@@ -178,7 +177,7 @@ function my_theme_register_required_plugins() {
 		'dismiss_msg'  => '',                      // If 'dismissable' is false, this message will be output at top of nag.
 		'is_automatic' => false,                   // Automatically activate plugins after installation or not.
 		'message'      => '',                      // Message to output right before the plugins table.
-	);
+	];
 
 	tgmpa( $plugins, $config );
 }

@@ -16,23 +16,23 @@ final class Staff extends CPT {
 	protected $plural			= 'Staff';
 	protected $icon				= 'dashicons-businessman';
 	protected $hide_view 		= false;
-	protected $thumbnail_size	= array(
+	protected $thumbnail_size	= [
 		'width'		=> 300,
 		'height'	=> 300,
-	);
+	];
 
 	// Arguments to define the CPT
-	protected $cpt_args			= array(
+	protected $cpt_args			= [
 		'rewrite'				=> true,
-	);
+	];
 
 	// Arguments for the CPT loop
-	protected $loop_args = array(
+	protected $loop_args = [
 		'orderby' 		=> 'menu_order',
 		'order' 		=> 'ASC',
 		'posts_per_page' => 100,
 		'no_found_rows'	=> false,
-	);
+	];
 
 	/**
 	 * Display a single item from the queried posts.
@@ -76,19 +76,19 @@ final class Staff extends CPT {
 		// Setup the main CMB box
 		$cmb = parent::cmb_metaboxes();
 
-		$cmb->add_field( array(
+		$cmb->add_field( [
 			'name' => __( 'Position/Title', 'evans-mu' ),
 			'desc' => sprintf( esc_html__( 'Enter the title for the ', 'evans-mu' ), $this->cptslug ),
 			'id'   => $this->prefix . 'position',
 			'type' => 'text',
-		) );
+		] );
 
-		$cmb->add_field( array(
+		$cmb->add_field( [
 			'name' => __( 'Image', 'evans-mu' ),
 			'id'   => $this->prefix . 'image',
 			'type' => 'file',
-			'allow' => array( 'attachment' ),
-		) );
+			'allow' => [ 'attachment' ],
+		] );
 	}
 }
 

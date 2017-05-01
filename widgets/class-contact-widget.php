@@ -21,64 +21,64 @@ final class ContactWidget extends Widget {
 	 * @return array list of fields
 	 */
 	public function widget_fields() {
-		return array(
-			array(
+		return [
+			[
 				'id'		=> 'title',
 				'name'		=> __( 'Title', 'evans-mu' ),
 				'type'		=> 'text',
 				'default'	=> __( 'Contact Info', 'evans-mu' ),
-			),
-			array(
+			],
+			[
 				'id'		=> 'address',
 				'name'		=> __( 'Address', 'evans-mu' ),
 				'desc'		=> __( 'Street Address', 'evans-mu' ),
 				'type'		=> 'text',
-			),
-			array(
+			],
+			[
 				'id'		=> 'city',
 				'name'		=> __( 'City', 'evans-mu' ),
 				'type'		=> 'text',
 				'default'	=> __( 'Fort Collins', 'evans-mu' ),
-			),
-			array(
+			],
+			[
 				'id'		=> 'state',
 				'name'		=> __( 'State', 'evans-mu' ),
 				'type'		=> 'text',
 				'default'	=> __( 'CO', 'evans-mu' ),
-			),
-			array(
+			],
+			[
 				'id'		=> 'zip',
 				'name'		=> __( 'ZIP', 'evans-mu' ),
 				'type'		=> 'text',
 				'default'	=> '80521',
-			),
-			array(
+			],
+			[
 				'id'		=> 'phone',
 				'name'		=> __( 'Phone', 'evans-mu' ),
 				'type'		=> 'text',
 				'default'	=> '(970) 123-4567',
-			),
-			array(
+			],
+			[
 				'id'		=> 'fax',
 				'name'		=> __( 'Fax', 'evans-mu' ),
 				'type'		=> 'text',
 				'default'	=> '',
-			),
-			array(
+			],
+			[
 				'id'		=> 'email',
 				'name'		=> __( 'Email', 'evans-mu' ),
 				'type'		=> 'text',
 				'sanitize'	=> 'sanitize_email',
 				'default'	=> 'me@thissite.com',
-			),
-			array(
+			],
+			[
 				'id'		=> 'map',
 				'name'		=> __( 'Map?', 'evans-mu' ),
 				'desc'		=> __( 'Choose whether to show a map underneath the info or not.', 'evans-mu' ),
 				'type'		=> 'checkbox',
 				'default'	=> 'on',
-			),
-		);
+			],
+		];
 	}
 
 	/**

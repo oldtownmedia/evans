@@ -16,27 +16,27 @@ final class Partners extends CPT {
 	protected $plural			= 'Partners';
 	protected $icon				= 'dashicons-star-filled';
 	protected $hide_view 		= true;
-	protected $thumbnail_size	= array(
+	protected $thumbnail_size	= [
 		'width'		=> 200,
 		'height'	=> 200,
-	);
+	];
 
 	// Arguments to define the CPT
-	protected $cpt_args			= array(
+	protected $cpt_args			= [
 		'exclude_from_search'	=> true,
 		'show_in_nav_menus'		=> false,
 		'publicly_queryable'	=> false,
-		'supports'      		=> array( 'title' ),
+		'supports'      		=> [ 'title' ],
 		'has_archive'   		=> false,
-	);
+	];
 
 	// Arguments for the CPT loop
-	protected $loop_args = array(
+	protected $loop_args = [
 		'orderby' 		=> 'menu_order',
 		'order' 		=> 'ASC',
 		'posts_per_page' => 100,
 		'no_found_rows'	=> false,
-	);
+	];
 
 	/**
 	 * Display a single item from the queried posts.
@@ -70,19 +70,19 @@ final class Partners extends CPT {
 		// Setup the main CMB box
 		$cmb = parent::cmb_metaboxes();
 
-		$cmb->add_field( array(
+		$cmb->add_field( [
 			'name' => __( 'Link URL', 'evans-mu' ),
 			'desc' => __( 'Enter the URL from the page you want to link to.', 'evans-mu' ),
 			'id'   => $this->prefix . 'url',
 			'type' => 'text',
-		) );
+		] );
 
-		$cmb->add_field( array(
+		$cmb->add_field( [
 			'name' => __( 'Image', 'evans-mu' ),
 			'id'   => $this->prefix . 'image',
 			'type' => 'file',
-			'allow' => array( 'attachment' ),
-		) );
+			'allow' => [ 'attachment' ],
+		] );
 	}
 }
 

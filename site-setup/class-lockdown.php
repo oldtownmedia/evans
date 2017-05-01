@@ -36,11 +36,11 @@ class Lockdown {
 			return;
 		}
 
-		add_action( 'admin_bar_menu', array( $this, 'page_lockdown_display' ), 500 );
-		add_action( 'admin_init', array( $this, 'set_lockdown_option' ), 105 );
-		add_action( 'init', array( $this, 'lockdown_this_thing' ), 105 );
-		add_action( 'init', array( $this, 'lockdown_actions' ), 5 );
-		add_action( 'admin_init', array( $this, 'lockdown_actions' ), 5 );
+		add_action( 'admin_bar_menu', [ $this, 'page_lockdown_display' ], 500 );
+		add_action( 'admin_init', [ $this, 'set_lockdown_option' ], 105 );
+		add_action( 'init', [ $this, 'lockdown_this_thing' ], 105 );
+		add_action( 'init', [ $this, 'lockdown_actions' ], 5 );
+		add_action( 'admin_init', [ $this, 'lockdown_actions' ], 5 );
 	}
 
 	/**
@@ -70,12 +70,12 @@ class Lockdown {
 			}
 
 			$wp_admin_bar->add_node(
-				array(
+				[
 					'id'     => 'site_lockdown',
 					'title'  => $title,
 					'parent' => false,
 					'href'   => $link,
-				)
+				]
 			);
 		}
 	}
@@ -107,7 +107,7 @@ class Lockdown {
 	 */
 	public function lockdown_actions() {
 		// We're logged in and validated, return.
-		if ( is_user_logged_in() || in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ), true ) ) {
+		if ( is_user_logged_in() || in_array( $GLOBALS['pagenow'], [ 'wp-login.php', 'wp-register.php' ], true ) ) {
 			return;
 		}
 

@@ -11,13 +11,13 @@
   */
 
 // Define a list of subfolders to poke through for files
-$dirs = array(
+$dirs = [
 	'abstracts',
 	'admin',
 	'assets',
 	'modules',
 	'widgets'
-);
+];
 
 /*
  * Add site-setup folder to our smart loading ONLY if this folder exists.

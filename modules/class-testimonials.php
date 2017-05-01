@@ -18,18 +18,18 @@ final class Testimonials extends CPT {
 	protected $hide_view 		= true;
 
 	// Arguments to define the CPT
-	protected $cpt_args			= array(
+	protected $cpt_args			= [
 		'exclude_from_search'	=> true,
 		'show_in_nav_menus'		=> false,
-	);
+	];
 
 	// Arguments for the CPT loop
-	protected $loop_args = array(
+	protected $loop_args = [
 		'no_found_rows'	=> true,
 		'orderby' 		=> 'menu_order',
 		'order' 		=> 'ASC',
 		'posts_per_page' => 100,
-	);
+	];
 
 	/**
 	 * Display a single item from the queried posts.
@@ -67,11 +67,11 @@ final class Testimonials extends CPT {
 		// Setup the main CMB box
 		$cmb = parent::cmb_metaboxes();
 
-		$cmb->add_field( array(
+		$cmb->add_field( [
 			'name'	=> __( 'Reviewer Name', 'evans-mu' ),
 			'id'	=> $this->prefix . 'reviewer',
 			'type'	=> 'text',
-		) );
+		] );
 	}
 }
 

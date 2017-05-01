@@ -121,10 +121,10 @@ abstract class CPT {
 	 * Hooks function to fire off the events we need.
 	 */
 	public function hooks() {
-		add_action( 'init', array( $this, 'define_cpt' ) );
-		add_filter( 'cmb2_admin_init', array( $this, 'cmb_metaboxes' ) );
-		add_filter( 'cpt_array_filter', array( $this, 'dashboard_cpt_loop' ), 10 );
-		add_shortcode( $this->cptslug_plural, array( $this, 'shortcode' ) );
+		add_action( 'init', [ $this, 'define_cpt' ] );
+		add_filter( 'cmb2_admin_init', [ $this, 'cmb_metaboxes' ] );
+		add_filter( 'cpt_array_filter', [ $this, 'dashboard_cpt_loop' ], 10 );
+		add_shortcode( $this->cptslug_plural, [ $this, 'shortcode' ] );
 
 		// If fed dimensions for a thumbnails
 		if ( ! empty( $this->thumbnail_size ) ) {
@@ -133,14 +133,14 @@ abstract class CPT {
 
 		// If we want to use the taxonomy, hook in the taxonomy functions
 		if ( ! empty( $this->taxonomy_name ) ) {
-			add_action( 'init', array( $this, 'define_taxonomy' ), 0 );
+			add_action( 'init', [ $this, 'define_taxonomy' ], 0 );
 		}
 
 		// If we don't want links to the single to appear in the admin section
 		if ( true === $this->hide_view ) {
-			add_filter( 'post_row_actions', array( $this, 'remove_view_from_row' ), 10, 2 );
-			add_filter( 'page_row_actions', array( $this, 'remove_view_from_row' ), 10, 2 );	// In case post is hierarchical
-			add_filter( 'get_sample_permalink_html', array( $this, 'remove_permalink_option' ), '', 1 );
+			add_filter( 'post_row_actions', [ $this, 'remove_view_from_row' ], 10, 2 );
+			add_filter( 'page_row_actions', [ $this, 'remove_view_from_row' ], 10, 2 );	// In case post is hierarchical
+			add_filter( 'get_sample_permalink_html', [ $this, 'remove_permalink_option' ], '', 1 );
 		}
 	}
 
@@ -150,10 +150,10 @@ abstract class CPT {
 	 * @param array $args Query arguments.
 	 * @return string Combined HTML contents of the looped query.
 	 */
-	public function loop_cpt( $args = array() ) {
+	public function loop_cpt( $args = [] ) {
 		$html = '';
 
-		$objects = new \WP_Query( $this->query_mods( array(), $args ) );
+		$objects = new \WP_Query( $this->query_mods( [], $args ) );
 
 		if ( $objects->have_posts() ) {
 			$html .= "<ul class='" . esc_attr( $this->cptslug ) . "-listing'>";
@@ -204,12 +204,12 @@ abstract class CPT {
 		if ( ! empty( $args['pid'] ) ) {
 			$query['no_found_rows']		= false;
 			$query['posts_per_page']	= 1;
-			$query['post__in']			= array( $args['pid'] );
+			$query['post__in']			= [ $args['pid'] ];
 		}
 
 		// If our shortcode passed in a group id OR our taxonomy_loop passes in a group id
 		if ( ! empty( $args['group'] ) ) {
-			$query[ $this->tax_slug ]		= array( $args['group'] );
+			$query[ $this->tax_slug ]		= [ $args['group'] ];
 		}
 
 		return $query;
@@ -274,15 +274,15 @@ abstract class CPT {
 	 * @param array $args Arguments to be passed to get_terms.
 	 * @return string HTML content of the looped taxonomy & posts.
 	 */
-	public function taxonomy_loop( $args = array() ) {
+	public function taxonomy_loop( $args = [] ) {
 		$html = '';
 
 		$terms = get_terms(
 			$this->tax_slug,
-			array(
+			[
 				'hide_empty'	=> true,
 				'number'		=> 500,
-			)
+			]
 		);
 
 		if ( ! empty( $terms ) ) {
@@ -316,21 +316,21 @@ abstract class CPT {
 	 */
 	public function shortcode( $atts ) {
 		$atts = shortcode_atts(
-			array(
+			[
 				'quantity' 	=> '',
 				'group'		=> '',
 				'id'		=> '',
 				'random'	=> false,
-			),
+			],
 			$atts
 		);
 
-		$args = array(
+		$args = [
 			'quantity'	=> $atts['quantity'],
 			'group'		=> $atts['group'],
 			'random'	=> $atts['random'],
 			'pid'		=> $atts['id'],
-		);
+		];
 
 		return $this->loop_cpt( $args );
 	}
@@ -343,7 +343,7 @@ abstract class CPT {
 	 * public, menu position, etc.
 	 */
 	public function define_cpt() {
-		$labels = array(
+		$labels = [
 			'name'               => sprintf( _x( '%s', 'post type general name', 'evans-mu' ), $this->plural ),
 			'singular_name'      => sprintf( _x( '%s', 'post type singular name', 'evans-mu' ), $this->singular ),
 			'add_new'            => sprintf( _x( 'Add New', '%s', 'evans-mu' ), $this->cptslug ),
@@ -357,17 +357,17 @@ abstract class CPT {
 			'not_found_in_trash' => sprintf( __( 'No %s found in the Trash', 'evans-mu' ), $this->plural ),
 			'parent_item_colon'  => sprintf( __( 'Parent %s', 'evans-mu' ), $this->singular ),
 			'menu_name'          => sprintf( __( '%s', 'evans-mu' ), $this->plural ),
-		);
+		];
 
-		$defaults = array(
+		$defaults = [
 			'labels'		=> $labels,
 			'public'        => true,
 			'menu_position' => 7,
 			'menu_icon'		=> $this->icon,
 			'rewrite'       => false,
 			'hierarchical'	=> true,
-			'supports'      => array( 'title', 'editor' ),
-		);
+			'supports'      => [ 'title', 'editor' ],
+		];
 
 		$args = wp_parse_args( $this->cpt_args, $defaults );
 
@@ -380,14 +380,14 @@ abstract class CPT {
 	 * @return object Passthrough of all metaboxes.
 	 */
 	public function cmb_metaboxes() {
-		$cmb = new_cmb2_box( array(
+		$cmb = new_cmb2_box( [
 			'id'            => $this->cptslug . '_metabox',
 			'title'         => sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
-			'object_types'  => array( $this->cptslug ),
+			'object_types'  => [ $this->cptslug ],
 			'context'       => 'normal',
 			'priority'      => 'high',
 			'show_names'    => true,
-		) );
+		] );
 
 		return $cmb;
 	}
@@ -396,7 +396,7 @@ abstract class CPT {
 	 * Taxonomy definition if we have set the proper variables at the beginning.
 	 */
 	public function define_taxonomy() {
-		$labels = array(
+		$labels = [
 			'name'              => sprintf( _x( '%s', 'taxonomy general name', 'evans-mu' ), $this->taxonomy_name ),
 			'singular_name'     => sprintf( _x( '%s', 'taxonomy singular name', 'evans-mu' ), $this->taxonomy_name ),
 			'search_items'      => sprintf( __( 'Search %s', 'evans-mu' ), $this->taxonomy_plural ),
@@ -408,14 +408,14 @@ abstract class CPT {
 			'add_new_item'      => sprintf( __( 'Add New %s', 'evans-mu' ), $this->taxonomy_name ),
 			'new_item_name'     => sprintf( __( 'New %s', 'evans-mu' ), $this->taxonomy_name ),
 			'menu_name'         => sprintf( __( '%s', 'evans-mu' ), $this->taxonomy_plural ),
-		);
+		];
 
-		$args = array(
+		$args = [
 			'labels' 			=> $labels,
 			'show_tagcloud'		=> false,
 			'show_admin_column' => true,
 			'hierarchical'		=> true,
-		);
+		];
 
 		register_taxonomy( $this->tax_slug, $this->cptslug, $args );
 	}
@@ -462,12 +462,12 @@ abstract class CPT {
 	 * @return array $cpt_array Passthrough objects to add.
 	 */
 	public function dashboard_cpt_loop( $cpt_array ) {
-		$cpt_array[] = array(
+		$cpt_array[] = [
 			'slug'		=> $this->cptslug,
 			'singular'	=> $this->singular,
 			'plural'	=> $this->plural,
 			'class'		=> $this->icon,
-		);
+		];
 
 		return $cpt_array;
 	}

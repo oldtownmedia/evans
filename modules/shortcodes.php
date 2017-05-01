@@ -10,11 +10,11 @@ namespace evans;
 add_shortcode( 'button', __NAMESPACE__ . '\button_shortcode' );
 function button_shortcode( $atts ) {
 	$atts = shortcode_atts(
-		array(
+		[
 			'link'		=> '',
 			'text'		=> 'Read More',
 			'target'	=> '',
-		),
+		],
 		$atts
 	);
 

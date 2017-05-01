@@ -14,16 +14,14 @@ class HelperFunctionsTests extends \PHPUnit_Framework_TestCase {
     }
 
 	public function test_cmb_prefix(){
-
 		$slug = 'portfolio';
 		$this->assertEquals( '_cmb2_portfolio_', cmb_prefix( $slug ) );
-
 	}
 
 	public function test_add_loading_variables(){
 
-		\WP_Mock::wpFunction( 'is_admin', array(
-		    'return_in_order' => array(
+		\WP_Mock::wpFunction( 'is_admin', [
+		    'return_in_order' => [
 		    	// Defer checks
 		    	false, false,
 		    	false, false,
@@ -35,8 +33,8 @@ class HelperFunctionsTests extends \PHPUnit_Framework_TestCase {
 		    	false, false,
 		    	false, false,
 		    	true, true
-		    )
-		) );
+		    ]
+		] );
 
 		// Defer checks
 		$url = 'http://oldtownmediainc.com/wp-content/themes/otm/js/myscript.js?ver=1';
@@ -81,7 +79,4 @@ class HelperFunctionsTests extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( "http://oldtownmediainc.com/wp-content/themes/otm/style/main.css", remove_script_version( $url ) );
 
 	}
-
-	//public function test_otm_set_messages(){}
-
 }

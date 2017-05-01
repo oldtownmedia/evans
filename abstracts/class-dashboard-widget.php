@@ -31,7 +31,7 @@ abstract class Dashboard_Widget {
 	 * This function is used to avoid loading any unnecessary functions/code
 	 */
 	public function hooks() {
-		add_action( 'wp_dashboard_setup', array( $this, 'register_widget' ) );
+		add_action( 'wp_dashboard_setup', [ $this, 'register_widget' ] );
 	}
 
 	/**
@@ -39,9 +39,9 @@ abstract class Dashboard_Widget {
 	 */
 	public function register_widget() {
 		wp_add_dashboard_widget(
-			$this->id,							// Widget slug.
-			$this->title,						// Title
-			array( $this, 'build_the_widget' )	// Callback function
+			$this->id,                    // Widget slug.
+			$this->title,                 // Title
+			[ $this, 'build_the_widget' ] // Callback function
 		);
 	}
 

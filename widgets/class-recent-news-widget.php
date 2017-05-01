@@ -10,11 +10,9 @@ namespace evans;
  * @copyright 2015 Old Town Media
  */
 final class RecentNewsWidget extends Widget {
-
 	protected $base			= 'recent-news';
 	protected $title		= 'Recent News';
 	protected $description	= 'Display the most recent posts from your blog.';
-
 
 	/**
 	 * Array of fields for the admin editing of the widget.
@@ -24,44 +22,42 @@ final class RecentNewsWidget extends Widget {
 	public function widget_fields() {
 		// Get list of categories to choose from
 		$categories = get_categories();
-		$cat_array = array(
+		$cat_array = [
 			'' => 'Select a Category',
-		);
+		];
 
 		foreach ( $categories as $category ) {
 			$cat_array[ $category->slug ] = $category->cat_name;
 		}
 
-		return array(
-			array(
+		return [
+			[
 				'id'		=> 'title',
 				'name'		=> __( 'Title', 'evans-mu' ),
 				'type'		=> 'text',
 				'default'	=> 'Recent News',
-			),
-			array(
+			],
+			[
 				'id'		=> 'category',
 				'name'		=> __( 'Category', 'evans-mu' ),
 				'desc'		=> 'optional',
 				'type'		=> 'select',
 				'options'	=> $cat_array,
-			),
-			array(
+			],
+			[
 				'id'		=> 'num_posts',
 				'name'		=> __( 'Number of Posts', 'evans-mu' ),
 				'desc'		=> 'optional',
 				'type'		=> 'text',
-			),
-			array(
+			],
+			[
 				'id'		=> 'word_length',
 				'name'		=> __( 'Number of Words per Post to Display', 'evans-mu' ),
 				'desc'		=> 'optional',
 				'type'		=> 'text',
-			),
-		);
-
+			],
+		];
 	}
-
 
 	/**
 	 * The front-end view of the widget
@@ -96,12 +92,12 @@ final class RecentNewsWidget extends Widget {
 		}
 
 		// Our loop arguments
-		$query = array(
+		$query = [
 			'posts_per_page'	=> $posts_per,
 			'category_name'		=> $cat,
 			'order'            	=> 'DESC',
 			'orderby'			=> 'date',
-		);
+		];
 
 		$objects = new \WP_Query( $query );
 
