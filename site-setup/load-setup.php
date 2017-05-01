@@ -30,9 +30,8 @@ if ( ! get_option( 'evans_plugins_installed' ) && 'installed' !== get_option( 'e
  * installed active. Once they are active a non-autoloaded WP Option variable
  * is set to stop loading of the plugin install files.
  */
-add_action( 'admin_init', __NAMESPACE__ . '\flag_plugins_installed' );
-function flag_plugins_installed() {
+add_action( 'admin_init', function() {
 	if ( is_plugin_active( 'wpremote/plugin.php' ) && is_plugin_active( 'wordpress-seo/wp-seo.php' ) ) {
 		add_option( 'evans_plugins_installed', 'installed', '', 'no' );
 	}
-}
+} );

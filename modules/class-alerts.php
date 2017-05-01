@@ -11,7 +11,6 @@ namespace evans;
  * @author     Old Town Media
  */
 final class Alerts extends CPT {
-
 	protected $cptslug 			= 'alert';
 	protected $cptslug_plural	= 'alerts';
 	protected $singular			= 'Alert';
@@ -35,7 +34,6 @@ final class Alerts extends CPT {
 		'posts_per_page' => 1,
 		'nopaging'		=> true,
 	);
-
 
 	/**
 	 * Loop through custom post type and return combined HTML from posts.
@@ -61,9 +59,7 @@ final class Alerts extends CPT {
 		wp_reset_postdata();
 
 		return $html;
-
 	}
-
 
 	/**
 	 * Perform query modifications without touching our loop function.
@@ -73,7 +69,6 @@ final class Alerts extends CPT {
 	 * @return string Modified query arguments.
 	 */
 	public function query_mods( $query, $args ) {
-
 		$query['meta_query'] 	= array(
 			'relation'	=> 'OR',
 			array(
@@ -103,9 +98,7 @@ final class Alerts extends CPT {
 		);
 
 		return parent::query_mods( $query, $args );
-
 	}
-
 
 	/**
 	 * Display a single item from the queried posts.
@@ -117,7 +110,6 @@ final class Alerts extends CPT {
 	 * @return string HTML contents for the individual post.
 	 */
 	public function display_single( $pid ) {
-
 		$html = '';
 
 		$end = get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'end_date', true );
@@ -135,21 +127,18 @@ final class Alerts extends CPT {
 		}
 
 		return $html;
-
 	}
-
 
 	/**
 	 * Add in array of custom metabox fields for use with CMB2.
 	 */
 	public function cmb_metaboxes() {
-
 		// Setup the main CMB box
 		$cmb = parent::cmb_metaboxes();
 
 		$cmb->add_field( array(
 			'name'    => __( 'Active?', 'evans-mu' ),
-			'desc'    => __( 'Choose whether this ' . $this->cptslug . ' should be active or not', 'evans-mu' ),
+			'desc'    => sprintf( __( 'Choose whether this %s should be active or not', 'evans-mu' ), $this->cptslug ),
 			'id'      => $this->prefix . 'active',
 			'type'    => 'radio',
 			'options' => array(
@@ -160,7 +149,7 @@ final class Alerts extends CPT {
 
 		$cmb->add_field( array(
 			'name' 		=> __( 'Start Date', 'evans-mu' ),
-			'desc' 		=> __( 'If you would like to schedule this ' . $this->cptslug . ', enter a start date.', 'evans-mu' ),
+			'desc' 		=> sprintf( __( 'If you would like to schedule this %s, enter a start date.', 'evans-mu' ), $this->cptslug ),
 			'id'   		=> $this->prefix . 'start_date',
 			'type' 		=> 'text_datetime_timestamp',
 			'default'	=> time(),
@@ -168,15 +157,12 @@ final class Alerts extends CPT {
 
 		$cmb->add_field( array(
 			'name' => __( 'End Date', 'evans-mu' ),
-			'desc' => __( 'If you would like to schedule this ' . $this->cptslug . ', enter an end date.', 'evans-mu' ),
+			'desc' => sprintf( __( 'If you would like to schedule this %s, enter an end date.', 'evans-mu' ), $this->cptslug ),
 			'id'   => $this->prefix . 'end_date',
 			'type' => 'text_datetime_timestamp',
 		) );
-
 	}
-
 }
-
 
 /*
  * Instantiate the hooks method

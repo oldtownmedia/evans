@@ -8,10 +8,8 @@ namespace evans;
  *
  * @package    WordPress
  * @subpackage Evans
- * @author     Old Town Media
  */
 final class Highlights extends CPT {
-
 	protected $cptslug 			= 'highlight';
 	protected $cptslug_plural	= 'highlights';
 	protected $singular			= 'Home Highlight';
@@ -40,7 +38,6 @@ final class Highlights extends CPT {
 		'posts_per_page' => 3,
 	);
 
-
 	/**
 	 * Display a single item from the queried posts.
 	 *
@@ -51,7 +48,6 @@ final class Highlights extends CPT {
 	 * @return string HTML contents for the individual post.
 	 */
 	public function display_single( $pid ) {
-
 		$html = '';
 
 		$link		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'url', true );
@@ -77,21 +73,18 @@ final class Highlights extends CPT {
 		$html .= '</li>';
 
 		return $html;
-
 	}
-
 
 	/**
 	 * Add in array of custom metabox fields for use with CMB2.
 	 */
 	public function cmb_metaboxes() {
-
 		// Setup the main CMB box
 		$cmb = parent::cmb_metaboxes();
 
 		$cmb->add_field( array(
 			'name' => __( 'Content', 'evans-mu' ),
-			'desc' => __( 'Enter any content that you would like to appear in the ' . $this->singular, 'evans-mu' ),
+			'desc' => sprintf( __( 'Enter any content that you would like to appear in the %s', 'evans-mu' ). $this->singular ),
 			'id'   => $this->prefix . 'content',
 			'type' => 'text',
 		) );
@@ -117,11 +110,8 @@ final class Highlights extends CPT {
 			'type' => 'file',
 			'allow' => array( 'attachment' ),
 		) );
-
 	}
-
 }
-
 
 /*
  * Instantiate the hooks method

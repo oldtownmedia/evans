@@ -8,10 +8,8 @@ namespace evans;
  *
  * @package    WordPress
  * @subpackage Evans
- * @author     Old Town Media
  */
 final class Partners extends CPT {
-
 	protected $cptslug 			= 'partner';
 	protected $cptslug_plural	= 'partners';
 	protected $singular			= 'Partner';
@@ -40,7 +38,6 @@ final class Partners extends CPT {
 		'no_found_rows'	=> false,
 	);
 
-
 	/**
 	 * Display a single item from the queried posts.
 	 *
@@ -51,7 +48,6 @@ final class Partners extends CPT {
 	 * @return string HTML contents for the individual post.
 	 */
 	public function display_single( $pid ) {
-
 		$html = '';
 
 		$link	= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'url', true );
@@ -65,15 +61,12 @@ final class Partners extends CPT {
 		$html .= '</li>';
 
 		return $html;
-
 	}
-
 
 	/**
 	 * Add in array of custom metabox fields for use with CMB2.
 	 */
 	public function cmb_metaboxes() {
-
 		// Setup the main CMB box
 		$cmb = parent::cmb_metaboxes();
 
@@ -90,11 +83,8 @@ final class Partners extends CPT {
 			'type' => 'file',
 			'allow' => array( 'attachment' ),
 		) );
-
 	}
-
 }
-
 
 /*
  * Instantiate the hooks method

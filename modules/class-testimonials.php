@@ -8,10 +8,8 @@ namespace evans;
  *
  * @package    WordPress
  * @subpackage Evans
- * @author     Old Town Media
  */
 final class Testimonials extends CPT {
-
 	protected $cptslug 			= 'testimonial';
 	protected $cptslug_plural	= 'testimonials';
 	protected $singular			= 'Testimonial';
@@ -33,7 +31,6 @@ final class Testimonials extends CPT {
 		'posts_per_page' => 100,
 	);
 
-
 	/**
 	 * Display a single item from the queried posts.
 	 *
@@ -44,7 +41,6 @@ final class Testimonials extends CPT {
 	 * @return string HTML contents for the individual post.
 	 */
 	public function display_single( $pid ) {
-
 		$html = '';
 
 		$reviewer = get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'reviewer', true );
@@ -62,15 +58,12 @@ final class Testimonials extends CPT {
 		$html .= '</li>';
 
 		return $html;
-
 	}
-
 
 	/**
 	 * Add in array of custom metabox fields for use with CMB2.
 	 */
 	public function cmb_metaboxes() {
-
 		// Setup the main CMB box
 		$cmb = parent::cmb_metaboxes();
 
@@ -79,11 +72,8 @@ final class Testimonials extends CPT {
 			'id'	=> $this->prefix . 'reviewer',
 			'type'	=> 'text',
 		) );
-
 	}
-
 }
-
 
 /*
  * Instantiate the hooks method

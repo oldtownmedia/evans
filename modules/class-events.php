@@ -8,10 +8,8 @@ namespace evans;
  *
  * @package    WordPress
  * @subpackage Evans
- * @author     Old Town Media
  */
 final class Events extends CPT {
-
 	protected $cptslug 			= 'event';
 	protected $cptslug_plural	= 'events';
 	protected $singular			= 'Event';
@@ -37,7 +35,6 @@ final class Events extends CPT {
 		'update_post_term_cache' => false,
 	);
 
-
 	/**
 	 * Perform query modifications without touching our loop function.
 	 *
@@ -46,7 +43,6 @@ final class Events extends CPT {
 	 * @return string Modified query arguments.
 	 */
 	public function query_mods( $query, $args ) {
-
 		$query['meta_key']		= $this->prefix . 'date';
 		$query['meta_query'] 	= array(
 			array(
@@ -58,9 +54,7 @@ final class Events extends CPT {
 		);
 
 		return parent::query_mods( $query, $args );
-
 	}
-
 
 	/**
 	 * Display a single item from the queried posts.
@@ -72,7 +66,6 @@ final class Events extends CPT {
 	 * @return string HTML contents for the individual post.
 	 */
 	public function display_single( $pid ) {
-
 		$html = '';
 
 		$date		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'date', true );
@@ -101,28 +94,25 @@ final class Events extends CPT {
 			$html .= '</li>';
 
 		return $html;
-
 	}
-
 
 	/**
 	 * Add in array of custom metabox fields for use with CMB2.
 	 */
 	public function cmb_metaboxes() {
-
 		// Setup the main CMB box
 		$cmb = parent::cmb_metaboxes();
 
 		$cmb->add_field( array(
 			'name' => __( 'Start Date/Time', 'evans-mu' ),
-			'desc' => __( 'Enter a date for your ' . $this->cptslug, 'evans-mu' ),
+			'desc' => sprintf( __( 'Enter a date for your %s', 'evans-mu' ), $this->cptslug ),
 			'id'   => $this->prefix . 'date',
 			'type' => 'text_datetime_timestamp',
 		) );
 
 		$cmb->add_field( array(
 			'name' => __( 'Event Cost', 'evans-mu' ),
-			'desc' => __( 'Enter the guest cost for your ' . $this->cptslug . ' (optional)', 'evans-mu' ),
+			'desc' => sprintf( __( 'Enter the guest cost for your %s (optional)', 'evans-mu' ), $this->cptslug ),
 			'id'   => $this->prefix . 'cost',
 			'type' => 'text_money',
 		) );
@@ -133,11 +123,8 @@ final class Events extends CPT {
 			'type' => 'file',
 			'allow' => array( 'attachment' ),
 		) );
-
 	}
-
 }
-
 
 /*
  * Instantiate the hooks method

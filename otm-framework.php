@@ -12,6 +12,7 @@
 
 // Define a list of subfolders to poke through for files
 $dirs = array(
+	'abstracts',
 	'admin',
 	'assets',
 	'modules',
@@ -35,4 +36,10 @@ foreach ( $dirs as $dir ) {
 	}
 }
 
-// @todo:: rename modules to post-types
+// @todo:: Use an autoloader
+// @todo:: Use PSR-4 file/classnames
+// @todo:: Add namespaces to everything
+// @todo:: Put CMB in vendor folder
+// @todo:: Put all files in one folder?
+// @todo:: ob all the things
+// @todo:: space all the arrays instead of tabs

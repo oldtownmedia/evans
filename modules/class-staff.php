@@ -8,10 +8,8 @@ namespace evans;
  *
  * @package    WordPress
  * @subpackage Evans
- * @author     Old Town Media
  */
 final class Staff extends CPT {
-
 	protected $cptslug 			= 'staff';
 	protected $cptslug_plural	= 'staff';
 	protected $singular			= 'Staff';
@@ -36,7 +34,6 @@ final class Staff extends CPT {
 		'no_found_rows'	=> false,
 	);
 
-
 	/**
 	 * Display a single item from the queried posts.
 	 *
@@ -47,7 +44,6 @@ final class Staff extends CPT {
 	 * @return string HTML contents for the individual post.
 	 */
 	public function display_single( $pid ) {
-
 		$html = '';
 
 		$img_id		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true );
@@ -71,15 +67,12 @@ final class Staff extends CPT {
 		$html .= '</li>';
 
 		return $html;
-
 	}
-
 
 	/**
 	 * Add in array of custom metabox fields for use with CMB2.
 	 */
 	public function cmb_metaboxes() {
-
 		// Setup the main CMB box
 		$cmb = parent::cmb_metaboxes();
 
@@ -96,11 +89,8 @@ final class Staff extends CPT {
 			'type' => 'file',
 			'allow' => array( 'attachment' ),
 		) );
-
 	}
-
 }
-
 
 /*
  * Instantiate the hooks method

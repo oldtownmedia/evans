@@ -11,7 +11,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-class Site_Lockdown {
+class Lockdown {
 
 	/**
 	 * IP Address of the server for this script to run on.
@@ -46,7 +46,7 @@ class Site_Lockdown {
 	/**
 	 * Create our admin menu main node for turning lockdown on or off.
 	 *
-	 * @param type $wp_admin_bar Global wp_admin_bar object.
+	 * @param object $wp_admin_bar Global wp_admin_bar object.
 	 */
 	public function page_lockdown_display( $wp_admin_bar ) {
 		// Check that the admin bar is showing and is admin user
@@ -63,10 +63,10 @@ class Site_Lockdown {
 
 			if ( $locked == 'locked' ) {
 				$title	= '<span style="color:green">' . esc_html__( 'Site is locked', 'evans-mu' ) . '</span>';
-				$link   = add_query_arg( 'unlock_site',  wp_create_nonce( 'evans_unlock_site' ),  );
+				$link   = add_query_arg( 'unlock_site',  wp_create_nonce( 'evans_unlock_site' ), $url );
 			} else {
 				$title	= '<span style="color:red">' . esc_html__( 'Site is unlocked', 'evans-mu' ) . '</span>';
-				$link   = add_query_arg( 'lock_site',  wp_create_nonce( 'evans_lock_site' ),  );
+				$link   = add_query_arg( 'lock_site',  wp_create_nonce( 'evans_lock_site' ), $url );
 			}
 
 			$wp_admin_bar->add_node(
@@ -107,13 +107,13 @@ class Site_Lockdown {
 	 */
 	public function lockdown_actions() {
 		// We're logged in and validated, return.
-		if ( is_user_logged_in() || in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) ) {
+		if ( is_user_logged_in() || in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ), true ) ) {
 			return;
 		}
 
 		$locked = get_option( 'evans_site_lockdown' );
 
-		if ( $locked == 'locked' && ! is_admin() ) {
+		if ( 'locked' === $locked && ! is_admin() ) {
 
 			// Check to see if the current user is allowed
 			if ( ! in_array( $_SERVER['REMOTE_ADDR'], $this->acceptable_ips, true ) ) {
@@ -143,4 +143,4 @@ class Site_Lockdown {
 /*
  * Instantiate our class
  */
-$evans_simple_admin = new Site_Lockdown();
+$evans_simple_admin = new Lockdown();
