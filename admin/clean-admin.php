@@ -70,10 +70,6 @@ function register_fields() {
 	);
 }
 
-/*************
-* Menu Stuff *
-*************/
-
 /**
  * Remove unnecesary menu & sub-menu items.
  *
@@ -96,12 +92,12 @@ function remove_menus() {
 
 	// Move pages item to top.
 	global $menu, $submenu;
-	$menu[6] = $menu[5];	// Move posts from 5 to 6
-	$menu[5] = $menu[20];	// Move pages from 20 to 5
-	unset( $menu[20] );		// Remove spot that pages was in
+	$menu[6] = $menu[5];	// Move posts from 5 to 6.
+	$menu[5] = $menu[20];	// Move pages from 20 to 5.
+	unset( $menu[20] );		// Remove spot that pages was in.
 
-	// Remove customizer link.
-	unset( $submenu['themes.php'][6] );	// Alternative method of removing customizer
+	// Alternative method of removing customizer link.
+	unset( $submenu['themes.php'][6] );
 
 	// Rename Widgets.
 	if ( isset( $submenu['themes.php'][7] ) ) {
@@ -118,10 +114,10 @@ function remove_menus() {
 	// Remove menu items only for non-admins.
 	$current_user = wp_get_current_user();
 	if ( 'otm' !== $current_user->user_login ) {
-		remove_submenu_page( 'themes.php', 'themes.php' );		// Remove Theme page
-		remove_submenu_page( 'gf_edit_forms', 'gf_export' );	// GF Export/Import
-		remove_submenu_page( 'gf_edit_forms', 'gf_addons' );	// GF Export/Import
-		remove_submenu_page( 'gf_edit_forms', 'gf_help' );		// GF Export/Import
+		remove_submenu_page( 'themes.php', 'themes.php' );		// Theme page.
+		remove_submenu_page( 'gf_edit_forms', 'gf_export' );	// GF Export/Import.
+		remove_submenu_page( 'gf_edit_forms', 'gf_addons' );	// GF Addons.
+		remove_submenu_page( 'gf_edit_forms', 'gf_help' );		// GF Help.
 	}
 }
 
@@ -137,7 +133,7 @@ function is_gracious_menu_item( $item ) {
 
 /**
  * Move all items in the main admin menu that aren't whitelisted
- * to the very bottom. Because seriously, it's rediculous
+ * to the very bottom. Because seriously, it's rediculous.
  *
  * @param array $menu Original menu array.
  * @return array $menu Modified menu array.
@@ -146,7 +142,6 @@ function menu_order( $menu ) {
 	$penalty_box = [];
 
 	foreach ( $menu as $key => $item ) {
-
 		if ( 'separator1' === $item ) {
 			break;
 		} elseif ( 'index.php' !== $item && ! $this->is_gracious_menu_item( $item ) ) {
@@ -160,15 +155,15 @@ function menu_order( $menu ) {
 	return array_merge( $menu, $penalty_box );
 }
 
-/******************
-* Plugin Specific *
-******************/
-
 /**
  * Modify the text for Soliloquy & Envira to whitelabeled strings.
  *
- * @param string $translated_text translated version of the string.
- * @param string $source_text original text.
+ * This is intentionally naive for performance sake. The pages are
+ * splattered with the plugin's branding anyway so might as well
+ * simply blunt it rather than attempt to fully whitelabel.
+ *
+ * @param string $translated_text Translated version of the string.
+ * @param string $source_text     Original text.
  * @return string modified text.
  */
 function relabel_soliloquy_envira( $translated_text, $source_text ) {
@@ -178,19 +173,20 @@ function relabel_soliloquy_envira( $translated_text, $source_text ) {
 	}
 
 	$strings = [
-		'Soliloquy Slider' => 'Slider',
-		'Soliloquy slider' => 'slider',
-		'Soliloquy'        => 'Slider',
-		'an Envira'        => 'a Gallery',
-		'Envira'           => 'Gallery',
+		'Soliloquy Slider'      => 'Slider',
+		'Soliloquy slider'      => 'slider',
+		'Soliloquy Sliders'     => 'Sliders',
+		'Soliloquy'             => 'Slider',
+		'an Envira'             => 'a Gallery',
+		'Envira Gallery'        => 'Gallery',
+		'Envira Galleries'      => 'Galleries',
+		'Native Envira Gallery' => 'Native Gallery',
+		'Envira'                => 'Gallery',
 	];
 
-	// @todo:: make sure this works.
-	array_walk( $strings, function( $item, $key ) use ( $translated_text, $source_text ) {
-		if ( strpos( $source_text, $key ) !== false ) {
-			return str_replace( $key, $item, $translated_text );
-		}
-	} );
+	if ( array_key_exists( $source_text, $strings ) ) {
+		return $strings[ $source_text ];
+	}
 
 	return $translated_text;
 }
@@ -217,10 +213,6 @@ function envira_skip_cpts( $post_types ) {
 
 	return $post_types;
 }
-
-/****************
-* General Admin *
-****************/
 
 /**
  * Remove unnecessary post columns from posts and pages.
