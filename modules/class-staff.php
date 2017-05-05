@@ -10,28 +10,28 @@ namespace evans;
  * @subpackage Evans
  */
 final class Staff extends CPT {
-	protected $cptslug 			= 'staff';
-	protected $cptslug_plural	= 'staff';
-	protected $singular			= 'Staff';
-	protected $plural			= 'Staff';
-	protected $icon				= 'dashicons-businessman';
-	protected $hide_view 		= false;
-	protected $thumbnail_size	= [
-		'width'		=> 300,
-		'height'	=> 300,
+	protected $cptslug        = 'staff';
+	protected $cptslug_plural = 'staff';
+	protected $singular       = 'Staff';
+	protected $plural         = 'Staff';
+	protected $icon           = 'dashicons-businessman';
+	protected $hide_view      = false;
+	protected $thumbnail_size = [
+		'width'  => 300,
+		'height' => 300,
 	];
 
 	// Arguments to define the CPT
-	protected $cpt_args			= [
-		'rewrite'				=> true,
+	protected $cpt_args = [
+		'rewrite' => true,
 	];
 
 	// Arguments for the CPT loop
 	protected $loop_args = [
-		'orderby' 		=> 'menu_order',
-		'order' 		=> 'ASC',
+		'orderby'        => 'menu_order',
+		'order'          => 'ASC',
 		'posts_per_page' => 100,
-		'no_found_rows'	=> false,
+		'no_found_rows'  => false,
 	];
 
 	/**
@@ -84,9 +84,9 @@ final class Staff extends CPT {
 		] );
 
 		$cmb->add_field( [
-			'name' => __( 'Image', 'evans-mu' ),
-			'id'   => $this->prefix . 'image',
-			'type' => 'file',
+			'name'  => __( 'Image', 'evans-mu' ),
+			'id'    => $this->prefix . 'image',
+			'type'  => 'file',
 			'allow' => [ 'attachment' ],
 		] );
 	}

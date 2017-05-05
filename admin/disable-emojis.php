@@ -34,3 +34,5 @@ function disable_emojis_tinymce( $plugins ) {
 		return [];
 	}
 }
+
+setup();

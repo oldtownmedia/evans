@@ -41,7 +41,7 @@ abstract class Widget extends \WP_Widget {
 			$this->base,
 			$this->title,
 			[
-				'classname'  => $this->base . '-class',
+				'classname'   => $this->base . '-class',
 				'description' => esc_html( $this->description ),
 			]
 		);
@@ -243,7 +243,7 @@ abstract class Widget extends \WP_Widget {
 		foreach ( $fields as $field ) {
 
 			if ( isset( $field['default'] ) ) {
-				$defaults[ $field['id'] ]	= $field['default'];
+				$defaults[ $field['id'] ] = $field['default'];
 			} else {
 				$defaults[ $field['id'] ] = '';
 			}

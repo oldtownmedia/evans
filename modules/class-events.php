@@ -10,28 +10,28 @@ namespace evans;
  * @subpackage Evans
  */
 final class Events extends CPT {
-	protected $cptslug 			= 'event';
-	protected $cptslug_plural	= 'events';
-	protected $singular			= 'Event';
-	protected $plural			= 'Events';
-	protected $icon				= 'dashicons-calendar';
-	protected $hide_view 		= false;
-	protected $thumbnail_size	= [
+	protected $cptslug        = 'event';
+	protected $cptslug_plural = 'events';
+	protected $singular       = 'Event';
+	protected $plural         = 'Events';
+	protected $icon           = 'dashicons-calendar';
+	protected $hide_view      = false;
+	protected $thumbnail_size = [
 		'width'		=> 300,
 		'height'	=> 200,
 	];
 
 	// Arguments to define the CPT
-	protected $cpt_args			= [
+	protected $cpt_args = [
 		'show_in_nav_menus'	=> false,
 	];
 
 	// Arguments for the CPT loop
 	protected $loop_args = [
-		'orderby' 			=> 'meta_value',
-		'order' 			=> 'ASC',
-		'nopaging'			=> false,
-		'no_found_rows' 	=> true,
+		'orderby'                => 'meta_value',
+		'order'                  => 'ASC',
+		'nopaging'	             => false,
+		'no_found_rows'          => true,
 		'update_post_term_cache' => false,
 	];
 
@@ -118,9 +118,9 @@ final class Events extends CPT {
 		] );
 
 		$cmb->add_field( [
-			'name' => __( 'Image', 'evans-mu' ),
-			'id'   => $this->prefix . 'image',
-			'type' => 'file',
+			'name'  => __( 'Image', 'evans-mu' ),
+			'id'    => $this->prefix . 'image',
+			'type'  => 'file',
 			'allow' => [ 'attachment' ],
 		] );
 	}

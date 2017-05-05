@@ -18,28 +18,28 @@ final class CompanyRSSFeedWidget extends Dashboard_Widget {
 	 *
 	 * @var string
 	 */
-	protected $id 		= 'rss_widget';
+	protected $id = 'rss_widget';
 
 	/**
 	 * Title for the dashboard widget.
 	 *
 	 * @var string
 	 */
-	protected $title 	= 'Latest News';
+	protected $title = 'Latest News';
 
 	/**
 	 * URL of the feed you want to hook into.
 	 *
 	 * @var string
 	 */
-	protected $feed_url		= 'https://oldtownmediainc.com/feed/';
+	protected $feed_url	= 'https://oldtownmediainc.com/feed/';
 
 	/**
 	 * The number of posts to show.
 	 *
 	 * @var int
 	 */
-	protected $num_posts	= 5;
+	protected $num_posts = 5;
 
 	/**
 	 * Build our widget and output the posts.

@@ -10,32 +10,32 @@ namespace evans;
  * @subpackage Evans
  */
 final class Partners extends CPT {
-	protected $cptslug 			= 'partner';
-	protected $cptslug_plural	= 'partners';
-	protected $singular			= 'Partner';
-	protected $plural			= 'Partners';
-	protected $icon				= 'dashicons-star-filled';
-	protected $hide_view 		= true;
-	protected $thumbnail_size	= [
+	protected $cptslug        = 'partner';
+	protected $cptslug_plural = 'partners';
+	protected $singular       = 'Partner';
+	protected $plural         = 'Partners';
+	protected $icon           = 'dashicons-star-filled';
+	protected $hide_view      = true;
+	protected $thumbnail_size = [
 		'width'		=> 200,
 		'height'	=> 200,
 	];
 
 	// Arguments to define the CPT
-	protected $cpt_args			= [
-		'exclude_from_search'	=> true,
-		'show_in_nav_menus'		=> false,
-		'publicly_queryable'	=> false,
-		'supports'      		=> [ 'title' ],
-		'has_archive'   		=> false,
+	protected $cpt_args = [
+		'exclude_from_search' => true,
+		'show_in_nav_menus'   => false,
+		'publicly_queryable'  => false,
+		'supports'            => [ 'title' ],
+		'has_archive'         => false,
 	];
 
 	// Arguments for the CPT loop
 	protected $loop_args = [
-		'orderby' 		=> 'menu_order',
-		'order' 		=> 'ASC',
+		'orderby'        => 'menu_order',
+		'order'          => 'ASC',
 		'posts_per_page' => 100,
-		'no_found_rows'	=> false,
+		'no_found_rows'  => false,
 	];
 
 	/**
@@ -78,9 +78,9 @@ final class Partners extends CPT {
 		] );
 
 		$cmb->add_field( [
-			'name' => __( 'Image', 'evans-mu' ),
-			'id'   => $this->prefix . 'image',
-			'type' => 'file',
+			'name'  => __( 'Image', 'evans-mu' ),
+			'id'    => $this->prefix . 'image',
+			'type'  => 'file',
 			'allow' => [ 'attachment' ],
 		] );
 	}

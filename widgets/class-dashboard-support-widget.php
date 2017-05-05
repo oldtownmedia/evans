@@ -17,14 +17,14 @@ final class CompanySupportWidget extends Dashboard_Widget {
 	 *
 	 * @var string
 	 */
-	protected $id 		= 'evans_support_dashboard_widget';
+	protected $id = 'evans_support_dashboard_widget';
 
 	/**
 	 * Title for the dashboard widget.
 	 *
 	 * @var string
 	 */
-	protected $title 	= 'Welcome to Your Dashboard';
+	protected $title = 'Welcome to Your Dashboard';
 
 	/**
 	 * Phone # of your company.

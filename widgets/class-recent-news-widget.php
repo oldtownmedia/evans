@@ -10,9 +10,9 @@ namespace evans;
  * @copyright 2015 Old Town Media
  */
 final class RecentNewsWidget extends Widget {
-	protected $base			= 'recent-news';
-	protected $title		= 'Recent News';
-	protected $description	= 'Display the most recent posts from your blog.';
+	protected $base        = 'recent-news';
+	protected $title       = 'Recent News';
+	protected $description = 'Display the most recent posts from your blog.';
 
 	/**
 	 * Array of fields for the admin editing of the widget.
@@ -32,29 +32,29 @@ final class RecentNewsWidget extends Widget {
 
 		return [
 			[
-				'id'		=> 'title',
-				'name'		=> __( 'Title', 'evans-mu' ),
-				'type'		=> 'text',
-				'default'	=> 'Recent News',
+				'id'      => 'title',
+				'name'    => __( 'Title', 'evans-mu' ),
+				'type'    => 'text',
+				'default' => 'Recent News',
 			],
 			[
-				'id'		=> 'category',
-				'name'		=> __( 'Category', 'evans-mu' ),
-				'desc'		=> 'optional',
-				'type'		=> 'select',
-				'options'	=> $cat_array,
+				'id'      => 'category',
+				'name'    => __( 'Category', 'evans-mu' ),
+				'desc'    => 'optional',
+				'type'    => 'select',
+				'options' => $cat_array,
 			],
 			[
-				'id'		=> 'num_posts',
-				'name'		=> __( 'Number of Posts', 'evans-mu' ),
-				'desc'		=> 'optional',
-				'type'		=> 'text',
+				'id'   => 'num_posts',
+				'name' => __( 'Number of Posts', 'evans-mu' ),
+				'desc' => 'optional',
+				'type' => 'text',
 			],
 			[
-				'id'		=> 'word_length',
-				'name'		=> __( 'Number of Words per Post to Display', 'evans-mu' ),
-				'desc'		=> 'optional',
-				'type'		=> 'text',
+				'id'   => 'word_length',
+				'name' => __( 'Number of Words per Post to Display', 'evans-mu' ),
+				'desc' => 'optional',
+				'type' => 'text',
 			],
 		];
 	}

@@ -18,14 +18,14 @@ class Lockdown {
 	 *
 	 * @var string
 	 */
-	private $server_ip 		= '104.131.16.207';
+	private $server_ip = '104.131.16.207';
 
 	/**
 	 * URL to pull the block page from.
 	 *
 	 * @var string
 	 */
-	private $block_page		= 'http://dev.otmoffice.com/resources/index.html';
+	private $block_page	= 'http://dev.otmoffice.com/resources/index.html';
 
 	 /**
 	  * Constructor function.

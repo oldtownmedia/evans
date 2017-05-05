@@ -11,9 +11,9 @@ add_shortcode( 'button', __NAMESPACE__ . '\button_shortcode' );
 function button_shortcode( $atts ) {
 	$atts = shortcode_atts(
 		[
-			'link'		=> '',
-			'text'		=> 'Read More',
-			'target'	=> '',
+			'link'   => '',
+			'text'   => 'Read More',
+			'target' => '',
 		],
 		$atts
 	);

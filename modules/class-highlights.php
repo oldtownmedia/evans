@@ -10,31 +10,31 @@ namespace evans;
  * @subpackage Evans
  */
 final class Highlights extends CPT {
-	protected $cptslug 			= 'highlight';
-	protected $cptslug_plural	= 'highlights';
-	protected $singular			= 'Home Highlight';
-	protected $plural			= 'Home Highlights';
-	protected $icon				= 'dashicons-archive';
-	protected $hide_view		= true;
-	protected $thumbnail_size	= [
+	protected $cptslug        = 'highlight';
+	protected $cptslug_plural = 'highlights';
+	protected $singular       = 'Home Highlight';
+	protected $plural         = 'Home Highlights';
+	protected $icon           = 'dashicons-archive';
+	protected $hide_view      = true;
+	protected $thumbnail_size = [
 		'width'		=> 400,
 		'height'	=> 400,
 	];
 
 	// Arguments to define the CPT
-	protected $cpt_args			= [
-		'exclude_from_search'	=> true,
-		'show_in_nav_menus'		=> false,
-		'publicly_queryable'	=> false,
-		'supports'      		=> [ 'title' ],
-		'has_archive'   		=> false,
+	protected $cpt_args = [
+		'exclude_from_search' => true,
+		'show_in_nav_menus'   => false,
+		'publicly_queryable'  => false,
+		'supports'            => [ 'title' ],
+		'has_archive'         => false,
 	];
 
 	// Arguments for the CPT loop
 	protected $loop_args = [
-		'no_found_rows'	=> true,
-		'orderby' 		=> 'menu_order',
-		'order' 		=> 'ASC',
+		'no_found_rows'  => true,
+		'orderby'        => 'menu_order',
+		'order'          => 'ASC',
 		'posts_per_page' => 3,
 	];
 
@@ -97,17 +97,17 @@ final class Highlights extends CPT {
 		] );
 
 		$cmb->add_field( [
-			'name' => __( 'Link Text', 'evans-mu' ),
-			'desc' => __( 'Enter text for the link.', 'evans-mu' ),
-			'id'   => $this->prefix . 'url_text',
-			'type' => 'text',
+			'name'    => __( 'Link Text', 'evans-mu' ),
+			'desc'    => __( 'Enter text for the link.', 'evans-mu' ),
+			'id'      => $this->prefix . 'url_text',
+			'type'    => 'text',
 			'default' => __( 'Read More', 'evans-mu' ),
 		] );
 
 		$cmb->add_field( [
-			'name' => __( 'Image', 'evans-mu' ),
-			'id'   => $this->prefix . 'image',
-			'type' => 'file',
+			'name'  => __( 'Image', 'evans-mu' ),
+			'id'    => $this->prefix . 'image',
+			'type'  => 'file',
 			'allow' => [ 'attachment' ],
 		] );
 	}

@@ -195,21 +195,21 @@ abstract class CPT {
 
 		// If our shortcode passed in the random as true
 		if ( ! empty( $args['random'] ) && $args['random'] == true ) {
-			$query['no_found_rows']		= false;
-			$query['posts_per_page']	= 1;
-			$query['orderby']			= 'rand';
+			$query['no_found_rows']  = false;
+			$query['posts_per_page'] = 1;
+			$query['orderby']        = 'rand';
 		}
 
 		// If our shortcode passed in an id
 		if ( ! empty( $args['pid'] ) ) {
-			$query['no_found_rows']		= false;
-			$query['posts_per_page']	= 1;
-			$query['post__in']			= [ $args['pid'] ];
+			$query['no_found_rows']	 = false;
+			$query['posts_per_page'] = 1;
+			$query['post__in']       = [ $args['pid'] ];
 		}
 
 		// If our shortcode passed in a group id OR our taxonomy_loop passes in a group id
 		if ( ! empty( $args['group'] ) ) {
-			$query[ $this->tax_slug ]		= [ $args['group'] ];
+			$query[ $this->tax_slug ] = [ $args['group'] ];
 		}
 
 		return $query;
@@ -280,8 +280,8 @@ abstract class CPT {
 		$terms = get_terms(
 			$this->tax_slug,
 			[
-				'hide_empty'	=> true,
-				'number'		=> 500,
+				'hide_empty' => true,
+				'number'     => 500,
 			]
 		);
 
@@ -317,19 +317,19 @@ abstract class CPT {
 	public function shortcode( $atts ) {
 		$atts = shortcode_atts(
 			[
-				'quantity' 	=> '',
-				'group'		=> '',
-				'id'		=> '',
-				'random'	=> false,
+				'quantity' => '',
+				'group'    => '',
+				'id'       => '',
+				'random'   => false,
 			],
 			$atts
 		);
 
 		$args = [
-			'quantity'	=> $atts['quantity'],
-			'group'		=> $atts['group'],
-			'random'	=> $atts['random'],
-			'pid'		=> $atts['id'],
+			'quantity' => $atts['quantity'],
+			'group'    => $atts['group'],
+			'random'   => $atts['random'],
+			'pid'      => $atts['id'],
 		];
 
 		return $this->loop_cpt( $args );
@@ -360,12 +360,12 @@ abstract class CPT {
 		];
 
 		$defaults = [
-			'labels'		=> $labels,
+			'labels'        => $labels,
 			'public'        => true,
 			'menu_position' => 7,
-			'menu_icon'		=> $this->icon,
+			'menu_icon'	    => $this->icon,
 			'rewrite'       => false,
-			'hierarchical'	=> true,
+			'hierarchical'  => true,
 			'supports'      => [ 'title', 'editor' ],
 		];
 
@@ -381,12 +381,12 @@ abstract class CPT {
 	 */
 	public function cmb_metaboxes() {
 		$cmb = new_cmb2_box( [
-			'id'            => $this->cptslug . '_metabox',
-			'title'         => sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
-			'object_types'  => [ $this->cptslug ],
-			'context'       => 'normal',
-			'priority'      => 'high',
-			'show_names'    => true,
+			'id'           => $this->cptslug . '_metabox',
+			'title'        => sprintf( __( '%s Information', 'evans-mu' ), $this->singular ),
+			'object_types' => [ $this->cptslug ],
+			'context'      => 'normal',
+			'priority'     => 'high',
+			'show_names'   => true,
 		] );
 
 		return $cmb;
@@ -411,10 +411,10 @@ abstract class CPT {
 		];
 
 		$args = [
-			'labels' 			=> $labels,
-			'show_tagcloud'		=> false,
+			'labels'            => $labels,
+			'show_tagcloud'     => false,
 			'show_admin_column' => true,
-			'hierarchical'		=> true,
+			'hierarchical'      => true,
 		];
 
 		register_taxonomy( $this->tax_slug, $this->cptslug, $args );
@@ -463,10 +463,10 @@ abstract class CPT {
 	 */
 	public function dashboard_cpt_loop( $cpt_array ) {
 		$cpt_array[] = [
-			'slug'		=> $this->cptslug,
-			'singular'	=> $this->singular,
-			'plural'	=> $this->plural,
-			'class'		=> $this->icon,
+			'slug'     => $this->cptslug,
+			'singular' => $this->singular,
+			'plural'   => $this->plural,
+			'class'    => $this->icon,
 		];
 
 		return $cpt_array;

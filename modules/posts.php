@@ -22,7 +22,7 @@ function post_columns( $columns ) {
 	unset( $columns['wpseo-score'] );
 
 	// Add in our modified columns
-	$columns['modified'] 	= 'Last Modified';
+	$columns['modified']    = 'Last Modified';
 	$columns['wpseo-score']	= 'SEO'; // Adding this back in, but at the very end
 
 	return $columns;

@@ -16,7 +16,7 @@ $dirs = [
 	'admin',
 	'assets',
 	'modules',
-	'widgets'
+	'widgets',
 ];
 
 /*
@@ -37,6 +37,7 @@ foreach ( $dirs as $dir ) {
 }
 
 // @todo:: Use an autoloader
+// @todo:: setup namespaces function
 // @todo:: Use PSR-4 file/classnames
 // @todo:: Add namespaces to everything
 // @todo:: Put CMB in vendor folder

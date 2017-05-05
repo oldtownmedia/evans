@@ -11,28 +11,28 @@ namespace evans;
  * @author     Old Town Media
  */
 final class Alerts extends CPT {
-	protected $cptslug 			= 'alert';
-	protected $cptslug_plural	= 'alerts';
-	protected $singular			= 'Alert';
-	protected $plural			= 'Alerts';
-	protected $icon				= 'dashicons-megaphone';
-	protected $hide_view 		= true;
+	protected $cptslug        = 'alert';
+	protected $cptslug_plural = 'alerts';
+	protected $singular       = 'Alert';
+	protected $plural         = 'Alerts';
+	protected $icon           = 'dashicons-megaphone';
+	protected $hide_view      = true;
 
 	// Arguments to define the CPT
-	protected $cpt_args			= [
-		'exclude_from_search'	=> true,
-		'show_in_nav_menus'		=> false,
-		'publicly_queryable'	=> false,
-		'has_archive'   		=> false,
+	protected $cpt_args	= [
+		'exclude_from_search' => true,
+		'show_in_nav_menus'   => false,
+		'publicly_queryable'  => false,
+		'has_archive'         => false,
 	];
 
 	// Arguments for the CPT loop
 	protected $loop_args = [
-		'no_found_rows'	=> true,
-		'orderby' 		=> 'menu_order',
-		'order' 		=> 'ASC',
+		'no_found_rows'  => true,
+		'orderby'        => 'menu_order',
+		'order'          => 'ASC',
 		'posts_per_page' => 1,
-		'nopaging'		=> true,
+		'no_found_rows'	 => true,
 	];
 
 	/**
@@ -69,30 +69,30 @@ final class Alerts extends CPT {
 	 * @return string Modified query arguments.
 	 */
 	public function query_mods( $query, $args ) {
-		$query['meta_query'] 	= [
-			'relation'	=> 'OR',
+		$query['meta_query'] = [
+			'relation' => 'OR',
 			[
 				[
-					'key' 		=> $this->prefix . 'active',
-					'value' 	=> 'active',
-					'compare' 	=> '=',
+					'key'     => $this->prefix . 'active',
+					'value'   => 'active',
+					'compare' => '=',
 				],
 				[
-					'key' 		=> $this->prefix . 'start_date',
-					'compare' 	=> 'NOT EXISTS',
+					'key'     => $this->prefix . 'start_date',
+					'compare' => 'NOT EXISTS',
 				],
 			],
 			[
 				[
-					'key' 		=> $this->prefix . 'active',
-					'value' 	=> 'active',
-					'compare' 	=> '=',
+					'key'     => $this->prefix . 'active',
+					'value'   => 'active',
+					'compare' => '=',
 				],
 				[
-					'key' 		=> $this->prefix . 'start_date',
-					'value' 	=> time(),
-					'compare' 	=> '<=',
-					'type'		=> 'char',
+					'key'     => $this->prefix . 'start_date',
+					'value'   => time(),
+					'compare' => '<=',
+					'type'    => 'char',
 				],
 			],
 		];
@@ -142,17 +142,17 @@ final class Alerts extends CPT {
 			'id'      => $this->prefix . 'active',
 			'type'    => 'radio',
 			'options' => [
-				'active'	=> __( 'Active', 'evans-mu' ),
-				'inactive'	=> __( 'Inactive', 'evans-mu' ),
+				'active'   => __( 'Active', 'evans-mu' ),
+				'inactive' => __( 'Inactive', 'evans-mu' ),
 			],
 		] );
 
 		$cmb->add_field( [
-			'name' 		=> __( 'Start Date', 'evans-mu' ),
-			'desc' 		=> sprintf( __( 'If you would like to schedule this %s, enter a start date.', 'evans-mu' ), $this->cptslug ),
-			'id'   		=> $this->prefix . 'start_date',
-			'type' 		=> 'text_datetime_timestamp',
-			'default'	=> time(),
+			'name'    => __( 'Start Date', 'evans-mu' ),
+			'desc'    => sprintf( __( 'If you would like to schedule this %s, enter a start date.', 'evans-mu' ), $this->cptslug ),
+			'id'      => $this->prefix . 'start_date',
+			'type'    => 'text_datetime_timestamp',
+			'default' => time(),
 		] );
 
 		$cmb->add_field( [
