@@ -1,13 +1,17 @@
 <?php
+/**
+ * Abstract Dashboard Widget.
+ *
+ * @package    WordPress
+ * @subpackage evans
+ */
+
 namespace evans\Abstracts;
 
 /**
  * Abstract lass to quickly and easily generate admin dashboard widgets.
  *
  * @abstract
- * @package    WordPress
- * @subpackage Evans
- * @author     Old Town Media
  */
 abstract class Dashboard_Widget {
 

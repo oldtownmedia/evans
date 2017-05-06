@@ -1,10 +1,15 @@
 <?php
-namespace evans\CleanAdmin;
+/**
+ * Cleans up the admin by removing and adding certain functionality.
+ *
+ * @package    WordPress
+ * @subpackage evans
+ */
+
+namespace evans\Clean_Admin;
 
 /**
  * Hooks function to fire off the events we need.
- *
- * @see add_action, add_filter
  */
 function setup() {
 	// Couple of public functions
@@ -26,7 +31,7 @@ function setup() {
 	add_action( 'admin_notices', __NAMESPACE__ . '\\custom_update_nag', 99 );
 	add_filter( 'menu_order', __NAMESPACE__ . '\\menu_order', 9999 );
 	add_filter( 'custom_menu_order', '__return_true' );
-	add_filter( 'gettext', __NAMESPACE__ . '\\soliloquy_whitelabel', 10, 3 );
+	add_filter( 'gettext', __NAMESPACE__ . '\\relabel_soliloquy_envira', 10, 3 );
 	add_filter( 'envira_gallery_skipped_posttypes', __NAMESPACE__ . '\\envira_skip_cpts' );
 	add_filter( 'manage_posts_columns', __NAMESPACE__ . '\\remove_columns' );
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_post_meta_boxes' );

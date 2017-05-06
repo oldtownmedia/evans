@@ -1,6 +1,6 @@
 <?php
 /**
-  * Plugin Name: Evans - the functionality framework for your site
+  * Plugin Name: Mini Evans - the functionality framework for your site
   * Plugin URI: https://oldtownmediainc.com/
   * Description: Plugin to enable all kinds of features on your site.
   * Author: Old Town Media
@@ -26,14 +26,11 @@ foreach ( $dirs as $dir ) {
 	}
 }
 
-evans\CleanAdmin\setup();
-evans\DisableEmojis\setup();
+evans\Clean_Admin\setup();
+evans\Clean_Admin\setup();
 evans\Security\setup();
 
 // @todo:: Use an autoloader
 // @todo:: setup namespaces function
 // @todo:: Use PSR-4 file/classnames
 // @todo:: Add namespaces to everything
-// @todo:: Put abstracts into their own folder
-// @todo:: Put CMB in vendor folder
-// @todo:: Put all files in one folder?

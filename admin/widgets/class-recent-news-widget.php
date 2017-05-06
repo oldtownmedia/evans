@@ -1,15 +1,17 @@
 <?php
+/**
+ * Front-end most recent posts widget.
+ *
+ * @package    WordPress
+ * @subpackage evans
+ */
+
 namespace evans\Widgets;
 
 use evans\Abstracts;
 
 /**
  * Display the Most Recent News in a widget.
- *
- * @package   Evans
- * @author    OTM <support@oldtownmediainc.com>
- * @link      https://oldtownmediainc.com
- * @copyright 2015 Old Town Media
  */
 final class RecentNewsWidget extends Abstracts\Widget {
 	protected $base			= 'recent-news';

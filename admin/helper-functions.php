@@ -1,7 +1,12 @@
 <?php
-namespace evans\Helpers;
+/**
+ * General helper functionality.
+ *
+ * @package    WordPress
+ * @subpackage evans
+ */
 
-// @todo:: break gform mod into its own file.
+namespace evans\Helpers;
 
 /**
  * Add attributes to various script tags.

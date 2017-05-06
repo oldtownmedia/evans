@@ -1,4 +1,11 @@
 <?php
+/**
+ * Dashboard RSS Feed from OTM Site widget.
+ *
+ * @package    WordPress
+ * @subpackage evans
+ */
+
 namespace evans\Widgets;
 
 use evans\Abstracts;
@@ -8,10 +15,6 @@ use evans\Abstracts;
  *
  * Calls up the feed URL and the most recent 5 posts from the feed for display
  * in the admin section
- *
- * @package    WordPress
- * @subpackage Evans
- * @author     Old Town Media
  */
 final class CompanyRSSFeedWidget extends Abstracts\Dashboard_Widget {
 

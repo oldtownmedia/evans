@@ -1,4 +1,11 @@
 <?php
+/**
+ * Dashboard Support information widget.
+ *
+ * @package    WordPress
+ * @subpackage evans
+ */
+
 namespace evans\Widgets;
 
 use evans\Abstracts;
@@ -7,10 +14,6 @@ use evans\Abstracts;
  * CompanySupportWidget
  *
  * Support information for display in the admin section
- *
- * @package    WordPress
- * @subpackage Evans
- * @author     Old Town Media
  */
 final class CompanySupportWidget extends Abstracts\Dashboard_Widget {
 

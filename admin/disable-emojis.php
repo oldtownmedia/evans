@@ -2,10 +2,11 @@
 /*
  * Remove emoji support and unnnecessary emoji files.
  *
- * Copyright Ryan Hellyer
+ * @package    WordPress
+ * @subpackage evans
  */
 
-namespace evans\DisableEmojis;
+namespace evans\Disable_Emojis;
 
 /**
  * Disable the emojis

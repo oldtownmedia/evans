@@ -1,15 +1,17 @@
 <?php
+/**
+ * Front-end contact information widget.
+ *
+ * @package    WordPress
+ * @subpackage evans
+ */
+ 
 namespace evans\Widgets;
 
 use evans\Abstracts;
 
 /**
  * Display contact information in a widget.
- *
- * @package   Evans
- * @author    OTM <support@oldtownmediainc.com>
- * @link      https://oldtownmediainc.com
- * @copyright 2015 Old Town Media
  */
 final class ContactWidget extends Abstracts\Widget {
 	protected $base			= 'contact';

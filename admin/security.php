@@ -1,4 +1,11 @@
 <?php
+/**
+ * Security-based functionality.
+ *
+ * @package    WordPress
+ * @subpackage evans
+ */
+
 namespace evans\Security;
 
 /**
