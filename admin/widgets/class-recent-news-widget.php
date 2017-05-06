@@ -34,29 +34,29 @@ final class RecentNewsWidget extends Abstracts\Widget {
 
 		return [
 			[
-				'id'		=> 'title',
-				'name'		=> __( 'Title', 'evans-mu' ),
-				'type'		=> 'text',
-				'default'	=> 'Recent News',
+				'id'      => 'title',
+				'name'    => __( 'Title', 'evans-mu' ),
+				'type'    => 'text',
+				'default' => 'Recent News',
 			],
 			[
-				'id'		=> 'category',
-				'name'		=> __( 'Category', 'evans-mu' ),
-				'desc'		=> 'optional',
-				'type'		=> 'select',
-				'options'	=> $cat_array,
+				'id'      => 'category',
+				'name'    => __( 'Category', 'evans-mu' ),
+				'desc'    => 'optional',
+				'type'    => 'select',
+				'options' => $cat_array,
 			],
 			[
-				'id'		=> 'num_posts',
-				'name'		=> __( 'Number of Posts', 'evans-mu' ),
-				'desc'		=> 'optional',
-				'type'		=> 'text',
+				'id'   => 'num_posts',
+				'name' => __( 'Number of Posts', 'evans-mu' ),
+				'desc' => 'optional',
+				'type' => 'text',
 			],
 			[
-				'id'		=> 'word_length',
-				'name'		=> __( 'Number of Words per Post to Display', 'evans-mu' ),
-				'desc'		=> 'optional',
-				'type'		=> 'text',
+				'id'   => 'word_length',
+				'name' => __( 'Number of Words per Post to Display', 'evans-mu' ),
+				'desc' => 'optional',
+				'type' => 'text',
 			],
 		];
 	}
@@ -96,10 +96,10 @@ final class RecentNewsWidget extends Abstracts\Widget {
 
 		// Our loop arguments
 		$query = [
-			'posts_per_page'	=> $posts_per,
-			'category_name'		=> $cat,
-			'order'            	=> 'DESC',
-			'orderby'			=> 'date',
+			'posts_per_page' => $posts_per,
+			'category_name'  => $cat,
+			'order'          => 'DESC',
+			'orderby'        => 'date',
 		];
 
 		$objects = new \WP_Query( $query );

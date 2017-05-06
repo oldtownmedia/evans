@@ -162,42 +162,37 @@ function menu_order( $menu ) {
 	return array_merge( $menu, $penalty_box );
 }
 
-/******************
-* Plugin Specific *
-******************/
-
 /**
  * Modify the text for Soliloquy & Envira to whitelabeled strings
- *
- * @todo:: fix this
  *
  * @param string $translated_text translated version of the string.
  * @param string $source_text original text.
  * @return string modified text.
  */
-function soliloquy_whitelabel( $translated_text, $source_text ) {
-	// If not in the admin, return the default string.
-	if ( ! is_admin() ) {
-		return $translated_text;
-	}
+ function relabel_soliloquy_envira( $translated_text, $source_text ) {
+ 	// If not in the admin, return the default string.
+ 	if ( ! is_admin() ) {
+ 		return $translated_text;
+ 	}
 
-	$strings = [
-		'Soliloquy Slider' => 'Slider',
-		'Soliloquy slider' => 'slider',
-		'Soliloquy'        => 'Slider',
-		'an Envira'        => 'a Gallery',
-		'Envira'           => 'Gallery',
-	];
+ 	$strings = [
+ 		'Soliloquy Slider'      => 'Slider',
+ 		'Soliloquy slider'      => 'slider',
+ 		'Soliloquy Sliders'     => 'Sliders',
+ 		'Soliloquy'             => 'Slider',
+ 		'an Envira'             => 'a Gallery',
+ 		'Envira Gallery'        => 'Gallery',
+ 		'Envira Galleries'      => 'Galleries',
+ 		'Native Envira Gallery' => 'Native Gallery',
+ 		'Envira'                => 'Gallery',
+ 	];
 
-	// @todo:: make sure this works.
-	array_walk( $strings, function( $item, $key ) use ( $translated_text, $source_text ) {
-		if ( strpos( $source_text, $key ) !== false ) {
-			return str_replace( $key, $item, $translated_text );
-		}
-	} );
+ 	if ( array_key_exists( $source_text, $strings ) ) {
+ 		return $strings[ $source_text ];
+ 	}
 
-	return $translated_text;
-}
+ 	return $translated_text;
+ }
 
 /**
  * Filter out Envira from showing on a custom post type.
