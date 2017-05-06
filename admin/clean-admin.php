@@ -174,30 +174,30 @@ function menu_order( $menu ) {
  * @param string $source_text original text.
  * @return string modified text.
  */
- function relabel_soliloquy_envira( $translated_text, $source_text ) {
- 	// If not in the admin, return the default string.
- 	if ( ! is_admin() ) {
- 		return $translated_text;
- 	}
+function relabel_soliloquy_envira( $translated_text, $source_text ) {
+	// If not in the admin, return the default string.
+	if ( ! is_admin() ) {
+		return $translated_text;
+	}
 
- 	$strings = [
- 		'Soliloquy Slider'      => 'Slider',
- 		'Soliloquy slider'      => 'slider',
- 		'Soliloquy Sliders'     => 'Sliders',
- 		'Soliloquy'             => 'Slider',
- 		'an Envira'             => 'a Gallery',
- 		'Envira Gallery'        => 'Gallery',
- 		'Envira Galleries'      => 'Galleries',
- 		'Native Envira Gallery' => 'Native Gallery',
- 		'Envira'                => 'Gallery',
- 	];
+	$strings = [
+		'Soliloquy Slider'      => 'Slider',
+		'Soliloquy slider'      => 'slider',
+		'Soliloquy Sliders'     => 'Sliders',
+		'Soliloquy'             => 'Slider',
+		'an Envira'             => 'a Gallery',
+		'Envira Gallery'        => 'Gallery',
+		'Envira Galleries'      => 'Galleries',
+		'Native Envira Gallery' => 'Native Gallery',
+		'Envira'                => 'Gallery',
+	];
 
- 	if ( array_key_exists( $source_text, $strings ) ) {
- 		return $strings[ $source_text ];
- 	}
+	if ( array_key_exists( $source_text, $strings ) ) {
+		return $strings[ $source_text ];
+	}
 
- 	return $translated_text;
- }
+	return $translated_text;
+}
 
 /**
  * Filter out Envira from showing on a custom post type.
@@ -309,7 +309,7 @@ function custom_update_nag() {
 
 	$cur = get_preferred_from_update_core();
 
-	if ( ! isset( $cur->response ) || $cur->response !== 'upgrade' ) {
+	if ( ! isset( $cur->response ) || 'upgrade' !== $cur->response ) {
 		return false;
 	}
 
@@ -421,7 +421,7 @@ function add_admin_toolbar_links( $wp_admin_bar ) {
 					'href'   => $menu_item->url,
 				];
 
-				if ( $menu_item->menu_item_parent === 0 ) {
+				if ( 0 === $menu_item->menu_item_parent ) {
 					$wp_admin_bar->add_node( $page );
 				}
 

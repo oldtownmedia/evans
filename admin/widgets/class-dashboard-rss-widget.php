@@ -59,7 +59,7 @@ final class CompanyRSSFeedWidget extends Abstracts\Dashboard_Widget {
 		 $errors = $this->parse_for_errors( $rss );
 
 		if ( ! empty( $errors ) ) {
-			echo $errors;
+			echo esc_html( $errors );
 			return;
 		}
 
