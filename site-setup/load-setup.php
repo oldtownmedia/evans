@@ -7,7 +7,7 @@ namespace evans;
  * This file takes actions such as setting pretty permalinks, creating a common
  * menu, removing pings, etc.
  */
-if ( !get_option( 'evans_theme_setup' ) && get_option( 'evans_theme_setup' ) != 'setup' ){
+if ( ! get_option( 'evans_theme_setup' ) && 'setup' !== get_option( 'evans_theme_setup' ) ) {
 	require_once 'includes/class-initial-install.php';
 }
 
@@ -17,7 +17,7 @@ if ( !get_option( 'evans_theme_setup' ) && get_option( 'evans_theme_setup' ) != 
  * Library used to install plugins is TGM Plugin Installation by Thomas Griffin.
  * http://tgmpluginactivation.com/
  */
-if ( !get_option( 'evans_plugins_installed' ) && get_option( 'evans_plugins_installed' ) != 'installed' ){
+if ( ! get_option( 'evans_plugins_installed' ) && 'installed' !== get_option( 'evans_plugins_installed' ) ) {
 	require_once 'includes/class-tgm-plugin-activation.php';
 	require_once 'includes/auto-install-plugins.php';
 }
@@ -30,9 +30,8 @@ if ( !get_option( 'evans_plugins_installed' ) && get_option( 'evans_plugins_inst
  * installed active. Once they are active a non-autoloaded WP Option variable
  * is set to stop loading of the plugin install files.
  */
-add_action( 'admin_init', __NAMESPACE__ . '\flag_plugins_installed' );
-function flag_plugins_installed(){
-	if ( is_plugin_active( 'wpremote/plugin.php' ) && is_plugin_active( 'wordpress-seo/wp-seo.php' ) ){
+add_action( 'admin_init', function() {
+	if ( is_plugin_active( 'wpremote/plugin.php' ) && is_plugin_active( 'wordpress-seo/wp-seo.php' ) ) {
 		add_option( 'evans_plugins_installed', 'installed', '', 'no' );
 	}
-}
+} );

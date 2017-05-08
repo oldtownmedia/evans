@@ -11,17 +11,18 @@
   */
 
 // Define a list of subfolders to poke through for files
-$dirs = array(
+$dirs = [
+	'abstracts',
 	'admin',
 	'assets',
 	'modules',
-	'widgets'
-);
+	'widgets',
+];
 
 /*
  * Add site-setup folder to our smart loading ONLY if this folder exists.
  * This allows you to completely remove this folder with no repurcussions in production.
- */
+ 2*/
 if ( file_exists( WPMU_PLUGIN_DIR .'/site-setup' ) && is_dir( WPMU_PLUGIN_DIR . '/site-setup' ) ) {
 	$dirs[] = 'site-setup';
 }
@@ -34,3 +35,12 @@ foreach ( $dirs as $dir ) {
 	    require_once $filename;
 	}
 }
+
+// @todo:: Use an autoloader
+// @todo:: setup namespaces function
+// @todo:: Use PSR-4 file/classnames
+// @todo:: Add namespaces to everything
+// @todo:: Put CMB in vendor folder
+// @todo:: Put all files in one folder?
+// @todo:: ob all the things
+// @todo:: space all the arrays instead of tabs
