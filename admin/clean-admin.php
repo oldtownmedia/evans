@@ -125,7 +125,7 @@ function remove_menus() {
  * Identify OK items to stay in the top of the admin section
  *
  * @param string $item Name of a menu item.
- * @return array list of whitelisted items.
+ * @return bool list of whitelisted items.
  */
 function is_gracious_menu_item( $item ) {
 	return 'wp-help-documents' ===  $item;
@@ -144,7 +144,7 @@ function menu_order( $menu ) {
 	foreach ( $menu as $key => $item ) {
 		if ( 'separator1' === $item ) {
 			break;
-		} elseif ( 'index.php' !== $item && ! $this->is_gracious_menu_item( $item ) ) {
+		} elseif ( 'index.php' !== $item && ! is_gracious_menu_item( $item ) ) {
 			// Yank it out and put it in the penalty box.
 			$penalty_box[] = $item;
 			unset( $menu[ $key ] );
@@ -366,7 +366,7 @@ function extended_editor_mce_buttons_2( $buttons ) {
 /**
  * Remove Yoast SEO columns from all post types.
  *
- * @param type $columns Default column array.
+ * @param array $columns Default column array.
  * @return array $columns Modified array of columns.
  */
 function seo_remove_columns( $columns ) {
