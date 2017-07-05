@@ -20,15 +20,15 @@ final class RecentNewsWidget extends Widget {
 	 * @return array list of fields
 	 */
 	public function widget_fields() {
-		// Get list of categories to choose from
-		$categories = get_categories();
-		$cat_array = [
-			'' => 'Select a Category',
-		];
-
-		foreach ( $categories as $category ) {
-			$cat_array[ $category->slug ] = $category->cat_name;
-		}
+		// Get list of categories to choose from ***Removed Category Functions
+		// $categories = get_categories();
+		// $cat_array = [
+		// 	'' => 'Select a Category',
+		// ];
+		//
+		// foreach ( $categories as $category ) {
+		// 	$cat_array[ $category->slug ] = $category->cat_name;
+		// }
 
 		return [
 			[
@@ -37,13 +37,13 @@ final class RecentNewsWidget extends Widget {
 				'type'    => 'text',
 				'default' => 'Recent News',
 			],
-			[
-				'id'      => 'category',
-				'name'    => __( 'Category', 'evans-mu' ),
-				'desc'    => 'optional',
-				'type'    => 'select',
-				'options' => $cat_array,
-			],
+			// [
+			// 	'id'      => 'category',
+			// 	'name'    => __( 'Category', 'evans-mu' ),
+			// 	'desc'    => 'optional',
+			// 	'type'    => 'select',
+			// 	'options' => $cat_array,
+			// ],
 			[
 				'id'   => 'num_posts',
 				'name' => __( 'Number of Posts', 'evans-mu' ),
@@ -76,14 +76,14 @@ final class RecentNewsWidget extends Widget {
 		}
 
 		// If user specifies specific categories, declare. Otherwise use all cats
-		if ( isset( $instance['category'] ) && ! empty( $instance['category'] ) ) {
-			$cat = esc_attr( $instance['category'] );
-		} else {
-			$categories = get_categories();
-			foreach ( $categories as $category ) {
-				$cat .= $category->slug . ',';
-			}
-		}
+		// if ( isset( $instance['category'] ) && ! empty( $instance['category'] ) ) {
+		// 	$cat = esc_attr( $instance['category'] );
+		// } else {
+		// 	$categories = get_categories();
+		// 	foreach ( $categories as $category ) {
+		// 		$cat .= $category->slug . ',';
+		// 	}
+		// }
 
 		if ( isset( $instance['word_length'] ) && ! empty( $instance['word_length'] ) ) {
 			$word_length = $instance['word_length'];
