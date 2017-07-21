@@ -103,30 +103,26 @@ final class Alerts extends CPT {
 	/**
 	 * Display a single item from the queried posts.
 	 *
-	 * This is the most often-overrideen function and will often contain CMB
+	 * This is the most often-overridden function and will often contain CMB
 	 * calls and custom display HTML.
 	 *
 	 * @param int $ Post ID.
 	 * @return string HTML contents for the individual post.
 	 */
 	public function display_single( $pid ) {
-		$html = '';
-
 		$end = get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'end_date', true );
 
-		if ( ! $end || time() <= $end ) {
+		ob_start();
+		if ( ! $end || time() <= $end ) :
+			?>
+			<div class='<?php esc_attr( $this->cptslug ); ?>'>
+				<h4><?php esc_html( get_the_title() ); ?></h4>
+				<?php apply_filters( 'the_content', get_the_content() ); ?>
+			</div>
+			<?php
+		endif;
 
-			$html .= "<div class='" . esc_attr( $this->cptslug ) . "'>";
-
-				$html .= '<h4>' . esc_html( get_the_title() ) . '</h4>';
-
-				$html .= apply_filters( 'the_content', get_the_content() );
-
-			$html .= '</div>';
-
-		}
-
-		return $html;
+		return ob_get_clean();
 	}
 
 	/**
