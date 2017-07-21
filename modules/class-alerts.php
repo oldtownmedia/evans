@@ -115,9 +115,9 @@ final class Alerts extends CPT {
 		ob_start();
 		if ( ! $end || time() <= $end ) :
 			?>
-			<div class='<?php esc_attr( $this->cptslug ); ?>'>
-				<h4><?php esc_html( get_the_title() ); ?></h4>
-				<?php apply_filters( 'the_content', get_the_content() ); ?>
+			<div class='<?php echo esc_attr( $this->cptslug ); ?>'>
+				<h4><?php echo esc_html( get_the_title() ); ?></h4>
+				<?php echo apply_filters( 'the_content', get_the_content() ); ?>
 			</div>
 			<?php
 		endif;
