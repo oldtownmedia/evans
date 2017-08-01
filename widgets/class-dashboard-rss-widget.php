@@ -86,29 +86,31 @@ final class CompanyRSSFeedWidget extends Dashboard_Widget {
 	 * @return string Error if there is one.
 	 */
 	private function parse_for_errors( $rss ) {
-		$html = '';
+		ob_start();
 
 		// If there is an error in receiving the posts
 		if ( is_wp_error( $rss ) ) {
 
-			if ( is_admin() || current_user_can( 'manage_options' ) ) {
-				$html .= '<p>';
-					$html .= '<strong>' . esc_html__( 'RSS Error: ', 'evans-mu' ) . '</strong>' . esc_html( $rss->get_error_message() );
-				$html .= '</p>';
-			}
+			if ( is_admin() || current_user_can( 'manage_options' ) ) { ?>
+				<p>
+					<strong><?php echo esc_html__( 'RSS Error: ', 'evans-mu' ); ?></strong><?php echo esc_html( $rss->get_error_message() );?>
+				</p>
+			<?php }
 
-			return $html;
+			return ob_get_clean();
 
 		}
 
 		// If there are no posts to show
 		if ( ! $rss->get_item_quantity() ) {
-			 $html .= '<p>' . esc_html__( 'Apparently, there are no updates to show!', 'evans-mu' ) . '</p>';
+			ob_start();?>
+			 <p><?php echo esc_html__( 'Apparently, there are no updates to show!', 'evans-mu' );?></p>
+			 <?php
 			 $rss->__destruct();
 			 unset( $rss );
 		}
 
-		return $html;
+		return ob_get_clean();
 	}
 }
 
