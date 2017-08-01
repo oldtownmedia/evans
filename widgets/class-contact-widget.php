@@ -89,12 +89,12 @@ final class ContactWidget extends Widget {
 	 * @return string Widget HTML.
 	 */
 	public function view( $args, $instance ) {
-		$html = $address_string = '';
-
-		$html .= $this->get_widget_title( $args, $instance );
+		 $address_string = '';
+		ob_start();
+		echo $this->get_widget_title( $args, $instance ); ?>
 
 		// Display the contact information
-		$html .= '<p>';
+		<p> <?php
 
 		if ( ! empty( $instance['address'] ) ) {
 			$address_string .= esc_html( $instance['address'] ) . '<br>';
@@ -114,29 +114,29 @@ final class ContactWidget extends Widget {
 
 			// echo the address string
 		if ( ! empty( $address_string ) ) {
-			$html .= $address_string . '<br>';
+			echo $address_string . '<br>';
 		}
 
-		if ( ! empty( $instance['phone'] ) ) {
-			$html .= '<strong>' . esc_html__( 'Phone:', 'evans-mu' ) . '</strong> ' . esc_html( $instance['phone'] ) . '<br>';
-		}
+		if ( ! empty( $instance['phone'] ) ) { ?>
+			<strong><?php echo esc_html__( 'Phone:', 'evans-mu' );?></strong><?php echo esc_html( $instance['phone'] );?><br>
+		<?php }
 
-		if ( ! empty( $instance['fax'] ) ) {
-			$html .= '<strong>' . esc_html__( 'Fax:', 'evans-mu' ) . '</strong> ' . esc_html( $instance['fax'] ) . '<br>';
-		}
+		if ( ! empty( $instance['fax'] ) ) { ?>
+			<strong><?php echo esc_html__( 'Fax:', 'evans-mu' );?></strong><?php echo esc_html( $instance['fax'] );?><br>
+		<?php }
 
-		if ( ! empty( $instance['email'] ) ) {
-			$html .= "<a href='mailto:" . sanitize_email( $instance['email'] ) . "'>" . sanitize_email( $instance['email'] ) . '</a><br>';
-		}
+		if ( ! empty( $instance['email'] ) ) { ?>
+			<a href='mailto:<? echo sanitize_email( $instance['email'] );?>'><?php echo sanitize_email( $instance['email'] );?></a><br>
+		<?php } ?>
 
-		$html .= '</p>';
+	</p> <?php
 
 		// If map is checked, display the map using Simple Google Maps Short Code
 		if ( 'on' === $instance['map'] && ! empty( $address_string ) && function_exists( 'pw_map_shortcode' ) ) {
-			$html .= do_shortcode( '[pw_map address="' . $address_string . '"]' );
+			echo do_shortcode( '[pw_map address="' . $address_string . '"]' );
 		}
 
-		return $html;
+		return ob_get_clean();
 	}
 }
 
