@@ -151,27 +151,28 @@ abstract class CPT {
 	 * @return string Combined HTML contents of the looped query.
 	 */
 	public function loop_cpt( $args = [] ) {
-		$html = '';
+		ob_start();
 
 		$objects = new \WP_Query( $this->query_mods( [], $args ) );
 
-		if ( $objects->have_posts() ) {
-			$html .= "<ul class='" . esc_attr( $this->cptslug ) . "-listing'>";
+		if ( $objects->have_posts() ) { ?>
+			<ul class="<?php echo esc_attr( $this->cptslug ); ?>-listing">
 
-			while ( $objects->have_posts() ) : $objects->the_post();
+				<?php	while ( $objects->have_posts() ) : $objects->the_post();
 
-				$html .= $this->display_single( get_the_id() );
+					$this->display_single( get_the_id() );
 
-			endwhile;
+				endwhile; ?>
 
-			$html .= '</ul>';
-		} else {
-			$html = '<h3>' . sprintf( esc_html__( 'There are no %s to list. Check back soon!', 'evans-mu' ), $this->cptslug_plural ) . '</h3>';
-		}
+			</ul> <?php
+		} else { ?>
+			<h3><?php sprintf( esc_html__('There are no %s to list. Check back soon!', 'evans-mu' ), $this->cptslug_plural ); ?></h3>
+
+		<?php }
 
 		wp_reset_postdata();
 
-		return $html;
+		return ob_get_clean();
 	}
 
 	/**
@@ -225,17 +226,17 @@ abstract class CPT {
 	 * @return string HTML contents for the individual post.
 	 */
 	public function display_single( $pid ) {
-		$html = '';
+		ob_start(); ?>
 
-		$html .= "<li class='" . esc_attr( $this->cptslug ) . "'>";
+		<li class="<?php esc_attr( $this->cptslug ); ?>">
 
-			$html .= '<h3>' . esc_html( get_the_title( $pid ) ) . '</h3>';
+			<h3><?php esc_html( get_the_title( $pid )); ?></h3>
 
-			$html .= apply_filters( 'the_content', get_the_content() );
+			<?php apply_filters( 'the_content', get_the_content() ); ?>
 
-		$html .= '</li>';
+		</li>
 
-		return $html;
+		<?php return ob_get_clean();
 	}
 
 	/**
@@ -246,23 +247,24 @@ abstract class CPT {
 	 * @return string HTML contents for the image and link.
 	 */
 	protected function get_img( $img, $link = '' ) {
-		$html = '';
+		ob_start();
 
 		if ( empty( $img ) ) {
 			return;
 		}
 
-		if ( ! empty( $link ) ) {
-			$html .= "<a href=' " . esc_url( $link ) . "'>";
-		}
+		if ( ! empty( $link ) ) { ?>
+				<a href="<?php echo esc_url( $link ); ?>"></a>;
+		<?php } ?>
 
-			$html .= "<img src='" . esc_url( $img[0] ) . "' alt='" . esc_attr( get_the_title() ) . "' />";
+			<img src="<?php echo esc_url($img[0]); ?>" alt="<?php echo esc_attr( get_the_title() ); ?>"/>
 
-		if ( ! empty( $link ) ) {
-			$html .= '</a>';
-		}
+		<?php
+		if ( ! empty( $link ) ) { ?>
+			</a>
+		<?php }
 
-		return $html;
+		return ob_get_clean();
 	}
 
 	/**
@@ -275,7 +277,7 @@ abstract class CPT {
 	 * @return string HTML content of the looped taxonomy & posts.
 	 */
 	public function taxonomy_loop( $args = [] ) {
-		$html = '';
+		ob_start();
 
 		$terms = get_terms(
 			$this->tax_slug,
@@ -288,24 +290,24 @@ abstract class CPT {
 		if ( ! empty( $terms ) ) {
 
 			foreach ( $terms as $term ) :
-
-				$html .= '<h2>' . esc_html( apply_filters( 'the_title', $term->name ) ) . '</h2>';
-
+				?>
+				<h2><?php echo esc_html( apply_filters( 'the_title', $term->name ) ); ?><h2>
+				<?php
 				$description = term_description( $term->term_id, $this->tax_slug );
 
 				if ( ! empty( $description ) ) {
-					$html .= apply_filters( 'the_content', $description );
+					apply_filters( 'the_content', $description );
 				}
 
 				// Add the group we're querying to the get_cpt arguments
 				$args['group'] = $term->slug;
-				$html .= $this->loop_cpt( $args );
+				$this->loop_cpt( $args );
 
 			endforeach;
 
 		}
 
-		return $html;
+		return ob_get_clean();
 	}
 
 	/**
