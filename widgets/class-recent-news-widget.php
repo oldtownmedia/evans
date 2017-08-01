@@ -67,7 +67,8 @@ final class RecentNewsWidget extends Widget {
 	 * @return string Widget HTML.
 	 */
 	public function view( $args, $instance ) {
-		$html  = $cat = '';
+		$cat = '';
+		ob_start();
 
 		if ( isset( $instance['num_posts'] ) && ! empty( $instance['num_posts'] ) ) {
 			$posts_per = absint( $instance['num_posts'] );
@@ -103,21 +104,22 @@ final class RecentNewsWidget extends Widget {
 
 		if ( $objects->have_posts() ) :
 
-			$html .= $this->get_widget_title( $args, $instance );
+			echo $this->get_widget_title( $args, $instance );
 
-			while ( $objects->have_posts() ) : $objects->the_post();
+			while ( $objects->have_posts() ) : $objects->the_post(); ?>
 
-				$html .= '<h3>' . esc_html( get_the_title() ) . '</h3>';
+				<h3><?php echo esc_html( get_the_title() );?></h3>
 
-				$html .= apply_filters( 'the_content', wp_trim_words( get_the_content(), $word_length ) );
+				<?php echo apply_filters( 'the_content', wp_trim_words( get_the_content(), $word_length ) ); ?>
 
-				$html .= "<a href='" . esc_url( get_permalink() ) . "' class='button' role='button'>" . esc_html__( 'Read More', 'evans-mu' ) . '</a>';
+				<a href="<?php echo esc_url( get_permalink() );?>" class='button' role='button'><?php echo esc_html__( 'Read More', 'evans-mu' ); ?></a>
 
+			<?php
 			endwhile;
 
 		endif;
 
-		return $html;
+		return ob_get_clean();
 	}
 }
 
