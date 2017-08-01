@@ -44,29 +44,32 @@ final class Staff extends CPT {
 	 * @return string HTML contents for the individual post.
 	 */
 	public function display_single( $pid ) {
-		$html = '';
+		ob_start();
 
 		$img_id		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true );
 		$img		= wp_get_attachment_image_src( $img_id, get_post_type() . '-thumb' );
 		$title		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'position', true );
+		?>
 
-		$html .= "<li class='" . esc_attr( $this->cptslug ) . "' itemscope itemtype ='http://schema.org/Person'>";
+		<li class="<?php echo esc_attr( $this->cptslug );?>" itemscope itemtype ='http://schema.org/Person'>
 
-			$html .= $this->get_img( $img );
+			<?php echo $this->get_img( $img ); ?>
 
-			$html .= "<h3 itemprop='name'>" . esc_html( get_the_title() ) . '</h3>';
+			<h3 itemprop='name'><?php echo esc_html( get_the_title() );?></h3>
 
-		if ( ! empty( $title ) ) {
-			$html .= '<p>
-                    <strong>' . esc_html__( 'Position:', 'evans-mu' ) . "</strong> <span itemprop='jobTitle'>" . esc_html( $title ) . '</span>
-                </p>';
-		}
+		<?php
+		if ( ! empty( $title ) ) { ?>
+			<p>
+        <strong><?php echo esc_html__( 'Position:', 'evans-mu' );?>"</strong> <span itemprop='jobTitle'><?php echo esc_html( $title ); ?></span>
+      </p>
+		<?php }
 
-			$html .= apply_filters( 'the_content', get_the_content() );
+			echo apply_filters( 'the_content', get_the_content() );?>
 
-		$html .= '</li>';
+		</li>
 
-		return $html;
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
