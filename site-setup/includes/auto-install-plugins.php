@@ -75,11 +75,6 @@ function my_theme_register_required_plugins() {
 			'required' 	=> true,
 		],
 		[
-			'name' 		=> 'Simple 301 Redirects',
-			'slug' 		=> 'simple-301-redirects',
-			'required' 	=> false,
-		],
-		[
 			'name' 		=> 'Simple Frontend Template Display',
 			'slug' 		=> 'simple-frontend-template-display',
 			'required' 	=> true,
@@ -109,11 +104,7 @@ function my_theme_register_required_plugins() {
 			'slug' 		=> 'wordpress-seo',
 			'required' 	=> true,
 		],
-		[
-			'name' 		=> 'The WP Remote WordPress Plugin',
-			'slug' 		=> 'wpremote',
-			'required' 	=> true,
-		],
+
 		[
 			'name' 		=> 'Test Content Generator',
 			'slug' 		=> 'test-content-suite',
