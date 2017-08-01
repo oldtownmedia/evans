@@ -66,34 +66,37 @@ final class Events extends CPT {
 	 * @return string HTML contents for the individual post.
 	 */
 	public function display_single( $pid ) {
-		$html = '';
+		ob_start();
 
 		$date		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'date', true );
 		$cost		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'cost', true );
 		$img_id		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true );
 		$img		= wp_get_attachment_image_src( $img_id, get_post_type() . '-thumb' );
+		?>
 
-			$html .= "<li itemscope itemtype='http://data-vocabulary.org/Event' class='" . esc_attr( $this->cptslug ) . " group'>";
+			<li itemscope itemtype='http://data-vocabulary.org/Event' class="<?php echo esc_attr( $this->cptslug );?> group">
 
-				$html .= $this->get_img( $img );
+				<?php $this->get_img( $img ); ?>
 
-				$html .= '<h3>' . esc_html( get_the_title() ) . '</h3>';
+				<h3><?php echo esc_html( get_the_title() ); ?></h3>
 
-				$html .= '<p>';
+				<p>
 
-					$html .= esc_html( date( 'm/d/Y', $date ) ) . ' ' . esc_html( date( 'g:i A', $date ) ) . '<br>';
+					<?php echo esc_html( date( 'm/d/Y', $date ) );?> <?php echo esc_html( date( 'g:i A', $date ) );?> <br>
 
-		if ( ! empty( $cost ) ) {
-			$html .= esc_html__( 'Cost:', 'evans-mu' ) . ' ' . esc_html( $cost ) . '<br>';
-		}
+		<?php
+		if ( ! empty( $cost ) ) { ?>
+			<?php echo esc_html__( 'Cost:', 'evans-mu' );?>  <?php echo esc_html( $cost );?> <br>
+		<?php } ?>
 
-				$html .= '</p>';
+				</p>
 
-				$html .= apply_filters( 'the_content', get_the_content() );
+				<?php echo apply_filters( 'the_content', get_the_content() );?>
 
-			$html .= '</li>';
+			</li>
 
-		return $html;
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
