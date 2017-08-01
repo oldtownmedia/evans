@@ -48,19 +48,21 @@ final class Partners extends CPT {
 	 * @return string HTML contents for the individual post.
 	 */
 	public function display_single( $pid ) {
-		$html = '';
+		ob_start();
 
 		$link	= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'url', true );
 		$img_id	= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'image_id', true );
 		$img	= wp_get_attachment_image_src( $img_id, get_post_type() . '-thumb' );
+		?>
 
-		$html .= "<li class='" . esc_attr( $this->cptslug ) . "'>";
+		<li class="<?php echo esc_attr( $this->cptslug );?>">
 
-			$html .= $this->get_img( $img, $link );
+			<?php echo $this->get_img( $img, $link ); ?>
 
-		$html .= '</li>';
+		</li>
 
-		return $html;
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
