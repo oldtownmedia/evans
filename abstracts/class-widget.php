@@ -259,7 +259,7 @@ abstract class Widget extends \WP_Widget {
 	 * @return string compiled HTML.
 	 */
 	public function admin_form( $instance ) {
-		$html = '';
+		ob_start();
 
 		$fields = $this->widget_fields();
 
@@ -269,10 +269,10 @@ abstract class Widget extends \WP_Widget {
 
 		// Loop through the fields and build an HTML form field
 		foreach ( $fields as $field ) {
-			$html .= $this->build_form_field( $field, $instance );
+			$this->build_form_field( $field, $instance );
 		}
 
-		return $html;
+		return ob_get_clean();
 	}
 
 	/**
@@ -289,55 +289,62 @@ abstract class Widget extends \WP_Widget {
 	 * @return string Compiled field.
 	 */
 	private function build_form_field( $field, $instance ) {
-		$html = '';
+		ob_start();
 
 		if ( empty( $field ) ) {
 			return;
-		}
+		} ?>
 
-		$html .= "<p class='" . esc_attr( $field['type'] ) . "-box evans-field'>";
+		<p class="<?php echo esc_attr( $field['type'] ); ?>-box evans-field">
 
-		$html .= "<label for='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "'><strong>" . esc_attr( $field['name'] ) . '</strong></label>';
+		<label for="<?php echo esc_attr( $this->get_fied_id( $field['id'] ) ); ?>"><strong><?php echo esc_attr( $field['name'] )?></strong></label>
 
-		if ( 'checkbox' !== $field['type'] ) {
-			$html .= '<br>';
-		}
+		<?php
+		if ( 'checkbox' !== $field['type'] ) { ?>
+			<br>
+	<?php	}
 
 		switch ( $field['type'] ) {
 
-			case 'text' :
+			case 'text' : ?>
 
-				$html .= "<input id='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "' name='" . esc_attr( $this->get_field_name( $field['id'] ) ) . "' value='" . esc_attr( $instance[ $field['id'] ] ) . "' />";
+				<input id="<?php echo esc_attr( $this->get_field_id( $field['id'] ) );?>" name="<?php echo esc_attr( $this->get_field_name( $field['id'] ) );?>" value="<?php echo esc_attr( $instance[ $field['id'] ] );?>">
 
+			<?php
 			break;
 
-			case 'textarea' :
+			case 'textarea' : ?>
 
-				$html .= "<textarea id='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "' name='" . esc_attr( $this->get_field_name( $field['id'] ) ) . "'>" . esc_html( $instance[ $field['id'] ] ) . '</textarea>';
+				<textarea id="<?php echo esc_attr( $this->get_field_id( $field['id'] ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( $field['id'] ) );?>"><?php echo esc_html( $instance[ $field['id'] ] );?></textarea>
+
+			<?php
 
 			break;
 
 			case 'select' :
 
-				if ( ! empty( $field['options'] ) ) {
+				if ( ! empty( $field['options'] ) ) { ?>
 
-					$html .= "<select id='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "' name='" . esc_attr( $this->get_field_name( $field['id'] ) ) . "' >";
+					<select id="<?php echo esc_attr( $this->get_field_id( $field['id'] ) ); ?>" name ="<?php echo esc_attr( $this->get_field_name( $field['id'] ) ); ?>">
 
+					<?php
 					foreach ( $field['options'] as $key => $value ) {
 						$selected = '';
 
 						if ( $key === $instance[ $field['id'] ] ) {
 							$selected = 'selected';
-						}
+						} ?>
 
-						$html .= "<option value=' " . esc_attr( $key ) . "' " . esc_attr( $selected ) . '>';
-						$html .= esc_html( $value );
-						$html .= '</option>';
-					}
+						<option value="<?php echo esc_attr( $key );?> <?php echo esc_attr( $selected ) ?>">
 
-					$html .= '</select>';
+						<?php esc_html( $value ); ?>
 
-				}
+						</option>
+					<?php } ?>
+
+				</select>
+
+				<?php }
 
 			break;
 
@@ -350,9 +357,11 @@ abstract class Widget extends \WP_Widget {
 
 						if ( $key === $instance[ $field['id'] ] ) {
 							$selected = ' checked"';
-						}
+						} ?>
 
-						$html .= "<input type='radio' value='" . esc_attr( $key ) . "' " . esc_attr( $selected ) . '> <span>' . esc_html( $value ) . '</span><br>';
+						<input type="radio" value="<?php echo esc_attr( $key ); ?> <?php echo esc_attr( $selected ); ?>"><span><?php echo esc_html( $value ); ?></span><br>
+
+						<?php
 
 					}
 				}
@@ -364,21 +373,23 @@ abstract class Widget extends \WP_Widget {
 
 				if ( 'on' === $instance[ $field['id'] ] ) {
 					$checked = ' checked';
-				}
+				} ?>
 
-				$html .= "<input type='checkbox' id='" . esc_attr( $this->get_field_id( $field['id'] ) ) . "' name='" . esc_attr( $this->get_field_name( $field['id'] ) ) . "' " . esc_attr( $checked ) . " value='on' />";
+				<input type="checkbox" id="<?php echo esc_attr( $this->get_field_id( $field['id'] ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( $field['id'] ) );?> <?php echo esc_attr( $checked );?>" value="on" />
 
+			<?php
 			break;
 
 		}// End switch().
 
-		if ( isset( $field['desc'] ) ) {
-			$html .= '<br><span><i><small>' . esc_html( $field['desc'] ) . '</i></small></span>';
-		}
+		if ( isset( $field['desc'] ) ) { ?>
+			<br><span><i><small><?php echo esc_html( $field['desc'] );?></i></small></span>
+		<?php } ?>
 
-		$html .= '</p>';
+		</p>
 
-		return $html;
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
