@@ -42,7 +42,7 @@ final class Alerts extends CPT {
 	 * @return string Combined HTML contents of the looped query.
 	 */
 	public function loop_cpt( $args = [] ) {
-		$html = '';
+		ob_start();
 
 		$objects = new \WP_Query( $this->query_mods( [], $args ) );
 
@@ -50,7 +50,7 @@ final class Alerts extends CPT {
 
 			while ( $objects->have_posts() ) : $objects->the_post();
 
-				$html .= $this->display_single( get_the_id() );
+				echo $this->display_single( get_the_id() );
 
 			endwhile;
 
@@ -58,7 +58,7 @@ final class Alerts extends CPT {
 
 		wp_reset_postdata();
 
-		return $html;
+		return ob_get_clean();
 	}
 
 	/**
