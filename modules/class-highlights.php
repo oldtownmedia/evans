@@ -57,20 +57,20 @@ final class Highlights extends CPT {
 		$img		= wp_get_attachment_image_src( $img_id, get_post_type() . '-thumb' );
 		?>
 
-		<li class="<?php esc_attr( $this->cptslug );?>">
+		<li class="<?php echo esc_attr( $this->cptslug );?>">
 
 			<?php echo $this->get_img( $img, $link ); ?>
 
 			<h3><a href="<?php echo esc_url( $link ); ?>"><?php echo esc_html( get_the_title() );?></a></h3>
 
 		<?php
-		if ( ! empty( $content ) ) {
+		if ( ! empty( $content ) ) :
 			 echo apply_filters( 'the_content', $content );
-		}
+		endif;
 
-		if ( ! empty( $link_text ) ) { ?>
+		if ( ! empty( $link_text ) ) : ?>
 			<a href="<?php echo esc_url( $link );?>" class='button' role='button'><?php echo esc_html( $link_text );?></a>
-		<?php } ?>
+		<?php endif; ?>
 
 		</li>
 
