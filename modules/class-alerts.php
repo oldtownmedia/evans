@@ -46,7 +46,7 @@ final class Alerts extends CPT {
 
 		$objects = new \WP_Query( $this->query_mods( [], $args ) );
 
-		if ( $objects->have_posts() ) {
+		if ( $objects->have_posts() ) :
 
 			while ( $objects->have_posts() ) : $objects->the_post();
 
@@ -54,7 +54,7 @@ final class Alerts extends CPT {
 
 			endwhile;
 
-		}
+		endif;
 
 		wp_reset_postdata();
 
