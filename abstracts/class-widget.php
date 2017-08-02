@@ -72,29 +72,29 @@ abstract class Widget extends \WP_Widget {
 		// Check if there is a cached output
 		$cache = wp_cache_get( $this->base, 'widget' );
 
-		if ( ! is_array( $cache ) ) {
+		if ( ! is_array( $cache ) ) :
 			$cache = [];
-		}
+		endif;
 
-		if ( ! isset( $args['widget_id'] ) ) {
+		if ( ! isset( $args['widget_id'] ) ) :
 			$args['widget_id'] = $this->id;
-		}
+		endif;
 
-		if ( isset( $cache[ $args['widget_id'] ] ) ) {
+		if ( isset( $cache[ $args['widget_id'] ] ) ) :
 			print $cache[ $args['widget_id'] ];
-		}
+		endif;
 
 		$widget_string = $before_widget;
 
 		$widget_string .= $this->view( $args, $instance );
 		$widget_string .= $after_widget;
 
-		if ( isset( $args['widget_id'] ) ) {
+		if ( isset( $args['widget_id'] ) ) :
 
 			$cache[ $args['widget_id'] ] = $widget_string;
 			wp_cache_set( $this->base, $cache, 'widget' );
 
-		}
+		endif;
 
 		print $widget_string;
 	}
@@ -111,9 +111,9 @@ abstract class Widget extends \WP_Widget {
 
 		$fields = $this->widget_fields();
 
-		if ( empty( $fields ) ) {
+		if ( empty( $fields ) ) :
 			return $instance;
-		}
+		endif;
 
 		foreach ( $fields as $field ) {
 			$instance[ $field['id'] ] = $this->sanitize_field( $field, $new_instance[ $field['id'] ] );
@@ -137,16 +137,16 @@ abstract class Widget extends \WP_Widget {
 	 * @return variable Sanitized value.
 	 */
 	private function sanitize_field( $field, $value ) {
-		if ( empty( $field ) ) {
+		if ( empty( $field ) ) :
 			return;
-		}
+		endif;
 
 		// If the user has chose a custom sanitization
-		if ( isset( $field['sanitize'] ) ) {
+		if ( isset( $field['sanitize'] ) ) :
 			$sanitize = $field['sanitize'];
 
 			// If the user has chosen an array
-			if ( is_array( $sanitize ) ) {
+			if ( is_array( $sanitize ) ) :
 				$new_value = '';
 
 				foreach ( $sanitize as $filter ) {
@@ -156,16 +156,16 @@ abstract class Widget extends \WP_Widget {
 				$sanitized = $new_value;
 
 				// Else if we're just dealing one sanitization option
-			} else {
+			else:
 
 				$sanitized = $sanitize( $value );
 
-			}
-		} else {
+			endif;
+		 else :
 
 			$sanitized = strip_tags( $value );
 
-		}
+		endif;
 
 		return $sanitized;
 	}
@@ -220,9 +220,9 @@ abstract class Widget extends \WP_Widget {
 	 */
 	public function get_widget_title( $args, $instance ) {
 		// Display the widget title
-		if ( $instance['title'] ) {
+		if ( $instance['title'] ) :
 			return $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
-		}
+		endif;
 	}
 
 	/**
@@ -236,17 +236,17 @@ abstract class Widget extends \WP_Widget {
 		$fields = $this->widget_fields();
 		$defaults = [];
 
-		if ( ! is_array( $fields ) || empty( $fields ) ) {
+		if ( ! is_array( $fields ) || empty( $fields ) ) :
 			return;
-		}
+		endif;
 
 		foreach ( $fields as $field ) {
 
-			if ( isset( $field['default'] ) ) {
+			if ( isset( $field['default'] ) ) :
 				$defaults[ $field['id'] ] = $field['default'];
-			} else {
+			 else :
 				$defaults[ $field['id'] ] = '';
-			}
+			endif;
 		}
 
 		return $defaults;
@@ -263,13 +263,13 @@ abstract class Widget extends \WP_Widget {
 
 		$fields = $this->widget_fields();
 
-		if ( empty( $fields ) ) {
+		if ( empty( $fields ) ) :
 			return;
-		}
+		endif;
 
 		// Loop through the fields and build an HTML form field
 		foreach ( $fields as $field ) {
-			$this->build_form_field( $field, $instance );
+			echo $this->build_form_field( $field, $instance );
 		}
 
 		return ob_get_clean();
@@ -291,18 +291,18 @@ abstract class Widget extends \WP_Widget {
 	private function build_form_field( $field, $instance ) {
 		ob_start();
 
-		if ( empty( $field ) ) {
+		if ( empty( $field ) ) :
 			return;
-		} ?>
+		endif; ?>
 
 		<p class="<?php echo esc_attr( $field['type'] ); ?>-box evans-field">
 
 		<label for="<?php echo esc_attr( $this->get_fied_id( $field['id'] ) ); ?>"><strong><?php echo esc_attr( $field['name'] )?></strong></label>
 
 		<?php
-		if ( 'checkbox' !== $field['type'] ) { ?>
+		if ( 'checkbox' !== $field['type'] ) : ?>
 			<br>
-	<?php	}
+	<?php	endif;
 
 		switch ( $field['type'] ) {
 
@@ -323,7 +323,7 @@ abstract class Widget extends \WP_Widget {
 
 			case 'select' :
 
-				if ( ! empty( $field['options'] ) ) { ?>
+				if ( ! empty( $field['options'] ) ) : ?>
 
 					<select id="<?php echo esc_attr( $this->get_field_id( $field['id'] ) ); ?>" name ="<?php echo esc_attr( $this->get_field_name( $field['id'] ) ); ?>">
 
@@ -331,9 +331,9 @@ abstract class Widget extends \WP_Widget {
 					foreach ( $field['options'] as $key => $value ) {
 						$selected = '';
 
-						if ( $key === $instance[ $field['id'] ] ) {
+						if ( $key === $instance[ $field['id'] ] ) :
 							$selected = 'selected';
-						} ?>
+						endif; ?>
 
 						<option value="<?php echo esc_attr( $key );?> <?php echo esc_attr( $selected ) ?>">
 
@@ -344,36 +344,36 @@ abstract class Widget extends \WP_Widget {
 
 				</select>
 
-				<?php }
+			<?php endif;
 
 			break;
 
 			case 'radio' :
 
-				if ( ! empty( $field['options'] ) ) {
+				if ( ! empty( $field['options'] ) ) :
 
 					foreach ( $field['options'] as $key => $value ) {
 						$selected = '';
 
-						if ( $key === $instance[ $field['id'] ] ) {
+						if ( $key === $instance[ $field['id'] ] ) :
 							$selected = ' checked"';
-						} ?>
+						endif; ?>
 
 						<input type="radio" value="<?php echo esc_attr( $key ); ?> <?php echo esc_attr( $selected ); ?>"><span><?php echo esc_html( $value ); ?></span><br>
 
 						<?php
 
 					}
-				}
+				endif;
 
 			break;
 
 			case 'checkbox' :
 				$checked = '';
 
-				if ( 'on' === $instance[ $field['id'] ] ) {
+				if ( 'on' === $instance[ $field['id'] ] ) :
 					$checked = ' checked';
-				} ?>
+				endif; ?>
 
 				<input type="checkbox" id="<?php echo esc_attr( $this->get_field_id( $field['id'] ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( $field['id'] ) );?> <?php echo esc_attr( $checked );?>" value="on" />
 
@@ -382,9 +382,9 @@ abstract class Widget extends \WP_Widget {
 
 		}// End switch().
 
-		if ( isset( $field['desc'] ) ) { ?>
+		if ( isset( $field['desc'] ) ) : ?>
 			<br><span><i><small><?php echo esc_html( $field['desc'] );?></i></small></span>
-		<?php } ?>
+		<?php endif; ?>
 
 		</p>
 
