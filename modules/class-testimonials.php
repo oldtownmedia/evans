@@ -46,15 +46,15 @@ final class Testimonials extends CPT {
 		$reviewer = get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'reviewer', true );
 		?>
 
-		<li class="<?php echo esc_attr( $this->cptslug );?>">
+		<li class="<?php echo esc_attr( $this->cptslug ); ?>">
 
-			<h3><?php echo esc_html( get_the_title() );?></h3>
+			<h3><?php echo esc_html( get_the_title() ); ?></h3>
 
 			<?php echo apply_filters( 'the_content', get_the_content() );
 
-		if ( ! empty( $reviewer ) ) { ?>
-			<p class='cite'> - <span class='reviewer' itemprop='reviewer'><?php echo esc_html( $reviewer );?></span></p>
-		<?php } ?>
+		if ( ! empty( $reviewer ) ) : ?>
+			<p class='cite'> - <span class='reviewer' itemprop='reviewer'><?php echo esc_html( $reviewer ); ?></span></p>
+		<?php endif; ?>
 
 		</li>
 
