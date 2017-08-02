@@ -51,20 +51,20 @@ final class Staff extends CPT {
 		$title		= get_post_meta( $pid, cmb_prefix( get_post_type() ) . 'position', true );
 		?>
 
-		<li class="<?php echo esc_attr( $this->cptslug );?>" itemscope itemtype ='http://schema.org/Person'>
+		<li class="<?php echo esc_attr( $this->cptslug ); ?>" itemscope itemtype ='http://schema.org/Person'>
 
 			<?php echo $this->get_img( $img ); ?>
 
-			<h3 itemprop='name'><?php echo esc_html( get_the_title() );?></h3>
+			<h3 itemprop='name'><?php echo esc_html( get_the_title() ); ?></h3>
 
 		<?php
-		if ( ! empty( $title ) ) { ?>
+		if ( ! empty( $title ) ) : ?>
 			<p>
-        <strong><?php echo esc_html__( 'Position:', 'evans-mu' );?>"</strong> <span itemprop='jobTitle'><?php echo esc_html( $title ); ?></span>
+        <strong><?php echo esc_html__( 'Position:', 'evans-mu' ); ?>"</strong> <span itemprop='jobTitle'><?php echo esc_html( $title ); ?></span>
       </p>
-		<?php }
+		<?php endif;
 
-			echo apply_filters( 'the_content', get_the_content() );?>
+			echo apply_filters( 'the_content', get_the_content() ); ?>
 
 		</li>
 
