@@ -127,22 +127,22 @@ abstract class CPT {
 		add_shortcode( $this->cptslug_plural, [ $this, 'shortcode' ] );
 
 		// If fed dimensions for a thumbnails
-		if ( ! empty( $this->thumbnail_size ) ) {
+		if ( ! empty( $this->thumbnail_size ) ) :
 			add_image_size( $this->cptslug . '-thumb', $this->thumbnail_size['width'], $this->thumbnail_size['height'], true );
-		}
+		endif;
 
 		// If we want to use the taxonomy, hook in the taxonomy functions
-		if ( ! empty( $this->taxonomy_name ) ) {
+		if ( ! empty( $this->taxonomy_name ) ) :
 			add_action( 'init', [ $this, 'define_taxonomy' ], 0 );
-		}
+		endif;
 
 		// If we don't want links to the single to appear in the admin section
-		if ( true === $this->hide_view ) {
+		if ( true === $this->hide_view ) :
 			add_filter( 'post_row_actions', [ $this, 'remove_view_from_row' ], 10, 2 );
 			add_filter( 'page_row_actions', [ $this, 'remove_view_from_row' ], 10, 2 );	// In case post is hierarchical
 			add_filter( 'get_sample_permalink_html', [ $this, 'remove_permalink_option' ], '', 1 );
-		}
-	}
+
+		endif;
 
 	/**
 	 * Loop through custom post type and return combined HTML from posts.
@@ -155,20 +155,21 @@ abstract class CPT {
 
 		$objects = new \WP_Query( $this->query_mods( [], $args ) );
 
-		if ( $objects->have_posts() ) { ?>
+		if ( $objects->have_posts() ): ?>
 			<ul class="<?php echo esc_attr( $this->cptslug ); ?>-listing">
 
 				<?php	while ( $objects->have_posts() ) : $objects->the_post();
 
-					$this->display_single( get_the_id() );
+					echo $this->display_single( get_the_id() );
 
 				endwhile; ?>
 
 			</ul> <?php
-		} else { ?>
-			<h3><?php sprintf( esc_html__('There are no %s to list. Check back soon!', 'evans-mu' ), $this->cptslug_plural ); ?></h3>
+		 else : ?>
 
-		<?php }
+			<h3><?php echo esc_html( sprintf( __('There are no %s to list. Check back soon!', 'evans-mu' ), $this->cptslug_plural ) ); ?></h3>
+
+		<?php endif;
 
 		wp_reset_postdata();
 
@@ -195,23 +196,23 @@ abstract class CPT {
 		$query = array_merge( $original_query, $query );
 
 		// If our shortcode passed in the random as true
-		if ( ! empty( $args['random'] ) && $args['random'] == true ) {
+		if ( ! empty( $args['random'] ) && $args['random'] == true ) :
 			$query['no_found_rows']  = false;
 			$query['posts_per_page'] = 1;
 			$query['orderby']        = 'rand';
-		}
+		endif;
 
 		// If our shortcode passed in an id
-		if ( ! empty( $args['pid'] ) ) {
+		if ( ! empty( $args['pid'] ) ) :
 			$query['no_found_rows']	 = false;
 			$query['posts_per_page'] = 1;
 			$query['post__in']       = [ $args['pid'] ];
-		}
+		endif;
 
 		// If our shortcode passed in a group id OR our taxonomy_loop passes in a group id
-		if ( ! empty( $args['group'] ) ) {
+		if ( ! empty( $args['group'] ) ) :
 			$query[ $this->tax_slug ] = [ $args['group'] ];
-		}
+		endif;
 
 		return $query;
 	}
@@ -228,9 +229,9 @@ abstract class CPT {
 	public function display_single( $pid ) {
 		ob_start(); ?>
 
-		<li class="<?php esc_attr( $this->cptslug ); ?>">
+		<li class="<?php echo esc_attr( $this->cptslug ); ?>">
 
-			<h3><?php esc_html( get_the_title( $pid )); ?></h3>
+			<h3><?php echo esc_html( get_the_title( $pid ) ); ?></h3>
 
 			<?php apply_filters( 'the_content', get_the_content() ); ?>
 
@@ -249,20 +250,20 @@ abstract class CPT {
 	protected function get_img( $img, $link = '' ) {
 		ob_start();
 
-		if ( empty( $img ) ) {
+		if ( empty( $img ) ) :
 			return;
-		}
+		endif;
 
-		if ( ! empty( $link ) ) { ?>
+		if ( ! empty( $link ) ) : ?>
 				<a href="<?php echo esc_url( $link ); ?>"></a>;
-		<?php } ?>
+		<?php endif; ?>
 
 			<img src="<?php echo esc_url($img[0]); ?>" alt="<?php echo esc_attr( get_the_title() ); ?>"/>
 
 		<?php
-		if ( ! empty( $link ) ) { ?>
+		if ( ! empty( $link ) ) : ?>
 			</a>
-		<?php }
+		<?php endif;
 
 		return ob_get_clean();
 	}
@@ -287,7 +288,7 @@ abstract class CPT {
 			]
 		);
 
-		if ( ! empty( $terms ) ) {
+		if ( ! empty( $terms ) ) :
 
 			foreach ( $terms as $term ) :
 				?>
@@ -295,17 +296,17 @@ abstract class CPT {
 				<?php
 				$description = term_description( $term->term_id, $this->tax_slug );
 
-				if ( ! empty( $description ) ) {
-					apply_filters( 'the_content', $description );
-				}
+				if ( ! empty( $description ) ) :
+					echo apply_filters( 'the_content', $description );
+				endif;
 
 				// Add the group we're querying to the get_cpt arguments
 				$args['group'] = $term->slug;
-				$this->loop_cpt( $args );
+				echo $this->loop_cpt( $args );
 
 			endforeach;
 
-		}
+		endif;
 
 		return ob_get_clean();
 	}
@@ -431,10 +432,10 @@ abstract class CPT {
 	 */
 	public function remove_view_from_row( $actions, $post ) {
 
-		if ( $post->post_type === $this->cptslug ) {
+		if ( $post->post_type === $this->cptslug ) :
 			unset( $actions['inline hide-if-no-js'] );
 			unset( $actions['view'] );
-		}
+		endif;
 
 		return $actions;
 	}
@@ -450,9 +451,9 @@ abstract class CPT {
 	public function remove_permalink_option( $return ) {
 		global $post;
 
-		if ( ! empty( $post ) && $post->post_type === $this->cptslug ) {
+		if ( ! empty( $post ) && $post->post_type === $this->cptslug ) :
 			return;
-		}
+		endif;
 
 		return $return;
 	}
