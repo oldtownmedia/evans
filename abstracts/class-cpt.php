@@ -143,6 +143,7 @@ abstract class CPT {
 			add_filter( 'get_sample_permalink_html', [ $this, 'remove_permalink_option' ], '', 1 );
 
 		endif;
+	}
 
 	/**
 	 * Loop through custom post type and return combined HTML from posts.
@@ -164,8 +165,8 @@ abstract class CPT {
 
 				endwhile; ?>
 
-			</ul> <?php
-		 else : ?>
+			</ul>
+		<?php else: ?>
 
 			<h3><?php echo esc_html( sprintf( __('There are no %s to list. Check back soon!', 'evans-mu' ), $this->cptslug_plural ) ); ?></h3>
 
