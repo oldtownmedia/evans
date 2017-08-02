@@ -76,7 +76,7 @@ final class Events extends CPT {
 
 			<li itemscope itemtype='http://data-vocabulary.org/Event' class="<?php echo esc_attr( $this->cptslug );?> group">
 
-				<?php $this->get_img( $img ); ?>
+				<?php echo $this->get_img( $img ); ?>
 
 				<h3><?php echo esc_html( get_the_title() ); ?></h3>
 
@@ -85,9 +85,9 @@ final class Events extends CPT {
 					<?php echo esc_html( date( 'm/d/Y', $date ) );?> <?php echo esc_html( date( 'g:i A', $date ) );?> <br>
 
 		<?php
-		if ( ! empty( $cost ) ) { ?>
+		if ( ! empty( $cost ) ) : ?>
 			<?php echo esc_html__( 'Cost:', 'evans-mu' );?>  <?php echo esc_html( $cost );?> <br>
-		<?php } ?>
+		<?php endif; ?>
 
 				</p>
 
