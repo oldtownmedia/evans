@@ -52,10 +52,10 @@ final class CompanyRSSFeedWidget extends Dashboard_Widget {
 		 // Look for errors and outut if necessary
 		 $errors = $this->parse_for_errors( $rss );
 
-		if ( ! empty( $errors ) ) {
+		if ( ! empty( $errors ) ) :
 			echo wp_kses_post( $errors );
 			return;
-		}
+		endif;
 
 		// Start the output
 		echo "<ul>\n";
@@ -89,26 +89,26 @@ final class CompanyRSSFeedWidget extends Dashboard_Widget {
 		ob_start();
 
 		// If there is an error in receiving the posts
-		if ( is_wp_error( $rss ) ) {
+		if ( is_wp_error( $rss ) ) :
 
-			if ( is_admin() || current_user_can( 'manage_options' ) ) { ?>
+			if ( is_admin() || current_user_can( 'manage_options' ) ) : ?>
 				<p>
-					<strong><?php echo esc_html__( 'RSS Error: ', 'evans-mu' ); ?></strong><?php echo esc_html( $rss->get_error_message() );?>
+					<strong><?php echo esc_html__( 'RSS Error: ', 'evans-mu' ); ?></strong><?php echo esc_html( $rss->get_error_message() ); ?>
 				</p>
-			<?php }
+			<?php endif;
 
 			return ob_get_clean();
 
-		}
+		endif;
 
 		// If there are no posts to show
-		if ( ! $rss->get_item_quantity() ) {
-			ob_start();?>
-			 <p><?php echo esc_html__( 'Apparently, there are no updates to show!', 'evans-mu' );?></p>
+		if ( ! $rss->get_item_quantity() ) :
+			ob_start(); ?>
+			 <p><?php echo esc_html__( 'Apparently, there are no updates to show!', 'evans-mu' ); ?></p>
 			 <?php
 			 $rss->__destruct();
 			 unset( $rss );
-		}
+		endif;
 
 		return ob_get_clean();
 	}
