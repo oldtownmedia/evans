@@ -94,47 +94,47 @@ final class ContactWidget extends Widget {
 		echo $this->get_widget_title( $args, $instance ); ?>
 
 		// Display the contact information
-		<p> <?php
+		<p><?php
 
-		if ( ! empty( $instance['address'] ) ) {
+		if ( ! empty( $instance['address'] ) ) :
 			$address_string .= esc_html( $instance['address'] ) . '<br>';
-		}
+		endif;
 
-		if ( ! empty( $instance['city'] ) ) {
+		if ( ! empty( $instance['city'] ) ) :
 			$address_string .= esc_html( $instance['city'] ) . ', ';
-		}
+		endif;
 
-		if ( ! empty( $instance['state'] ) ) {
+		if ( ! empty( $instance['state'] ) ) :
 			$address_string .= esc_html( $instance['state'] ) . ' ';
-		}
+		endif;
 
-		if ( ! empty( $instance['zip'] ) ) {
+		if ( ! empty( $instance['zip'] ) ) :
 			$address_string .= esc_html( $instance['zip'] );
-		}
+		endif;
 
 			// echo the address string
-		if ( ! empty( $address_string ) ) {
+		if ( ! empty( $address_string ) ) :
 			echo $address_string . '<br>';
-		}
+		endif;
 
-		if ( ! empty( $instance['phone'] ) ) { ?>
-			<strong><?php echo esc_html__( 'Phone:', 'evans-mu' );?></strong><?php echo esc_html( $instance['phone'] );?><br>
-		<?php }
+		if ( ! empty( $instance['phone'] ) ) : ?>
+			<strong><?php echo esc_html__( 'Phone:', 'evans-mu' );?></strong><?php echo esc_html( $instance['phone'] ); ?><br>
+		<?php endif;
 
-		if ( ! empty( $instance['fax'] ) ) { ?>
-			<strong><?php echo esc_html__( 'Fax:', 'evans-mu' );?></strong><?php echo esc_html( $instance['fax'] );?><br>
-		<?php }
+		if ( ! empty( $instance['fax'] ) ) : ?>
+			<strong><?php echo esc_html__( 'Fax:', 'evans-mu' );?></strong><?php echo esc_html( $instance['fax'] ); ?><br>
+		<?php endif;
 
-		if ( ! empty( $instance['email'] ) ) { ?>
-			<a href='mailto:<? echo sanitize_email( $instance['email'] );?>'><?php echo sanitize_email( $instance['email'] );?></a><br>
-		<?php } ?>
+		if ( ! empty( $instance['email'] ) ) : ?>
+			<a href='mailto:<? echo sanitize_email( $instance['email'] );?>'><?php echo sanitize_email( $instance['email'] ); ?></a><br>
+		<?php endif; ?>
 
 	</p> <?php
 
 		// If map is checked, display the map using Simple Google Maps Short Code
-		if ( 'on' === $instance['map'] && ! empty( $address_string ) && function_exists( 'pw_map_shortcode' ) ) {
+		if ( 'on' === $instance['map'] && ! empty( $address_string ) && function_exists( 'pw_map_shortcode' ) ) :
 			echo do_shortcode( '[pw_map address="' . $address_string . '"]' );
-		}
+		endif;
 
 		return ob_get_clean();
 	}
