@@ -256,7 +256,7 @@ abstract class CPT {
 		endif;
 
 		if ( ! empty( $link ) ) : ?>
-				<a href="<?php echo esc_url( $link ); ?>"></a>;
+				<a href="<?php echo esc_url( $link ); ?>">;
 		<?php endif; ?>
 
 			<img src="<?php echo esc_url($img[0]); ?>" alt="<?php echo esc_attr( get_the_title() ); ?>"/>

@@ -51,7 +51,7 @@ final class CompanySupportWidget extends Dashboard_Widget {
 	 * Output the contents of the dashboard widget.
 	 */
 	public function build_the_widget() {
-		echo "<img src='" . esc_url( plugins_url( '../assets/images/widget-logo.png', __FILE__ ) ) . "' style='float:right;'>";
+		echo "<img src='" . esc_url( plugins_url( '../assets/images/widget-logo.png', __FILE__ ) ) . "' style='float:right; max-width: 100%;'>";
 
 		echo '<h2>' . esc_html__( 'Hello!', 'evans-mu' ) . '</h2>';
 
