@@ -5,6 +5,7 @@
     <exclude-pattern>vendor/*</exclude-pattern>
     <exclude-pattern>site-setup/includes/class-tgm-plugin-activation.php</exclude-pattern>
 	<exclude-pattern>assets/metabox/*</exclude-pattern>
+	<exclude-pattern>assets/metabox/register-CMB2.php</exclude-pattern>
 
 	<!-- Use HM Coding Standards -->
     <rule ref="vendor/humanmade/coding-standards">
